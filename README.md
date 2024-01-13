@@ -8,4 +8,3 @@ Important files and directories to know:
 - .gitignore => remove files/directories from being tracked by git
 - javadoc/ => includes javadoc for the Slick2D-Library from the slick2d download .zip
 - lib/ => includes all libraries necessary to run the game
-- testdata/ => includes testdata from the slick2d download .zip
