@@ -14,12 +14,14 @@ public class Weapon {
     protected short damagePerBullet;
     protected String ammoType;
     protected short firerate;
+    protected short fireTimer = 0;
     protected double spread;
     protected short range;
-    // pierce
     protected short magazineSize;
     protected short bullets;
     protected short reloadRate;
+    protected short reloadTimer = 0;
+    protected boolean hasAutomaticFire;
 
     //Konstruktoren
 
@@ -35,9 +37,10 @@ public class Weapon {
      * @param magazineSize Größe eines vollen Magazins
      * @param bullets Anzahl der aktuell innerhalb der Waffe geladenen Menge an Munition
      * @param reloadRate Zeit in Frames, bis wann nicht erneut nachgeladen werden kann.
+     * @param hasAutomaticFire True = Die Waffe verwendet automatisches Feuer, False = Die Waffe verwendet kein automatisches Feuer 
      */
     public Weapon(boolean isSecondary, short damagePerBullet, String ammoType, short firerate, double spread,
-            short range, short magazineSize, short bullets, short reloadRate) {
+            short range, short magazineSize, short bullets, short reloadRate, boolean hasAutomaticFire) {
         this.isSecondary = isSecondary;
         this.damagePerBullet = damagePerBullet;
         this.ammoType = ammoType;
@@ -47,6 +50,7 @@ public class Weapon {
         this.magazineSize = magazineSize;
         this.bullets = bullets;
         this.reloadRate = reloadRate;
+        this.hasAutomaticFire = hasAutomaticFire;
     }
 
     //Getter
@@ -132,6 +136,34 @@ public class Weapon {
         return reloadRate;
     }
 
+    /**
+     * Diese Methode gibt zurück, ob die Waffe automatisches Feuer bestitzt oder nicht
+     * 
+     * @return True = Die Waffe verwendet automatisches Feuer, False = Die Waffe verwendet kein automatisches Feuer 
+     */
+    public boolean getAutomaticFire() {
+        return hasAutomaticFire;
+    }
+
+    /**
+     * Diese Methode gibt zurück, wie viele Frames verbleiben, bis die Waffe erneut nachgeladen werden kann.
+     * 
+     * @return Zeit in Frames bis die Waffe erneut nachgeladen werden kann
+     */
+    public short getReloadTimer() {
+        return reloadTimer;
+    }
+
+    /**
+     * Diese Methode gibt zurück, wie viele Frames verbleiben, bis die Waffe erneut geschossen werden kann.
+     * 
+     * @return Zeit in Frames bis die Waffe erneut geschossen werden kann
+     */
+    public short getFireTimer() {
+        return fireTimer;
+    }
+
+
     //Setter
 
     /**
@@ -215,6 +247,34 @@ public class Weapon {
         this.reloadRate = reloadRate;
     }
 
+    /**
+     * Diese Methode legt fest, ob die Waffe automatisch schießt oder nicht.
+     * 
+     * @param hasAutomaticFire True = Die Waffe verwendet automatisches Feuer, False = Die Waffe verwendet kein automatisches Feuer 
+     */
+    public void setAutomaticFire(boolean hasAutomaticFire) {
+        this.hasAutomaticFire = hasAutomaticFire;
+    }
+
+    /**
+     * Diese Methode legt fest, wie viele Frames gewartet werden soll, bis die Waffe erneut nachgeladen werden kann
+     * 
+     * @param reloadTimer Zeit in Frames bis die Waffe erneut nachgeladen werden kann
+     */
+    public void setReloadTimer(short reloadTimer) {
+        this.reloadTimer = reloadTimer;
+    }
+
+    /**
+     * Diese Methode legt fest, wie viele Frames gewartet werden soll, bis die Waffe erneut geschossen werden kann
+     * 
+     * @param fireTimer Zeit in Frames bis die Waffe erneut geschossen werden kann
+     */
+    public void setFireTimer(short fireTimer) {
+        this.fireTimer = fireTimer;
+    }
+
+
     //Methoden
 
     /**
@@ -248,9 +308,13 @@ public class Weapon {
      * Diese Methode zieht den Abzug der Waffe.
      */
     public void attack(/*float xPos, float yPos, float direction*/) {
-        if (this.bullets > 0) {
-            this.setBullets((short) (this.bullets - 1));
+        //Prüfen, ob das Magazin leer ist, die Waffe nachgeladen wird, oder die Zeit zum letzten Schuss zu kurz für die Waffe ist
+        if (this.bullets <= 0 || fireTimer != 0 || reloadTimer != 0) {
+            System.out.println("Magazin ist leer.");
         }
+
+        //Munition updaten
+        this.setBullets((short) (this.bullets - 1));
     }
 
 }

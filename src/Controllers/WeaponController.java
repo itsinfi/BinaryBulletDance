@@ -20,41 +20,82 @@ import Weapons.Weapon;
  */
 //TODO: ANNOTATIONEN!!!
 public class WeaponController {
-    
 
     //Attribute
 
-    private HashSet<LivingEntity> livingEntities;
-    private HashSet<Bullet> bullets = new HashSet<Bullet>();//TODO: Zu Weapon Class ersetzen
-    private HashSet<Weapon> weapons = new HashSet<Weapon>();//TODO:
-
+    // private static HashSet<LivingEntity> livingEntities;
+    private static HashSet<Bullet> bullets = new HashSet<Bullet>();//TODO: Zu Weapon Class ersetzen
+    private static HashSet<Weapon> weapons = new HashSet<Weapon>();//TODO:
 
     //Konstruktoren
 
     //TODO: Konstruktor updaten + Annotationen hinzufügen
-    public WeaponController(HashSet<LivingEntity> livingEntities) {
-        this.livingEntities = livingEntities;
-        this.bullets = new HashSet<Bullet>();
-    }
+    // public WeaponController(HashSet<LivingEntity> livingEntities) {
+    //     this.livingEntities = livingEntities;
+    // }
 
+    
+    //Getter
+    
+
+    //Setter
+    
 
     //Methoden
-    
+
+    public static void addWeapon(Weapon weapon) {
+        weapons.add(weapon);
+    }
+
+    public static void removeWeapon(Weapon weapon) {
+        weapons.remove(weapon);
+    }
+
     //TODO: Methoden updaten nach UML + Annotationen hinzufügen
-    public void update(Input input, float bulletSpeed, int delta, GameContainer container, LivingEntity livingEntity) {
+    public static void update(Input input, float bulletSpeed, int delta, GameContainer container,
+            LivingEntity livingEntity) {
+
         // Update bullet position and check for collisions
-        Iterator<Bullet> it = bullets.iterator();
-        while (it.hasNext()) {
-            Bullet bullet = it.next();
+        Iterator<Bullet> _it = bullets.iterator();
+        while (_it.hasNext()) {
+            Bullet bullet = _it.next();
             if (bullet.getIsShooting()) {
                 bullet.updateBullet(container, bulletSpeed, delta);
             } else {
-                it.remove();//ALTER LIVE SAVER SUPER WICHTIG MERKEN YO
+                _it.remove();//ALTER LIVE SAVER SUPER WICHTIG MERKEN YO
             }
         }
+
+        //Alle Waffen durchiterieren
+        Iterator<Weapon> it = weapons.iterator();
+        while (it.hasNext()) {
+            Weapon weapon = it.next();
+
+            //ReloadTimer aktualisieren
+            if (weapon.getReloadRate() > 0 && weapon.getReloadTimer() > 0) {
+                short reloadTimer = weapon.getReloadTimer();
+                weapon.setReloadTimer(--reloadTimer);
+            }
+
+            //FireTimer aktualisieren
+            if (weapon.getFirerate() > 0 && weapon.getFireTimer() > 0) {
+                short fireTimer = weapon.getFireTimer();
+                weapon.setFireTimer(--fireTimer);
+            }
+
+            //TODO: Entscheidung: Brauchen wir das? Oder ist es too much?
+            if (weapon.getFireTimer() < 0) {
+                weapon.setFireTimer((short) 0);
+            }
+            
+            //TODO: Entscheidung: Brauchen wir das? Oder ist es too much?
+            if (weapon.getReloadTimer() < 0) {
+                weapon.setReloadTimer((short) 0);
+            }
+        } 
     }
 
-    public void render(Graphics g) {
+    public static void render(Graphics g) {
         Iterator<Bullet> it = bullets.iterator();
         while (it.hasNext()) {
             try {
@@ -66,8 +107,11 @@ public class WeaponController {
         }
     }
 
-    public void shoot(Input input, LivingEntity livingEntity) {
-        // livingEntity.getEquipped().attack(0, 0, 0);
+    //TODO: alles vernünftig überarbeiten
+    public static void shoot(Input input, LivingEntity livingEntity) {
+        Weapon weapon = livingEntity.getEquippedWeapon();
+
+        weapon.attack();
 
         float mouseX = input.getMouseX();
         float mouseY = input.getMouseY();
@@ -76,6 +120,9 @@ public class WeaponController {
         Vector2f bulletDirection = new Vector2f(mouseX - bulletX, mouseY - bulletY).normalise();
         Bullet bullet = new Bullet(bulletDirection, bulletX, bulletY, livingEntity);
         bullets.add(bullet);
+
+        //FireTimer setzen
+        weapon.setFireTimer(weapon.getFirerate());
     }
 
 }

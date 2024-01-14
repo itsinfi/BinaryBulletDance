@@ -21,7 +21,7 @@ public class PlayerController {
     //Attribute
 
     private Player player;
-    private int reloadTimer = 0;//TODO: im WeaponController implementieren
+    private short reloadTimer = 0;//TODO: im WeaponController implementieren
 
 
     //Konstruktoren
@@ -29,22 +29,35 @@ public class PlayerController {
     /**
      * Diese Methode erstellt den PlayerController und den Spieler.
      * 
+     * @param container Game Container des Games
      */
     //TODO: mit static init Methode ersetzen
     //TODO: alle Methoden und Attribute static machen
     //TODO: Spieler aus GameStateManager entfernen
     public PlayerController(GameContainer container) throws SlickException {
-        Weapon primary = new Weapon(false, (short) 30, "PRIMARY", (short) 2000, 0.0, (short) 200, (short) 30,
-                (short) 30, (short) 120);
-        Weapon secondary = new Weapon(true, (short) 30, "SECONDARY", (short) 2000, 0.0, (short) 200, (short) 15,
-                (short) 15, (short) 1000);
 
+        //Primärwaffe des Spielers erzeugen
+        Weapon primary = new Weapon(false, (short) 30, "PRIMARY", (short) 5, 0.0, (short) 200, (short) 30,
+                (short) 30, (short) 120, true);
+
+        //Sekundärwaffe des Spielers erzeugen
+        Weapon secondary = new Weapon(true, (short) 30, "SECONDARY", (short) 15, 0.0, (short) 200, (short) 15,
+                (short) 15, (short) 1000, false);
+        
+        //Primärwaffe dem WeaponController übergeben
+        WeaponController.addWeapon(primary);
+
+        //Sekundärwaffe dem WeaponController übergeben
+        WeaponController.addWeapon(secondary);
+        
+        //Spieler erzeugen
         player = new Player("assets/playertest.png", container, primary, primary, secondary);
 
+        //Spieler Startmunition geben
         HashMap<String, Short> ammo = new HashMap<String, Short>();
         ammo.put("PRIMARY", (short) 200);
         ammo.put("SECONDARY", (short) 200);
-        player.setAmmo(ammo);
+        player.setAmmo(ammo);//TODO: stattdessen addAmmo()-Methode, um nicht zu überschreiben
     }
 
 
@@ -69,10 +82,8 @@ public class PlayerController {
      * @param playerSpeed //TODO: remove
      * @param delta  Millisekunden seit dem letzten Frame
      * @param container GameContainer des Games
-     * @param weaponController //TODO: static machen und dann als parameter entfernen
      */
-    public void update(Input input, int delta, GameContainer container,
-            WeaponController weaponController) {
+    public void update(Input input, int delta, GameContainer container) {
 
         // Timervariablen
         if (reloadTimer > 0) {
@@ -105,11 +116,20 @@ public class PlayerController {
             player.setEquipped(false);
         }
 
-        // Kugeln schießen
-        if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-            player.getEquippedWeapon().attack();
-            if (player.getEquippedWeapon().getBullets() > 0) {
-                weaponController.shoot(input, this.player);
+        // Ausgerüstete Waffe lesen
+        Weapon equippedWeapon = player.getEquippedWeapon();
+
+        //Prüfen, ob die Waffe nachgeladen wird oder bereits den nächsten Schuss abgeben darf
+        if (equippedWeapon.getReloadTimer() == 0 && equippedWeapon.getFireTimer() == 0) {
+
+            //Prüfen, ob die Waffe automatisch ist und ob die linke Maustaste gedrückt (bzw. gehalten bei automatisch) wurde
+            if ((equippedWeapon.getAutomaticFire() && input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
+                    || (!equippedWeapon.getAutomaticFire() && input.isMousePressed(Input.MOUSE_LEFT_BUTTON))) {
+                
+                //Waffe schießen
+                if (player.getEquippedWeapon().getBullets() > 0) {
+                    WeaponController.shoot(input, this.player);
+                }
             }
         }
 

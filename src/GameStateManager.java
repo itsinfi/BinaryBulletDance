@@ -31,7 +31,6 @@ public class GameStateManager extends BasicGame {
     private final float BULLET_SPEED  = 0.69f;//TODO: remove
     private Level mapAsset;
     private PlayerController playerController;//TODO: make static
-    private WeaponController weaponController;//TODO: make static
 
 
     //Konstruktoren
@@ -83,7 +82,6 @@ public class GameStateManager extends BasicGame {
     public void init(GameContainer container) throws SlickException {
         playerController = new PlayerController(container);
         livingEntities.add(playerController.getPlayer());
-        weaponController = new WeaponController(livingEntities);
         mapAsset = new Level("assets/mapTest1.png");
     }
 
@@ -100,10 +98,10 @@ public class GameStateManager extends BasicGame {
         Input input = container.getInput();
 
         //Spieler updaten
-        playerController.update(input, delta, container, weaponController);
+        playerController.update(input, delta, container);
 
         //Waffen updaten
-        weaponController.update(input, BULLET_SPEED, delta, container, playerController.getPlayer());
+        WeaponController.update(input, BULLET_SPEED, delta, container, playerController.getPlayer());
     }
 
     /**
@@ -121,7 +119,7 @@ public class GameStateManager extends BasicGame {
         mapAsset.render(g);
 
         //Weapons rendern
-        weaponController.render(g);
+        WeaponController.render(g);
 
         //Player rendern
         playerController.render(g);
