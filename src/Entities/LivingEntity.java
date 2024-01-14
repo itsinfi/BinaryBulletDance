@@ -120,4 +120,9 @@ public abstract class LivingEntity extends Entity {
      */
     public abstract void render(Graphics g);
 
+    /**
+     * Diese Methode lädt die aktuell ausgerüstete Waffe der lebendigen Entität nach.
+     */
+    public abstract void reload();
+
 }

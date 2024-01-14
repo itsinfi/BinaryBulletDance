@@ -11,6 +11,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 import Entities.Bullet;
 import Entities.LivingEntity;
+import Weapons.Weapon;
 
 /**
  * Diese Klasse verwaltet alle Waffen im Game.
@@ -25,6 +26,7 @@ public class WeaponController {
 
     private HashSet<LivingEntity> livingEntities;
     private HashSet<Bullet> bullets = new HashSet<Bullet>();//TODO: Zu Weapon Class ersetzen
+    private HashSet<Weapon> weapons = new HashSet<Weapon>();//TODO:
 
 
     //Konstruktoren
@@ -66,7 +68,7 @@ public class WeaponController {
 
     public void shoot(Input input, LivingEntity livingEntity) {
         // livingEntity.getEquipped().attack(0, 0, 0);
-        
+
         float mouseX = input.getMouseX();
         float mouseY = input.getMouseY();
         float bulletX = livingEntity.getShape().getCenterX() + 25;

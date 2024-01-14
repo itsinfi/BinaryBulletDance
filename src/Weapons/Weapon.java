@@ -1,9 +1,5 @@
 package Weapons;
 
-import java.util.Map;
-import Entities.Player;
-import Exceptions.PlayerException;
-
 /**
  * Diese abstrakte Klasse gibt vor, wie Waffen im Game aufgebaut sein sollen.
  * 
@@ -222,63 +218,30 @@ public class Weapon {
     //Methoden
 
     /**
-     * Diese Methode lädt die Waffe eines Spielers nach.
+     * Diese Methode lädt die Waffe nach.
      * 
-     * @param player Spieler, der die Waffe nachladen möchte
+     * @param amount Menge der nachgeladenen Munition
      */
-    public void reload(Player player) {
-        Map.Entry<String, Short> ammo = null;
+    public void reload(short amount) {
 
-        //Munitionstyp + Menge im Spieler suchen
-        try {
-            ammo = player.findAmmo(this.ammoType);
-        } catch (PlayerException e) {
-            System.out.println(e);
+        //Prüfen, ob ein negativer Wert vorhanden ist.
+        if (amount < 0) {
+            System.out.println("Negativer Wert beim Nachladen.");
             return;
         }
 
-        //Falls Munition vorhanden ist, nachladen
-        if (ammo.getValue() != null) {
-            short ammoValue = ammo.getValue();
-            if (ammoValue > this.magazineSize) {
-                ammo.setValue((short) (ammoValue - this.magazineSize));
-                this.setBullets(this.magazineSize);
-            } else if (ammoValue < this.magazineSize) {
-                ammo.setValue((short) 0);
-                this.setBullets(ammoValue);
-            } else {
-                return;
-            }
+        //Neuen geladenen Munitionswert berechnen
+        short newBullets = (short) (this.bullets + amount);
 
+        //Prüfen, ob die Menge an neuer Munition die Magazingröße überschreitet
+        if (newBullets > this.magazineSize) {
+            System.out.println("Es wurde mehr Munition nachgeladen, als in das Magazin passt.");
+            newBullets = this.magazineSize;
         }
+
+        //Waffe nachladen
+        this.bullets = newBullets;
     }
-
-    //TODO:
-    // /**
-    //  * Diese Methode lädt die Waffe eines Gegners nach.
-    //  * 
-    //  * @param enemy Gegner, der die Waffe nachladen möchte
-    //  */
-    // public void reload(Enemy enemy) {
-
-    //     //Munitionstyp + Menge im Spieler suchen
-    //     Map.Entry<String, Short> ammo = player.findAmmo(this.ammoType);
-
-    //     //Falls Munition vorhanden ist, nachladen
-    //     if (ammo.getValue() != null) {
-    //         short ammoValue = ammo.getValue();
-    //         if (ammoValue > this.magazineSize) {
-    //             ammo.setValue((short) (ammoValue - this.magazineSize));
-    //             this.setBullets(this.magazineSize);
-    //         } else if (ammoValue < this.magazineSize) {
-    //             ammo.setValue((short) 0);
-    //             this.setBullets(ammoValue);
-    //         } else {
-    //             return;
-    //         }
-
-    //     }
-    // }
 
     //TODO:
     /**

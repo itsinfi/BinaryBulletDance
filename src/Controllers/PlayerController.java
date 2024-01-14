@@ -4,7 +4,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Shape;
 
 import Entities.Player;
 import Weapons.Weapon;
@@ -110,13 +109,13 @@ public class PlayerController {
         if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
             player.getEquippedWeapon().attack();
             if (player.getEquippedWeapon().getBullets() > 0) {
-                weaponController.shoot(input, this.getPlayer());
+                weaponController.shoot(input, this.player);
             }
         }
 
         // Waffe nachladen
         if (input.isKeyDown(Input.KEY_R) && reloadTimer == 0) {
-            player.getEquippedWeapon().reload(player);
+            player.reload();
             reloadTimer = player.getEquippedWeapon().getReloadRate();//TODO: im WeaponController implementieren
         }
 

@@ -1,16 +1,12 @@
 package Entities;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 import Weapons.Weapon;
-import Exceptions.PlayerException;
 
 /**
  * Diese Klasse stellt den Spieler des Games dar.
@@ -132,22 +128,40 @@ public class Player extends LivingEntity {
     }
 
     /**
-     * Diese Methode gibt die Menge und den Bezeichner eines bestimmten gesuchten Munitionstypen zurück.
-     * 
-     * @param ammoType Bezeichner der Munitionsart
-     * @return Gibt den Eintrag mit Bezeichner und Menge zurück
-     * @throws PlayerException falls der Munitionstyp nicht im Inventar gefunden werden konnte
+     * Diese Methode lädt die aktuell ausgerüstete Waffe des Spielers nach (falls genug Munition vorhanden ist)
      */
-    public Map.Entry<String, Short> findAmmo(String ammoType) throws PlayerException {
-        Iterator<Entry<String, Short>> it = this.ammo.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<String, Short> entry = it.next();
-            if (entry.getKey().equals(ammoType)) {
-                return entry;
-            }
+    @Override
+    public void reload() {
+        //Munitionstyp der Waffe abfragen
+        String ammoTypeString = this.equippedWeapon.getAmmoType();
+
+        //Prüfen, ob der Munitionstyp im Inventar des Spielers als Eintrag vorhanden ist.
+        if (!(this.ammo.containsKey(ammoTypeString))) {
+            System.out.println(ammoTypeString + " konnte nicht gefunden werden.");
+            return;
         }
-        PlayerException e = new PlayerException("Munitionstyp nicht gefunden");
-        throw e;
+
+        //Munitionsmenge aus dem Inventar herauslesen
+        short ammoCount = this.ammo.get(ammoTypeString);
+
+        //Prüfen, ob die Munition leer ist.
+        if (ammoCount <= 0) {
+            System.out.println("Munition ist leer.");
+            return;
+        }
+
+        //Menge an nachzuladener Munition berechnen (um ein volles Magazin zu erhalten)
+        short neededBullets = (short) (this.equippedWeapon.getMagazineSize() - this.equippedWeapon.getBullets());
+
+        //Menge an Munition im Inventar des Spielers abziehen.
+        if (ammoCount  >= neededBullets) {
+            this.ammo.replace(ammoTypeString, (short) (ammoCount - neededBullets));
+        } else {
+            this.ammo.replace(ammoTypeString, (short) 0);
+        }
+
+        //Waffe nachladen
+        this.equippedWeapon.reload((short) (ammoCount - this.ammo.get(ammoTypeString)));
     }
 
     /**
