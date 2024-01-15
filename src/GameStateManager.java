@@ -126,7 +126,10 @@ public class GameStateManager extends BasicGame {
 
         //Draw HUD
         Player player = playerController.getPlayer();
-        g.setColor(Color.orange);
+        g.setColor(player.getEquippedWeapon().getReloadTimer() == 0 ? Color.orange : Color.red);
+        if (player.getChangeEquippedWeaponTimer() != 0) {
+            g.setColor(Color.gray);
+        }
         g.drawString("Current Ammo: " + player.getEquippedWeapon().getBullets(), 10, container.getHeight() - 20);
         g.drawString("Ammo in Inventory: " + player.getAmmo().get(player.getEquippedWeapon().getAmmoType()), 10,
                 container.getHeight() - 40);

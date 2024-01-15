@@ -21,7 +21,6 @@ public class PlayerController {
     //Attribute
 
     private Player player;
-    private short reloadTimer = 0;//TODO: im WeaponController implementieren
 
 
     //Konstruktoren
@@ -42,7 +41,7 @@ public class PlayerController {
 
         //Sekundärwaffe des Spielers erzeugen
         Weapon secondary = new Weapon(true, (short) 30, "SECONDARY", (short) 15, 0.0, (short) 200, (short) 15,
-                (short) 15, (short) 1000, false);
+                (short) 15, (short) 60, false);
         
         //Primärwaffe dem WeaponController übergeben
         WeaponController.addWeapon(primary);
@@ -85,9 +84,10 @@ public class PlayerController {
      */
     public void update(Input input, int delta, GameContainer container) {
 
-        // Timervariablen
-        if (reloadTimer > 0) {
-            reloadTimer--;//TODO: im WeaponController implementieren
+        //changeEquippedWeaponTimer aktualisieren
+        short changeEquippedWeaponTimer = player.getChangeEquippedWeaponTimer();
+        if (changeEquippedWeaponTimer != 0) {
+            player.setChangeEquippedWeaponTimer(--changeEquippedWeaponTimer);
         }
 
         // Spielerbewegung
@@ -109,18 +109,21 @@ public class PlayerController {
         }
 
         // Weapon Slot wechseln
-        if (input.isKeyDown(Input.KEY_1)) {
-            player.setEquipped(true);
-        }
-        if (input.isKeyDown(Input.KEY_2)) {
-            player.setEquipped(false);
+        if (changeEquippedWeaponTimer == 0) {
+            if (input.isKeyDown(Input.KEY_1)) {
+                player.setEquippedWeapon(true);
+            }
+            
+            if (input.isKeyDown(Input.KEY_2)) {
+                player.setEquippedWeapon(false);
+            }
         }
 
         // Ausgerüstete Waffe lesen
         Weapon equippedWeapon = player.getEquippedWeapon();
 
-        //Prüfen, ob die Waffe nachgeladen wird oder bereits den nächsten Schuss abgeben darf
-        if (equippedWeapon.getReloadTimer() == 0 && equippedWeapon.getFireTimer() == 0) {
+        //Prüfen, ob die Waffe nachgeladen wird oder bereits den nächsten Schuss abgeben darf oder aktuell noch nicht fertig ausgerüstet ist.
+        if (equippedWeapon.getReloadTimer() == 0 && equippedWeapon.getFireTimer() == 0 && player.getChangeEquippedWeaponTimer() == 0) {
 
             //Prüfen, ob die Waffe automatisch ist und ob die linke Maustaste gedrückt (bzw. gehalten bei automatisch) wurde
             if ((equippedWeapon.getAutomaticFire() && input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
@@ -133,10 +136,13 @@ public class PlayerController {
             }
         }
 
-        // Waffe nachladen
-        if (input.isKeyDown(Input.KEY_R) && reloadTimer == 0) {
+        // ReloadTimer starten sobald Nachladevorgang gestartet wird
+        if (input.isKeyDown(Input.KEY_R) && equippedWeapon.getReloadTimer() == 0) {
+            equippedWeapon.setReloadTimer(equippedWeapon.getReloadRate());
+        
+        //Waffe nachladen, sobald der Reload Timer abläuft
+        } else if (equippedWeapon.getReloadTimer() == 1) {
             player.reload();
-            reloadTimer = player.getEquippedWeapon().getReloadRate();//TODO: im WeaponController implementieren
         }
 
     }

@@ -21,6 +21,7 @@ public class Player extends LivingEntity {
     private Weapon primaryWeapon;
     private Weapon secondaryWeapon;
     private HashMap<String, Short> ammo = new HashMap<String, Short>();
+    private short changeEquippedWeaponTimer = 0;
 
 
     //Konstruktoren
@@ -76,6 +77,15 @@ public class Player extends LivingEntity {
         return ammo;
     }
 
+    /**
+     * Diese Methode gibt die Anzahl an Frames aus, bis wann der Spieler seine Waffe fertig gewechselt hat.
+     * 
+     * @return Anzahl an Frames, bis wann der Spieler seine Waffe gewechselt hat
+     */
+    public short getChangeEquippedWeaponTimer() {
+        return changeEquippedWeaponTimer;
+    }
+
 
     //Setter
 
@@ -111,8 +121,18 @@ public class Player extends LivingEntity {
      * 
      * @param isPrimary True = Primärwaffe wird ausgerüstet, False = Sekundärwaffe wird ausgerüstet.
      */
-    public void setEquipped(boolean isPrimary) {
+    public void setEquippedWeapon(boolean isPrimary) {
         this.equippedWeapon = isPrimary ? this.primaryWeapon : this.secondaryWeapon;
+        this.changeEquippedWeaponTimer = 30;
+    }
+
+    /**
+     * Diese Methode setzt eine Anzahl an Frames, bis wann der Spieler seine Waffe fertig ausgerüstet hat.
+     * 
+     * @return Anzahl an Frames, bis wann der Spieler seine Waffe gewechselt hat
+     */
+    public void setChangeEquippedWeaponTimer(short changeEquippedWeaponTimer) {
+        this.changeEquippedWeaponTimer = changeEquippedWeaponTimer;
     }
     
 
