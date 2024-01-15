@@ -107,6 +107,49 @@ public abstract class LivingEntity extends Entity {
     //Methoden
 
     //TODO: add heal and takeDamage methods
+    
+    /**
+     * Diese Methode heilt die Entität.
+     * 
+     * @param amount Anzahl an Healthpoints, um die die Entität geheilt wird. Der Wert muss positiv sein!
+     */
+    public void heal(short amount) {
+    	
+    	//TODO: add exception handling
+    	if(amount < 0) {
+    		throw new IllegalArgumentException("Negative amounts are not allowed for healing! Use takeDamage(amount) if you want to deal damage to an entity instead!");
+    	}
+    	
+    	short finalAmount = (short) (this.getHitpoints() + amount);
+    	
+    	if (finalAmount > this.maxHitpoints) {
+    		this.setHitpoints(this.maxHitpoints);
+    	} else {
+    		this.setHitpoints(finalAmount);
+    	}
+    	
+    }
+    
+    /**
+     * Diese Methode fügt der Entität Schaden zu.
+     * @param amount Anzahl an Schadenspunkten, die zugefügt werden sollen. - Muss positiv sein!
+     */
+    public void takeDamage(short amount) {
+    	
+    	//TODO: add exception handling
+    	if(amount < 0) {
+    		throw new IllegalArgumentException("Negative amounts of damage are not allowed! Use heal(amount) if you want to heal an entity instead!");
+    	}
+    	
+    	short finalAmount = (short) (this.getHitpoints() - amount);
+    	
+    	if(finalAmount <= 0) {
+    		this.setHitpoints((short) (0));
+    		this.die();
+    	} else {
+    		this.setHitpoints(finalAmount);
+    	}
+    }
 
     /**
      * Diese Methode soll dafür sorgen, dass eine lebendige Entität sterben kann, um dann bestimmte Events zu Triggern.
