@@ -139,7 +139,7 @@ public class PlayerController {
         }
 
         // ReloadTimer starten sobald Nachladevorgang gestartet wird
-        if (input.isKeyDown(Input.KEY_R) && equippedWeapon.getReloadTimer() == 0) {
+        if (input.isKeyDown(Input.KEY_R) && equippedWeapon.getReloadTimer() == 0 && player.getAmmo().containsKey(equippedWeapon.getAmmoType()) && player.getAmmo().get(equippedWeapon.getAmmoType()) > 0) {
             equippedWeapon.setReloadTimer(equippedWeapon.getReloadRate());
         
         //Waffe nachladen, sobald der Reload Timer abläuft
