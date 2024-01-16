@@ -108,19 +108,21 @@ public class PlayerController {
             player.setX(player.getShape().getX() + playerSpeed * delta);
         }
 
+        // Ausgerüstete Waffe lesen
+        Weapon equippedWeapon = player.getEquippedWeapon();
+
         // Weapon Slot wechseln
         if (changeEquippedWeaponTimer == 0) {
-            if (input.isKeyDown(Input.KEY_1)) {
+            if (input.isKeyDown(Input.KEY_1) && equippedWeapon != player.getPrimaryWeapon()) {
+                equippedWeapon.setReloadTimer((short) 0);
                 player.setEquippedWeapon(true);
             }
             
-            if (input.isKeyDown(Input.KEY_2)) {
+            if (input.isKeyDown(Input.KEY_2) && equippedWeapon != player.getSecondaryWeapon()) {
+                equippedWeapon.setReloadTimer((short) 0);
                 player.setEquippedWeapon(false);
             }
         }
-
-        // Ausgerüstete Waffe lesen
-        Weapon equippedWeapon = player.getEquippedWeapon();
 
         //Prüfen, ob die Waffe nachgeladen wird oder bereits den nächsten Schuss abgeben darf oder aktuell noch nicht fertig ausgerüstet ist.
         if (equippedWeapon.getReloadTimer() == 0 && equippedWeapon.getFireTimer() == 0 && player.getChangeEquippedWeaponTimer() == 0) {
