@@ -138,8 +138,16 @@ public class PlayerController {
             }
         }
 
-        // ReloadTimer starten sobald Nachladevorgang gestartet wird
-        if (input.isKeyDown(Input.KEY_R) && equippedWeapon.getReloadTimer() == 0 && player.getAmmo().containsKey(equippedWeapon.getAmmoType()) && player.getAmmo().get(equippedWeapon.getAmmoType()) > 0) {
+        // Prüfen, ob:
+        //- 'r' gedrückt wird
+        //- Der Spieler den Munitionstyp der ausgerüsteten Waffe im Inventar besitzt
+        //- Der Spieler mehr als 0 Schuss für die erforderte Munition im Inventar besitzt
+        //- Die Waffe nicht schon voll ist
+        if (input.isKeyDown(Input.KEY_R) && equippedWeapon.getReloadTimer() == 0
+                && player.getAmmo().containsKey(equippedWeapon.getAmmoType())
+                && player.getAmmo().get(equippedWeapon.getAmmoType()) > 0
+                && equippedWeapon.getBullets() < equippedWeapon.getMagazineSize()) {
+            //ReloadTimer starten
             equippedWeapon.setReloadTimer(equippedWeapon.getReloadRate());
         
         //Waffe nachladen, sobald der Reload Timer abläuft
