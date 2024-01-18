@@ -37,11 +37,10 @@ public abstract class Hud {
 		return font;
 	}
 	
-	// TODO: remove PlayerController and container as params when both classes were made static, then adjust container and playerController Callings properly
-	public static void render(Graphics g, PlayerController playerController, GameContainer container) {
+	public static void render(Graphics g, GameContainer container) {
 		g.setFont(Hud.getFont());
         
-        Player player = playerController.getPlayer();
+        Player player = PlayerController.getPlayer();
         
         g.setColor(player.getEquippedWeapon().getReloadTimer() == 0 ? Color.orange : Color.red);
         if (player.getChangeEquippedWeaponTimer() != 0) {

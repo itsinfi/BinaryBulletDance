@@ -23,7 +23,7 @@ public class PlayerController {
     
     //Attribute
 
-    private Player player;
+    private static Player player;
 
 
     //Konstruktoren
@@ -33,10 +33,8 @@ public class PlayerController {
      * 
      * @param container Game Container des Games
      */
-    //TODO: mit static init Methode ersetzen
-    //TODO: alle Methoden und Attribute static machen
     //TODO: Spieler aus GameStateManager entfernen
-    public PlayerController(GameContainer container) throws SlickException {
+    public static void init(GameContainer container) throws SlickException {
 
         //Primärwaffe des Spielers erzeugen
         Weapon primary = (Weapon) new Primary();
@@ -62,7 +60,7 @@ public class PlayerController {
      * 
      * @return Spieler des Games
      */
-    public Player getPlayer() {
+    public static Player getPlayer() {
         return player;
     }
 
@@ -76,7 +74,7 @@ public class PlayerController {
      * @param delta  Millisekunden seit dem letzten Frame
      * @param container GameContainer des Games
      */
-    public void update(Input input, int delta, GameContainer container) {
+    public static void update(Input input, int delta, GameContainer container) {
 
         //changeEquippedWeaponTimer aktualisieren
         short changeEquippedWeaponTimer = player.getChangeEquippedWeaponTimer();
@@ -139,7 +137,7 @@ public class PlayerController {
                 
                 //Waffe schießen
                 if (player.getEquippedWeapon().getBullets() > 0) {
-                    WeaponController.shoot(input, this.player);
+                    WeaponController.shoot(input, player);
                 }
             }
         }
@@ -169,8 +167,8 @@ public class PlayerController {
      * @param g Grafische Darstellung des Spiels durch die Slick2D-Library
      */
     //TODO: Diese Methode in der Main verwenden
-    public void render(Graphics g) {
-        this.player.render(g);
+    public static void render(Graphics g) {
+        player.render(g);
     }
     
 }

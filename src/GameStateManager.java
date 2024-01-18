@@ -86,8 +86,8 @@ public class GameStateManager extends BasicGame {
      */
     @Override
     public void init(GameContainer container) throws SlickException {
-        playerController = new PlayerController(container);
-        livingEntities.add(playerController.getPlayer());
+        PlayerController.init(container);
+        livingEntities.add(PlayerController.getPlayer());
         mapAsset = new Level("assets/mapTest1.png");
 
         //Font für die GUI laden        
@@ -107,10 +107,10 @@ public class GameStateManager extends BasicGame {
         Input input = container.getInput();
 
         //Spieler updaten
-        playerController.update(input, delta, container);
+        PlayerController.update(input, delta, container);
 
         //Waffen updaten
-        WeaponController.update(input, BULLET_SPEED, delta, container, playerController.getPlayer());
+        WeaponController.update(input, BULLET_SPEED, delta, container, PlayerController.getPlayer());
     }
 
     /**
@@ -131,11 +131,10 @@ public class GameStateManager extends BasicGame {
         WeaponController.render(g);
 
         //Player rendern
-        playerController.render(g);
+        PlayerController.render(g);
 
         //Draw HUD
-        // TODO: remove playerController and container param when both clases were made static
-        Hud.render(g, playerController, container);
+        Hud.render(g, container);
         
     }
     
