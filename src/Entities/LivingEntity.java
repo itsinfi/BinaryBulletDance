@@ -1,16 +1,13 @@
 package Entities;
 
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-
-import Entities.Weapon;
 
 /**
  * Diese Klasse stellt die Vorgabe für alle lebendigen Entitäten im Game dar, sprich Spieler und Gegner
  * 
  * @author Sascha Angermann
  */
-public abstract class LivingEntity extends Entity {
+public abstract class LivingEntity extends Entity implements Renderable {
 
     
     //Attribute
@@ -30,17 +27,13 @@ public abstract class LivingEntity extends Entity {
      * Die Attribute x, y, width und height werden hierbei verwendet, um ein Shape-Objekt zu erzeugen.
      * 
      * @param spriteAsset Pfad zum Image-Asset zur Darstellung der Entität
-     * @param x x-Koordinate der Position der Entität
-     * @param y y-Koordinate der Position der Entität
-     * @param width Räumliche Breite der Entität
-     * @param height Räumliche Höhe der Entität
+     * @param centerX Zentrale x-Koordinate der Position der Entität
+     * @param centerY Zentrale y-Koordinate der Position der Entität
      * @param direction Blickrichtung der Entität (in Grad)
-     * @param equippedWeapon Aktuell ausgerüstete Waffe der Entität
      * @throws SlickException falls etwas bei der Erstellung des Sprites oder Shapes nicht klappt.
      */
-    public LivingEntity(String spriteAsset, float x, float y, float width, float height, float direction, Weapon equippedWeapon) throws SlickException {
-        super(spriteAsset, x, y, width, height, direction);
-        this.equippedWeapon = equippedWeapon;
+    public LivingEntity(String spriteAsset, float centerX, float centerY, float direction) throws SlickException {
+        super(spriteAsset, centerX, centerY, direction);
     }
 
 
@@ -155,13 +148,6 @@ public abstract class LivingEntity extends Entity {
      * Diese Methode soll dafür sorgen, dass eine lebendige Entität sterben kann, um dann bestimmte Events zu Triggern.
      */
     public abstract void die();
-
-    /**
-     * Diese Methode stellt die lebendige Entität visuell dar.
-     * 
-     * @param g Grafische Darstellung des Spiels durch die Slick2D-Library
-     */
-    public abstract void render();
 
     /**
      * Diese Methode lädt die aktuell ausgerüstete Waffe der lebendigen Entität nach.

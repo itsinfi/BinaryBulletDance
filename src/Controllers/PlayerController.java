@@ -6,7 +6,6 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
-import Entities.Entity;
 import Entities.LivingEntity;
 import Entities.Player;
 import Entities.Weapons.Primary;
@@ -39,15 +38,18 @@ public class PlayerController {
     //TODO: alle Methoden und Attribute static machen
     //TODO: Spieler aus GameStateManager entfernen
     public PlayerController(GameContainer container) throws SlickException {
-        System.out.println(player instanceof Entity);
-        //Primärwaffe des Spielers erzeugen
-        Weapon primary = (Weapon) new Primary(container);//TODO: zu living entity austauschen
-        
-        //Sekundärwaffe des Spielers erzeugen
-        Weapon secondary = (Weapon) new Secondary(container); //TODO: zu living entity austauschen
 
         //Spieler erzeugen
-        player = new Player("assets/playertest.png", container, primary, primary, secondary);
+        player = new Player("assets/playertest_fixed.png", container);
+
+        //Primärwaffe des Spielers erzeugen
+        Weapon primary = (Weapon) new Primary((LivingEntity) player);
+        player.setPrimaryWeapon(primary);//TODO: mit addWeapon(Weapon) methode umsetzen!!! um primär und sekundär zu forcen und auto equippen
+        player.setEquippedWeapon(true);//TODO: mit addWeapon(Weapon) methode umsetzen!!! um primär und sekundär zu forcen und auto equippen
+        
+        //Sekundärwaffe des Spielers erzeugen
+        Weapon secondary = (Weapon) new Secondary((LivingEntity) player);
+        player.setSecondaryWeapon(secondary);//TODO: mit addWeapon(Weapon) methode umsetzen!!! um primär und sekundär zu forcen und auto equippen
 
         //Spieler Startmunition geben
         HashMap<String, Short> ammo = new HashMap<String, Short>();
@@ -88,40 +90,42 @@ public class PlayerController {
 
         // Spielerbewegung (+ Waffen des Spielers)
         float playerSpeed = player.getMovementSpeed();
+        Weapon primaryWeapon = player.getPrimaryWeapon();
+        Weapon secondaryWeapon = player.getSecondaryWeapon();
 
         if (input.isKeyDown(Input.KEY_W) && player.getShape().getY() > 0) {
             player.setY(player.getShape().getY() - playerSpeed * delta);
-            player.getPrimaryWeapon().setY(player.getShape().getY() - playerSpeed * delta);
-            player.getSecondaryWeapon().setY(player.getShape().getY() - playerSpeed * delta);
+            primaryWeapon.setY(primaryWeapon.getShape().getY() - playerSpeed * delta);
+            secondaryWeapon.setY(secondaryWeapon.getShape().getY() - playerSpeed * delta);
         }
         if (input.isKeyDown(Input.KEY_S)
                 && player.getShape().getY() < container.getHeight() - player.getShape().getHeight()) {
             player.setY(player.getShape().getY() + playerSpeed * delta);
-            player.getPrimaryWeapon().setY(player.getShape().getY() + playerSpeed * delta);
-            player.getSecondaryWeapon().setY(player.getShape().getY() + playerSpeed * delta);
+            primaryWeapon.setY(primaryWeapon.getShape().getY() + playerSpeed * delta);
+            secondaryWeapon.setY(secondaryWeapon.getShape().getY() + playerSpeed * delta);
         }
         if (input.isKeyDown(Input.KEY_A) && player.getShape().getX() > 0) {
             player.setX(player.getShape().getX() - playerSpeed * delta);
-            player.getPrimaryWeapon().setX(player.getShape().getX() - playerSpeed * delta);
-            player.getSecondaryWeapon().setX(player.getShape().getX() - playerSpeed * delta);
+            primaryWeapon.setX(primaryWeapon.getShape().getX() - playerSpeed * delta);
+            secondaryWeapon.setX(secondaryWeapon.getShape().getX() - playerSpeed * delta);
         }
         if (input.isKeyDown(Input.KEY_D)
                 && player.getShape().getX() < container.getWidth() - player.getShape().getWidth()) {
             player.setX(player.getShape().getX() + playerSpeed * delta);
-            player.getPrimaryWeapon().setX(player.getShape().getX() + playerSpeed * delta);
-            player.getSecondaryWeapon().setX(player.getShape().getX() + playerSpeed * delta);
+            primaryWeapon.setX(primaryWeapon.getShape().getX() + playerSpeed * delta);
+            secondaryWeapon.setX(secondaryWeapon.getShape().getX() + playerSpeed * delta);
         }
         
         // Spielerausrichtung
         float mouseX = input.getMouseX();
         float mouseY = input.getMouseY();
-        float playerX = player.getShape().getCenterX();
-        float playerY = player.getShape().getCenterY();
+        float playerX = player.getShape().getX();
+        float playerY = player.getShape().getY();
         
         Vector2f playerDirection = new Vector2f(mouseX - playerX, mouseY - playerY).normalise();
         
         float playerRotationAngle = (float) Math.toDegrees(Math.atan2(playerDirection.getY(), playerDirection.getX()));
-        player.setRotationAngle(playerRotationAngle);
+        player.setDirection(playerRotationAngle);
 
         
         // Ausgerüstete Waffe lesen
@@ -178,7 +182,7 @@ public class PlayerController {
      * @param g Grafische Darstellung des Spiels durch die Slick2D-Library
      */
     //TODO: Diese Methode in der Main verwenden
-    public void render() {
-        this.player.render();
+    public void render(Graphics g) {
+        this.player.render(g);
     }
 }

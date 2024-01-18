@@ -2,6 +2,7 @@ package Entities;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Shape;
 
 /**
  * Diese abstrakte Klasse gibt vor, wie Waffen im Game aufgebaut sein sollen.
@@ -43,9 +44,10 @@ public abstract class Weapon extends Entity {
      * @param reloadRate Zeit in Frames, bis wann nicht erneut nachgeladen werden kann.
      * @param hasAutomaticFire True = Die Waffe verwendet automatisches Feuer, False = Die Waffe verwendet kein automatisches Feuer 
      */
-    public Weapon(String spriteAsset, float x, float y, float width, float height, float direction, boolean isSecondary, short damagePerBullet, String ammoType, short firerate, double spread,
+    public Weapon(String spriteAsset, float centerX, float centerY, float direction, boolean isSecondary, short damagePerBullet, String ammoType, short firerate, double spread,
             short range, short magazineSize, short bullets, short reloadRate, boolean hasAutomaticFire) throws SlickException {
-        super(spriteAsset, x, y, width, height, direction);
+        // super(spriteAsset, x, y, width, height, direction);
+        super(spriteAsset, centerX, centerY, direction);
         this.isSecondary = isSecondary;
         this.damagePerBullet = damagePerBullet;
         this.ammoType = ammoType;
@@ -340,9 +342,13 @@ public abstract class Weapon extends Entity {
         this.setBullets((short) (this.bullets - 1));
     }
 
-    public void render(float x, float y, float rotationAngle) {
+    /**
+     * Diese Methode stellt die Waffe visuell im Level dar
+     * 
+     * @param rotationAngle Rotation des Trägers der Waffe
+     */
+    public void render(float rotationAngle) {
         this.sprite.setRotation(rotationAngle);
-        this.sprite.draw(this.shape.getCenterX(), this.shape.getCenterY());
+        this.sprite.draw(this.shape.getX(), this.shape.getY());
     }
-
 }

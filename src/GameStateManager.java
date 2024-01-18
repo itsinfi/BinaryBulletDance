@@ -138,7 +138,7 @@ public class GameStateManager extends BasicGame {
         WeaponController.render(g);
 
         //Player rendern
-        playerController.render();
+        playerController.render(g);
 
         //Draw HUD
         g.setFont(font);

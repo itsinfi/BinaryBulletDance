@@ -115,10 +115,10 @@ public class WeaponController {
 
         float mouseX = input.getMouseX();
         float mouseY = input.getMouseY();
-        float bulletX = livingEntity.getShape().getCenterX() + 25;
-        float bulletY = livingEntity.getShape().getCenterY() + 40;
+        float bulletX = livingEntity.getShape().getCenterX();
+        float bulletY = livingEntity.getShape().getCenterY();
         Vector2f bulletDirection = new Vector2f(mouseX - bulletX, mouseY - bulletY).normalise();
-        Bullet bullet = new Bullet(bulletDirection, bulletX, bulletY, livingEntity);
+        Bullet bullet = new Bullet(bulletDirection, livingEntity);
         bullets.add(bullet);
 
         //FireTimer setzen

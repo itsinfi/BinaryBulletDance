@@ -7,8 +7,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-import Entities.Weapon;
-
 /**
  * Diese Klasse stellt den Spieler des Games dar.
  * 
@@ -23,7 +21,6 @@ public class Player extends LivingEntity {
     private Weapon secondaryWeapon;
     private HashMap<String, Short> ammo = new HashMap<String, Short>();
     private short changeEquippedWeaponTimer = 0;
-    private float rotationAngle;
     private Vector2f playerDirection;
 
 
@@ -34,17 +31,14 @@ public class Player extends LivingEntity {
      * 
      * @param playerAsset Pfad zum Image-Asset zur Darstellung der Entität
      * @param container Zur Berechnung der Koordinaten für das "shape"-Attribut
-     * @param equippedWeapon Aktuell ausgerüstete Waffe der Entität
-     * @param primaryWeapon Primärwaffe des Spielers
-     * @param secondaryWeapon Sekundärwaffe des Spielers
      * @throws SlickException falls etwas bei der Erstellung des Sprites oder Shapes nicht klappt.
      */
-    public Player(String playerAsset, GameContainer container, Weapon equippedWeapon, Weapon primaryWeapon,
-            Weapon secondaryWeapon) throws SlickException {
-        super(playerAsset, container.getWidth() / 2 - 16, container.getHeight() / 2 - 16, 32, 32,
-                0 /*TODO: add direction*/, equippedWeapon);
-        this.primaryWeapon = primaryWeapon;
-        this.secondaryWeapon = secondaryWeapon;
+    public Player(String playerAsset, GameContainer container) throws SlickException {
+        
+        //Spieler in der Mitte des Bildschirms spawnen
+        super(playerAsset, container.getWidth() / 2, container.getHeight() / 2, 0);
+
+        //Werte festlegen
         this.maxHitpoints = 100;
         this.hitpoints = 100;
         this.movementSpeed = 0.27f;
@@ -146,12 +140,12 @@ public class Player extends LivingEntity {
      * 
      * @param g Grafische Darstellung des Spiels durch die Slick2D-Library
      */
-    public void render() {
+    public void render(Graphics g) {
         float x = this.shape.getX();
         float y = this.shape.getY();
-    	this.sprite.setRotation(rotationAngle);
+        this.sprite.setRotation(direction);
         this.sprite.draw(x, y);
-        this.getEquippedWeapon().render(rotationAngle, x, y);
+        this.getEquippedWeapon().render(direction);
     }
 
     /**
@@ -214,16 +208,6 @@ public class Player extends LivingEntity {
 
 	public void setPlayerDirection(Vector2f playerDirection) {
 		this.playerDirection = playerDirection;
-	}
-
-
-	public float getRotationAngle() {
-		return rotationAngle;
-	}
-
-
-	public void setRotationAngle(float rotationAngle) {
-		this.rotationAngle = rotationAngle;
 	}
 
 }
