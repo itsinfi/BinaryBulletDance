@@ -100,6 +100,11 @@ public class PlayerController {
             player.setX(player.getShape().getX() + playerSpeed * delta);
         }
         
+        // TODO: DEVELOPER TOOL, REMOVE LATER
+        if (input.isKeyDown(Input.KEY_H)) {
+        	player.takeDamage((short) 1);
+        }
+        
         // Spielerausrichtung
         float mouseX = input.getMouseX();
         float mouseY = input.getMouseY();

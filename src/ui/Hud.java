@@ -23,6 +23,9 @@ public abstract class Hud {
      private static Font awtFont;
      private static TrueTypeFont font;
      
+     private static Font gameOverFont;
+     private static TrueTypeFont gameOverTTF;
+     
     // getter and setter
 	
 	public static InputStream getInputStream() {
@@ -54,6 +57,24 @@ public abstract class Hud {
                 10,
                 container.getHeight() - 40);
         g.drawString("HP: " + player.getHitpoints(), 10, container.getHeight() - 60);
+        
+        // TODO: fix this shit
+        if(PlayerController.getPlayer().getHitpoints() <= 0) {
+        	try {
+        		gameOverFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+            	gameOverFont = gameOverFont.deriveFont(200f);
+            	
+            	gameOverTTF = new TrueTypeFont (gameOverFont, true);
+        	} catch (Exception e) {
+        		e.printStackTrace();
+        	}
+        	
+//        	awtFont = awtFont.deriveFont(20f); // Set the font size
+        	
+        	g.setColor(Color.red);
+        	
+        	g.drawString("You died!", (container.getWidth()-12)/2, container.getHeight()/2);
+        }
 	}
 
 	/**

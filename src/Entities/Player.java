@@ -200,7 +200,9 @@ public class Player extends LivingEntity {
     @Override
     public void die() {
         // TODO: Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'die'");
+    	
+    	
+//        throw new UnsupportedOperationException("Unimplemented method 'die'");
     }
 
 
