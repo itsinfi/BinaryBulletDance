@@ -13,6 +13,7 @@ import Controllers.PlayerController;
 import Entities.LivingEntity;
 import Entities.Player;
 import Level.Level;
+import ui.Hud;
 
 import java.io.InputStream;
 import java.util.HashSet;
@@ -36,7 +37,6 @@ public class GameStateManager extends BasicGame {
     private final float BULLET_SPEED  = 0.69f;//TODO: remove
     private Level mapAsset;
     private PlayerController playerController;//TODO: make static
-    private TrueTypeFont font;
 
 
     //Konstruktoren
@@ -90,15 +90,8 @@ public class GameStateManager extends BasicGame {
         livingEntities.add(playerController.getPlayer());
         mapAsset = new Level("assets/mapTest1.png");
 
-        //Font für die GUI laden
-        try {
-            InputStream inputStream = ResourceLoader.getResourceAsStream("assets/nasalization-rg.ttf");
-            Font awtFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
-            awtFont = awtFont.deriveFont(12f); // Set the font size
-            font = new TrueTypeFont(awtFont, true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //Font für die GUI laden        
+        Hud.init();
     }
 
     /**
@@ -141,20 +134,9 @@ public class GameStateManager extends BasicGame {
         playerController.render(g);
 
         //Draw HUD
-        g.setFont(font);
-        Player player = playerController.getPlayer();
-        g.setColor(player.getEquippedWeapon().getReloadTimer() == 0 ? Color.orange : Color.red);
-        if (player.getChangeEquippedWeaponTimer() != 0) {
-            g.setColor(Color.gray);
-        }
-        g.drawString("Current Ammo: " + player.getEquippedWeapon().getBullets(), 10, container.getHeight() - 20);
-        g.drawString(
-                "Ammo in Inventory: " + (!player.getEquippedWeapon().getInfiniteAmmo()
-                        ? player.getAmmo().get(player.getEquippedWeapon().getAmmoType())
-                        : "unforseeable."),
-                10,
-                container.getHeight() - 40);
-        g.drawString("HP: " + player.getHitpoints(), 10, container.getHeight() - 60);
+        // TODO: remove playerController and container param when both clases were made static
+        Hud.render(g, playerController, container);
+        
     }
     
 }
