@@ -3,6 +3,7 @@ package Level;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.tiled.*;
 
 /**
  * Diese Klasse stellt das Level dar.
@@ -11,41 +12,43 @@ import org.newdawn.slick.SlickException;
  */
 public class Level {
 
+    // Attribute
 
-    //Attribute
+    private String levelPath;
+    private TiledMap tiledLevel;
 
-    private Image mapAsset;
-    
+    // Konstruktoren
 
-    //Konstruktoren
-
-    //TODO:
+    // TODO:
     /**
      * 
-     * @param imagePath
+     * @param levelPath
      * @throws SlickException
      */
-    public Level(String imagePath) throws SlickException {
-        mapAsset = new Image(imagePath);
+    public Level(String levelPath) throws SlickException {
+        this.levelPath = levelPath;
+        try {
+            this.tiledLevel = new TiledMap(levelPath);
+        } catch (SlickException e) {
+            e.printStackTrace();
+            throw new SlickException("Error loading TiledMap: " + levelPath, e);
+        }
     }
 
+    // Getter
 
-    //Getter
+    // Setter
 
+    // Methoden
 
-    //Setter
-    
-
-    //Methoden
-
-    //TODO:
+    // TODO:
     /**
      * 
      * @param g
      * @throws SlickException
      */
     public void render(Graphics g) throws SlickException {
-        mapAsset.draw(0, 0);
+        tiledLevel.render(0, 0);
     }
-    
+
 }

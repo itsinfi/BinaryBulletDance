@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="64" tileheight="64" infinite="1" nextlayerid="2" nextobjectid="1">
+ <editorsettings>
+  <chunksize width="64" height="64"/>
+ </editorsettings>
+ <tileset firstgid="1" source="Tileset01.tsx"/>
+ <layer id="1" name="Kachelebene 1" width="30" height="20">
+  <data encoding="base64" compression="gzip">
+   <chunk x="-64" y="-64" width="64" height="64">
+   H4sIAAAAAAAACu3PwQkAMAgAMXX/oVvBHXyYwA1wEQAAAAAAAAAAAAAAAAAAALCnpqv6PX8PnzEcAQBAAAA=
+  </chunk>
+   <chunk x="0" y="-64" width="64" height="64">
+   H4sIAAAAAAAACu3PQQkAAAgAMbV/aAvoX3CDC3ARAAAAAAAAAAAAAAAAAAAAXFBLX+TQp/8GULf2EgBAAAA=
+  </chunk>
+   <chunk x="-64" y="0" width="64" height="64">
+   H4sIAAAAAAAACu3PsREAMAgDMWD/oZOaBVwg3bn3V900f50+EaRf//X+SZ8AAAAAAAAAAAAAAAAAAIDlAdwPM2cAQAAA
+  </chunk>
+   <chunk x="0" y="0" width="64" height="64">
+   H4sIAAAAAAAACu3PsQ0AMAgEsYf9h6ZHSpsGW7oBrpLUqnPHfvfv/9J/PwIAAAAAAAAAAAAAAAAAAP4bQ+kp6gBAAAA=
+  </chunk>
+  </data>
+ </layer>
+</map>
