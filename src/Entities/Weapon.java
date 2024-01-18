@@ -1,11 +1,11 @@
-package Weapons;
+package Entities;
 
 /**
  * Diese abstrakte Klasse gibt vor, wie Waffen im Game aufgebaut sein sollen.
  * 
  * @author Sascha Angermann
  */
-public class Weapon {
+public abstract class Weapon {
     //TODO: später als abstrakte Oberklasse implementieren
 
     //Attribute
@@ -22,6 +22,7 @@ public class Weapon {
     protected short reloadRate;
     protected short reloadTimer = 0;
     protected boolean hasAutomaticFire;
+    protected boolean hasInfiniteAmmo = false;
 
     //Konstruktoren
 
@@ -41,6 +42,7 @@ public class Weapon {
      */
     public Weapon(boolean isSecondary, short damagePerBullet, String ammoType, short firerate, double spread,
             short range, short magazineSize, short bullets, short reloadRate, boolean hasAutomaticFire) {
+        super();
         this.isSecondary = isSecondary;
         this.damagePerBullet = damagePerBullet;
         this.ammoType = ammoType;
@@ -163,6 +165,15 @@ public class Weapon {
         return fireTimer;
     }
 
+    /**
+     * Diese Methode gibt zurück, ob eine Waffe unendlich Munition besitzt oder nicht
+     * 
+     * @param hasInfiniteAmmo True, falls eine Waffe unendlich Munition haben soll, False, falls nicht
+     */
+    public boolean getInfiniteAmmo() {
+        return hasInfiniteAmmo;
+    }
+
 
     //Setter
 
@@ -272,6 +283,15 @@ public class Weapon {
      */
     public void setFireTimer(short fireTimer) {
         this.fireTimer = fireTimer;
+    }
+
+    /**
+     * Diese Methode legt fest, ob eine Waffe unendlich Munition besitzt oder nicht
+     * 
+     * @param hasInfiniteAmmo True, falls eine Waffe unendlich Munition haben soll, False, falls nicht
+     */
+    public void setInfiniteAmmo(boolean hasInfiniteAmmo) {
+        this.hasInfiniteAmmo = hasInfiniteAmmo;
     }
 
 

@@ -3,7 +3,7 @@ package Entities;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-import Weapons.Weapon;
+import Entities.Weapon;
 
 /**
  * Diese Klasse stellt die Vorgabe für alle lebendigen Entitäten im Game dar, sprich Spieler und Gegner

@@ -11,7 +11,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 import Entities.Bullet;
 import Entities.LivingEntity;
-import Weapons.Weapon;
+import Entities.Weapon;
 
 /**
  * Diese Klasse verwaltet alle Waffen im Game.

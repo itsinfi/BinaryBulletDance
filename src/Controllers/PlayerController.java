@@ -6,7 +6,9 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 import Entities.Player;
-import Weapons.Weapon;
+import Entities.Weapons.Primary;
+import Entities.Weapons.Secondary;
+import Entities.Weapon;
 
 import java.util.HashMap;
 
@@ -36,19 +38,11 @@ public class PlayerController {
     public PlayerController(GameContainer container) throws SlickException {
 
         //Primärwaffe des Spielers erzeugen
-        Weapon primary = new Weapon(false, (short) 30, "PRIMARY", (short) 5, 0.0, (short) 200, (short) 30,
-                (short) 30, (short) 120, true);
-
+        Weapon primary = (Weapon) new Primary();
+        
         //Sekundärwaffe des Spielers erzeugen
-        Weapon secondary = new Weapon(true, (short) 30, "SECONDARY", (short) 15, 0.0, (short) 200, (short) 15,
-                (short) 15, (short) 60, false);
-        
-        //Primärwaffe dem WeaponController übergeben
-        WeaponController.addWeapon(primary);
+        Weapon secondary = (Weapon) new Secondary();
 
-        //Sekundärwaffe dem WeaponController übergeben
-        WeaponController.addWeapon(secondary);
-        
         //Spieler erzeugen
         player = new Player("assets/playertest.png", container, primary, primary, secondary);
 
@@ -78,7 +72,6 @@ public class PlayerController {
      * Diese Methode aktualisiert den Spieler und verwaltet die Inputs der Maus und Tastatur im Spiel.
      * 
      * @param input Mouse- und Keyboard-Input
-     * @param playerSpeed //TODO: remove
      * @param delta  Millisekunden seit dem letzten Frame
      * @param container GameContainer des Games
      */

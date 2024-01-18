@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import org.newdawn.slick.SlickException;
 
-import Weapons.Weapon;
+import Entities.Weapon;
 
 public class Enemy extends LivingEntity{
 

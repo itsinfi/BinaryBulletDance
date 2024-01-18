@@ -5,13 +5,18 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.util.ResourceLoader;
 
 import Controllers.WeaponController;
 import Controllers.PlayerController;
 import Entities.LivingEntity;
 import Entities.Player;
 import Level.Level;
+
+import java.io.InputStream;
 import java.util.HashSet;
+import java.awt.Font;
 
 /**
  * Diese Klasse verwaltet den Spielzustand und steuert den Ablauf des Spiels.
@@ -31,6 +36,7 @@ public class GameStateManager extends BasicGame {
     private final float BULLET_SPEED  = 0.69f;//TODO: remove
     private Level mapAsset;
     private PlayerController playerController;//TODO: make static
+    private TrueTypeFont font;
 
 
     //Konstruktoren
@@ -49,7 +55,7 @@ public class GameStateManager extends BasicGame {
 
 
     //Setter
-
+ 
 
     //Methoden
 
@@ -83,6 +89,16 @@ public class GameStateManager extends BasicGame {
         playerController = new PlayerController(container);
         livingEntities.add(playerController.getPlayer());
         mapAsset = new Level("assets/mapTest1.png");
+
+        //Font für die GUI laden
+        try {
+            InputStream inputStream = ResourceLoader.getResourceAsStream("assets/nasalization-rg.ttf");
+            Font awtFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+            awtFont = awtFont.deriveFont(12f); // Set the font size
+            font = new TrueTypeFont(awtFont, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -125,13 +141,18 @@ public class GameStateManager extends BasicGame {
         playerController.render(g);
 
         //Draw HUD
+        g.setFont(font);
         Player player = playerController.getPlayer();
         g.setColor(player.getEquippedWeapon().getReloadTimer() == 0 ? Color.orange : Color.red);
         if (player.getChangeEquippedWeaponTimer() != 0) {
             g.setColor(Color.gray);
         }
         g.drawString("Current Ammo: " + player.getEquippedWeapon().getBullets(), 10, container.getHeight() - 20);
-        g.drawString("Ammo in Inventory: " + player.getAmmo().get(player.getEquippedWeapon().getAmmoType()), 10,
+        g.drawString(
+                "Ammo in Inventory: " + (!player.getEquippedWeapon().getInfiniteAmmo()
+                        ? player.getAmmo().get(player.getEquippedWeapon().getAmmoType())
+                        : "unforseeable."),
+                10,
                 container.getHeight() - 40);
         g.drawString("HP: " + player.getHitpoints(), 10, container.getHeight() - 60);
     }

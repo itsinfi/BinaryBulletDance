@@ -6,7 +6,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-import Weapons.Weapon;
+import Entities.Weapon;
 
 /**
  * Diese Klasse stellt den Spieler des Games dar.
@@ -152,6 +152,12 @@ public class Player extends LivingEntity {
      */
     @Override
     public void reload() {
+
+        //Falls Munition unendlich ist, einfach das Magazin voll machen
+        if (this.equippedWeapon.getInfiniteAmmo()) {
+            this.equippedWeapon.reload((short) (this.equippedWeapon.getMagazineSize() - this.equippedWeapon.getBullets()));
+        }
+
         //Munitionstyp der Waffe abfragen
         String ammoTypeString = this.equippedWeapon.getAmmoType();
 
