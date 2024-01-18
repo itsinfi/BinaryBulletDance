@@ -4,6 +4,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 
 import Entities.Player;
 import Weapons.Weapon;
@@ -72,7 +73,7 @@ public class PlayerController {
     }
 
 
-    //Methoden
+    //Methodenb
 
     /**
      * Diese Methode aktualisiert den Spieler und verwaltet die Inputs der Maus und Tastatur im Spiel.
@@ -107,7 +108,19 @@ public class PlayerController {
                 && player.getShape().getX() < container.getWidth() - player.getShape().getWidth()) {
             player.setX(player.getShape().getX() + playerSpeed * delta);
         }
+        
+        // Spielerausrichtung
+        float mouseX = input.getMouseX();
+        float mouseY = input.getMouseY();
+        float playerX = player.getShape().getCenterX();
+        float playerY = player.getShape().getCenterY();
+        
+        Vector2f playerDirection = new Vector2f(mouseX - playerX, mouseY - playerY).normalise();
+        
+        float playerRotationAngle = (float) Math.toDegrees(Math.atan2(playerDirection.getY(), playerDirection.getX()));
+        player.setRotationAngle(playerRotationAngle);
 
+        
         // Ausgerüstete Waffe lesen
         Weapon equippedWeapon = player.getEquippedWeapon();
 

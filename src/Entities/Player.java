@@ -2,6 +2,7 @@ package Entities;
 
 import java.util.HashMap;
 
+import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -22,6 +23,8 @@ public class Player extends LivingEntity {
     private Weapon secondaryWeapon;
     private HashMap<String, Short> ammo = new HashMap<String, Short>();
     private short changeEquippedWeaponTimer = 0;
+    private float rotationAngle;
+    private Vector2f playerDirection;
 
 
     //Konstruktoren
@@ -144,6 +147,7 @@ public class Player extends LivingEntity {
      * @param g Grafische Darstellung des Spiels durch die Slick2D-Library
      */
     public void render(Graphics g) {
+    	this.sprite.setRotation(rotationAngle);
         this.sprite.draw(this.shape.getCenterX(), this.shape.getCenterY());
     }
 
@@ -192,5 +196,25 @@ public class Player extends LivingEntity {
         // TODO: Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'die'");
     }
+
+
+	public Vector2f getPlayerDirection() {
+		return playerDirection;
+	}
+
+
+	public void setPlayerDirection(Vector2f playerDirection) {
+		this.playerDirection = playerDirection;
+	}
+
+
+	public float getRotationAngle() {
+		return rotationAngle;
+	}
+
+
+	public void setRotationAngle(float rotationAngle) {
+		this.rotationAngle = rotationAngle;
+	}
 
 }
