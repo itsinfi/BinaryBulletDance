@@ -161,7 +161,7 @@ public abstract class LivingEntity extends Entity {
      * 
      * @param g Grafische Darstellung des Spiels durch die Slick2D-Library
      */
-    public abstract void render(Graphics g);
+    public abstract void render();
 
     /**
      * Diese Methode lädt die aktuell ausgerüstete Waffe der lebendigen Entität nach.

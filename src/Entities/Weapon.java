@@ -1,11 +1,14 @@
 package Entities;
 
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
+
 /**
  * Diese abstrakte Klasse gibt vor, wie Waffen im Game aufgebaut sein sollen.
  * 
  * @author Sascha Angermann
  */
-public abstract class Weapon {
+public abstract class Weapon extends Entity {
     //TODO: später als abstrakte Oberklasse implementieren
 
     //Attribute
@@ -40,9 +43,9 @@ public abstract class Weapon {
      * @param reloadRate Zeit in Frames, bis wann nicht erneut nachgeladen werden kann.
      * @param hasAutomaticFire True = Die Waffe verwendet automatisches Feuer, False = Die Waffe verwendet kein automatisches Feuer 
      */
-    public Weapon(boolean isSecondary, short damagePerBullet, String ammoType, short firerate, double spread,
-            short range, short magazineSize, short bullets, short reloadRate, boolean hasAutomaticFire) {
-        super();
+    public Weapon(String spriteAsset, float x, float y, float width, float height, float direction, boolean isSecondary, short damagePerBullet, String ammoType, short firerate, double spread,
+            short range, short magazineSize, short bullets, short reloadRate, boolean hasAutomaticFire) throws SlickException {
+        super(spriteAsset, x, y, width, height, direction);
         this.isSecondary = isSecondary;
         this.damagePerBullet = damagePerBullet;
         this.ammoType = ammoType;
@@ -335,6 +338,11 @@ public abstract class Weapon {
 
         //Munition updaten
         this.setBullets((short) (this.bullets - 1));
+    }
+
+    public void render(float x, float y, float rotationAngle) {
+        this.sprite.setRotation(rotationAngle);
+        this.sprite.draw(this.shape.getCenterX(), this.shape.getCenterY());
     }
 
 }

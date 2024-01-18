@@ -146,9 +146,12 @@ public class Player extends LivingEntity {
      * 
      * @param g Grafische Darstellung des Spiels durch die Slick2D-Library
      */
-    public void render(Graphics g) {
+    public void render() {
+        float x = this.shape.getX();
+        float y = this.shape.getY();
     	this.sprite.setRotation(rotationAngle);
-        this.sprite.draw(this.shape.getCenterX(), this.shape.getCenterY());
+        this.sprite.draw(x, y);
+        this.getEquippedWeapon().render(rotationAngle, x, y);
     }
 
     /**

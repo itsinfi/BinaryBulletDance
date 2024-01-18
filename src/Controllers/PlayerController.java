@@ -6,6 +6,8 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
+import Entities.Entity;
+import Entities.LivingEntity;
 import Entities.Player;
 import Entities.Weapons.Primary;
 import Entities.Weapons.Secondary;
@@ -37,12 +39,12 @@ public class PlayerController {
     //TODO: alle Methoden und Attribute static machen
     //TODO: Spieler aus GameStateManager entfernen
     public PlayerController(GameContainer container) throws SlickException {
-
+        System.out.println(player instanceof Entity);
         //Primärwaffe des Spielers erzeugen
-        Weapon primary = (Weapon) new Primary();
+        Weapon primary = (Weapon) new Primary(container);//TODO: zu living entity austauschen
         
         //Sekundärwaffe des Spielers erzeugen
-        Weapon secondary = (Weapon) new Secondary();
+        Weapon secondary = (Weapon) new Secondary(container); //TODO: zu living entity austauschen
 
         //Spieler erzeugen
         player = new Player("assets/playertest.png", container, primary, primary, secondary);
@@ -84,22 +86,30 @@ public class PlayerController {
             player.setChangeEquippedWeaponTimer(--changeEquippedWeaponTimer);
         }
 
-        // Spielerbewegung
+        // Spielerbewegung (+ Waffen des Spielers)
         float playerSpeed = player.getMovementSpeed();
 
         if (input.isKeyDown(Input.KEY_W) && player.getShape().getY() > 0) {
             player.setY(player.getShape().getY() - playerSpeed * delta);
+            player.getPrimaryWeapon().setY(player.getShape().getY() - playerSpeed * delta);
+            player.getSecondaryWeapon().setY(player.getShape().getY() - playerSpeed * delta);
         }
         if (input.isKeyDown(Input.KEY_S)
                 && player.getShape().getY() < container.getHeight() - player.getShape().getHeight()) {
             player.setY(player.getShape().getY() + playerSpeed * delta);
+            player.getPrimaryWeapon().setY(player.getShape().getY() + playerSpeed * delta);
+            player.getSecondaryWeapon().setY(player.getShape().getY() + playerSpeed * delta);
         }
         if (input.isKeyDown(Input.KEY_A) && player.getShape().getX() > 0) {
             player.setX(player.getShape().getX() - playerSpeed * delta);
+            player.getPrimaryWeapon().setX(player.getShape().getX() - playerSpeed * delta);
+            player.getSecondaryWeapon().setX(player.getShape().getX() - playerSpeed * delta);
         }
         if (input.isKeyDown(Input.KEY_D)
                 && player.getShape().getX() < container.getWidth() - player.getShape().getWidth()) {
             player.setX(player.getShape().getX() + playerSpeed * delta);
+            player.getPrimaryWeapon().setX(player.getShape().getX() + playerSpeed * delta);
+            player.getSecondaryWeapon().setX(player.getShape().getX() + playerSpeed * delta);
         }
         
         // Spielerausrichtung
@@ -160,7 +170,6 @@ public class PlayerController {
         } else if (equippedWeapon.getReloadTimer() == 1) {
             player.reload();
         }
-
     }
     
     /**
@@ -169,8 +178,7 @@ public class PlayerController {
      * @param g Grafische Darstellung des Spiels durch die Slick2D-Library
      */
     //TODO: Diese Methode in der Main verwenden
-    public void render(Graphics g) {
-        this.player.render(g);
+    public void render() {
+        this.player.render();
     }
-    
 }
