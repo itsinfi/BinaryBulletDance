@@ -28,7 +28,7 @@ public class Primary extends Weapon {
         //Primärwaffe  erzeugen
         super("assets/demoPrimary.png", livingEntity.getShape().getCenterX(), livingEntity.getShape().getCenterY(), livingEntity.getDirection(),
                 false, (short) 30, "PRIMARY", (short) 5, 0.0, (short) 200, (short) 30,
-                (short) 30, (short) 120, true);
+                (short) 30, (short) 120, true, 20, 12, 50, 15);
 
         //Primärwaffe dem WeaponController übergeben
         WeaponController.addWeapon((Weapon) this);

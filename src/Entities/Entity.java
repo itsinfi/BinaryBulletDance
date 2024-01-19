@@ -123,7 +123,7 @@ public abstract class Entity {
     }
 
     /**
-     * Diese Methode setzt die y-Koordinate des shape-Attributs der Entität auf einen neuen Wert.
+     * Diese Methode setzt die x-Koordinate des shape-Attributs der Entität auf einen neuen Wert.
      * 
      * @param x x-Koordinate der neuen Position
      */

@@ -1,8 +1,8 @@
 package Entities;
 
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Shape;
+
+import Entities.Animations.BulletFireAnimation;
 
 /**
  * Diese abstrakte Klasse gibt vor, wie Waffen im Game aufgebaut sein sollen.
@@ -27,6 +27,11 @@ public abstract class Weapon extends Entity {
     protected short reloadTimer = 0;
     protected boolean hasAutomaticFire;
     protected boolean hasInfiniteAmmo = false;
+    protected float offsetX;
+    protected float offsetY;
+    protected BulletFireAnimation bulletFire;
+    protected float bulletFireOffsetX;
+    protected float bulletFireOffsetY;
 
     //Konstruktoren
 
@@ -42,12 +47,24 @@ public abstract class Weapon extends Entity {
      * @param magazineSize Größe eines vollen Magazins
      * @param bullets Anzahl der aktuell innerhalb der Waffe geladenen Menge an Munition
      * @param reloadRate Zeit in Frames, bis wann nicht erneut nachgeladen werden kann.
-     * @param hasAutomaticFire True = Die Waffe verwendet automatisches Feuer, False = Die Waffe verwendet kein automatisches Feuer 
+     * @param hasAutomaticFire True = Die Waffe verwendet automatisches Feuer, False = Die Waffe verwendet kein automatisches Feuer
+     * @param offsetX Anzahl an Pixel, um welche die Waffe horizontal (wenn man nach rechts schaut) versetzt zum Träger der Waffe gerendert werden soll
+     * @param offsetY Anzahl an Pixel, um welche die Waffe vertikal (wenn man nach rechts schaut) versetzt zum Träger der Waffe gerendert werden soll
+     * @param bulletFireOffsetX Anzahl an Pixel, um welche das Schussfeuer horizontal (wenn man nach rechts schaut) versetzt zum Träger der Waffe gerendert werden soll
+     * @param bulletFireOffsetY Anzahl an Pixel, um welche das Schussfeuer vertikal (wenn man nach rechts schaut) versetzt zum Träger der Waffe gerendert werden soll
      */
     public Weapon(String spriteAsset, float centerX, float centerY, float direction, boolean isSecondary, short damagePerBullet, String ammoType, short firerate, double spread,
-            short range, short magazineSize, short bullets, short reloadRate, boolean hasAutomaticFire) throws SlickException {
-        // super(spriteAsset, x, y, width, height, direction);
+            short range, short magazineSize, short bullets, short reloadRate, boolean hasAutomaticFire, float offsetX, float offsetY, float bulletFireOffsetX, float bulletFireOffsetY) throws SlickException {
+        //Entity erzeugen
         super(spriteAsset, centerX, centerY, direction);
+
+        //Schussfeuer erzeugen (zum Rendern des Schussfeuers)
+        this.bulletFire = new BulletFireAnimation(centerX, centerY, direction, bulletFireOffsetX, bulletFireOffsetY);
+        
+        //Image auf der y-Achse spiegeln (Charakter soll Rechtshänder sein)
+        this.sprite = this.sprite.getFlippedCopy(false, true);
+
+        //Werte einfügen
         this.isSecondary = isSecondary;
         this.damagePerBullet = damagePerBullet;
         this.ammoType = ammoType;
@@ -58,6 +75,8 @@ public abstract class Weapon extends Entity {
         this.bullets = bullets;
         this.reloadRate = reloadRate;
         this.hasAutomaticFire = hasAutomaticFire;
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
     }
 
     //Getter
@@ -173,10 +192,37 @@ public abstract class Weapon extends Entity {
     /**
      * Diese Methode gibt zurück, ob eine Waffe unendlich Munition besitzt oder nicht
      * 
-     * @param hasInfiniteAmmo True, falls eine Waffe unendlich Munition haben soll, False, falls nicht
+     * @return hasInfiniteAmmo True, falls eine Waffe unendlich Munition haben soll, False, falls nicht
      */
     public boolean getInfiniteAmmo() {
         return hasInfiniteAmmo;
+    }
+
+    /**
+     * Diese Methode gibt zurück, wie hoch die Verschiebung auf der x-Achse zum Träger der Waffe ist
+     * 
+     * @return Anzahl an Pixel, um welche die Waffe horizontal (wenn man nach rechts schaut) versetzt zum Träger der Waffe gerendert werden soll
+     */
+    public float getOffsetX() {
+        return offsetX;
+    }
+
+    /**
+     * Diese Methode gibt zurück, wie hoch die Verschiebung auf der y-Achse zum Träger der Waffe ist
+     * 
+     * @return Anzahl an Pixel, um welche die Waffe vertikal (wenn man nach rechts schaut) versetzt zum Träger der Waffe gerendert werden soll
+     */
+    public float getOffsetY() {
+        return offsetY;
+    }
+
+    /**
+     * Diese Methode gibt die Animationsklasse für das Schussfeuer zurück
+     * 
+     * @return Animationsklasse für das Schussfeuer
+     */
+    public BulletFireAnimation getBulletFire() {
+        return bulletFire;
     }
 
 
@@ -299,6 +345,16 @@ public abstract class Weapon extends Entity {
         this.hasInfiniteAmmo = hasInfiniteAmmo;
     }
 
+    /**
+     * Diese Methode legt die Blickrichtung der Waffe und dessen Schussfeuers fest
+     * 
+     * @param direction Blickrichtung der Waffe (in Grad)
+     */
+    public void setDirection(float direction) {
+        this.direction = direction;
+        this.bulletFire.setDirection(direction);
+    }
+
 
     //Methoden
 
@@ -332,7 +388,7 @@ public abstract class Weapon extends Entity {
     /**
      * Diese Methode zieht den Abzug der Waffe.
      */
-    public void attack(/*float xPos, float yPos, float direction*/) {
+    public void attack() {
         //Prüfen, ob das Magazin leer ist, die Waffe nachgeladen wird, oder die Zeit zum letzten Schuss zu kurz für die Waffe ist
         if (this.bullets <= 0 || fireTimer != 0 || reloadTimer != 0) {
             System.out.println("Magazin ist leer.");
@@ -340,15 +396,37 @@ public abstract class Weapon extends Entity {
 
         //Munition updaten
         this.setBullets((short) (this.bullets - 1));
+
+        //Schussfeuer animieren
+        this.getBulletFire().animate();
     }
 
     /**
      * Diese Methode stellt die Waffe visuell im Level dar
-     * 
-     * @param rotationAngle Rotation des Trägers der Waffe
      */
-    public void render(float rotationAngle) {
-        this.sprite.setRotation(rotationAngle);
-        this.sprite.draw(this.shape.getX(), this.shape.getY());
+    public void render() {
+
+        //Die Position der Waffe lesen
+        float weaponX = this.shape.getX();
+        float weaponY = this.shape.getY();
+
+        //Den rotierten Offset berechnen (um die Waffe in der Hand darzustellen)
+        float rotatedOffsetX = (float) (this.offsetX * Math.cos(Math.toRadians(direction))
+                - this.offsetY * Math.sin(Math.toRadians(direction)));
+        float rotatedOffsetY = (float) (this.offsetX * Math.sin(Math.toRadians(direction))
+                + this.offsetY * Math.cos(Math.toRadians(direction)));
+
+        //Den rotierten Offset zu den Waffenkoordinaten addieren
+        float x = weaponX + rotatedOffsetX;
+        float y = weaponY + rotatedOffsetY;
+
+        //Rotation hinzufügen
+        this.sprite.setRotation(direction);
+
+        //Sprite rendern
+        this.sprite.draw(x, y);
+
+        //Schussfeuer rendern
+        this.bulletFire.render();
     }
 }

@@ -21,9 +21,9 @@ public class Bullet {
     boolean isShooting = false;
     private Vector2f bulletDirection;
 
-    public Bullet(Vector2f bulletDirection, LivingEntity shootingEntity) {
-        this.xPos = shootingEntity.getShape().getCenterX();
-        this.yPos = shootingEntity.getShape().getCenterY();
+    public Bullet(Vector2f bulletDirection, float bulletX, float bulletY) {
+        this.xPos = bulletX;
+        this.yPos = bulletY;
         this.bulletDirection = bulletDirection;
         isShooting = true;
         this.rotationX = this.xPos;

@@ -27,7 +27,7 @@ public class Secondary extends Weapon {
         //Sekundärwaffe erzeugen
         super("assets/demoSecondary.png", livingEntity.getShape().getCenterX(), livingEntity.getShape().getCenterY(), livingEntity.getDirection(),
                 true, (short) 30, "SECONDARY", (short) 15, 0.0, (short) 200, (short) 15,
-                (short) 15, (short) 60, false);
+                (short) 15, (short) 60, false, 5, 13, 18, 15);
 
         //Einstellen, dass Munition für die Waffe unendlich sein soll.
         this.hasInfiniteAmmo = true;

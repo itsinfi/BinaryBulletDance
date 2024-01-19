@@ -92,33 +92,61 @@ public class WeaponController {
             if (weapon.getReloadTimer() < 0) {
                 weapon.setReloadTimer((short) 0);
             }
+            
+            //Schussfeueranimation updaten
+            weapon.getBulletFire().update();
         } 
     }
 
     public static void render(Graphics g) {
-        Iterator<Bullet> it = bullets.iterator();
-        while (it.hasNext()) {
+        Iterator<Bullet> _it = bullets.iterator();
+        while (_it.hasNext()) {
             try {
-                it.next().drawBullet(g);
+                _it.next().drawBullet(g);
             } catch (SlickException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
+
+        //Schussfeueranimation von jeder Waffe aktualisieren
+        Iterator<Weapon> it = weapons.iterator();
+        while (it.hasNext()) {
+            it.next().getBulletFire().render();
+        }
     }
 
     //TODO: alles vernünftig überarbeiten
-    public static void shoot(Input input, LivingEntity livingEntity) {
-        Weapon weapon = livingEntity.getEquippedWeapon();
-
+    public static void shoot(Input input, Weapon weapon) {
         weapon.attack();
 
         float mouseX = input.getMouseX();
         float mouseY = input.getMouseY();
-        float bulletX = livingEntity.getShape().getCenterX();
-        float bulletY = livingEntity.getShape().getCenterY();
+
+        float direction = weapon.getDirection();
+        float offsetX = weapon.getOffsetX() + (weapon.getAmmoType().equals("PRIMARY") ? 20 : 0);
+        float offsetY = weapon.getOffsetY() + (weapon.getAmmoType().equals("PRIMARY") ? 5 : 0);
+
+        //Die Position der Waffe lesen
+        float weaponX = weapon.getShape().getCenterX();
+        float weaponY = weapon.getShape().getCenterY();
+
+        //Den rotierten Offset berechnen (um die Waffe in der Hand darzustellen)
+        float rotatedOffsetX = (float) (offsetX * Math.cos(Math.toRadians(direction))
+                - offsetY * Math.sin(Math.toRadians(direction)));
+        float rotatedOffsetY = (float) (offsetX * Math.sin(Math.toRadians(direction))
+                + offsetY * Math.cos(Math.toRadians(direction)));
+
+        
+        //Den rotierten Offset zu den Waffenkoordinaten addieren
+        float x = weaponX + rotatedOffsetX;
+        float y = weaponY + rotatedOffsetY;
+
+
+        float bulletX = x;
+        float bulletY = y;
         Vector2f bulletDirection = new Vector2f(mouseX - bulletX, mouseY - bulletY).normalise();
-        Bullet bullet = new Bullet(bulletDirection, livingEntity);
+        Bullet bullet = new Bullet(bulletDirection, bulletX, bulletY);
         bullets.add(bullet);
 
         //FireTimer setzen
