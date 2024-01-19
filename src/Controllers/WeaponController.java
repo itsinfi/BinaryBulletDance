@@ -2,6 +2,7 @@ package Controllers;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Random;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -26,6 +27,7 @@ public class WeaponController {
     // private static HashSet<LivingEntity> livingEntities;
     private static HashSet<Bullet> bullets = new HashSet<Bullet>();//TODO: Zu Weapon Class ersetzen
     private static HashSet<Weapon> weapons = new HashSet<Weapon>();//TODO:
+    private static Random shotAccuracyRandomizer = new Random();
 
     //Konstruktoren
 
@@ -118,11 +120,17 @@ public class WeaponController {
 
     //TODO: alles vernünftig überarbeiten
     public static void shoot(Input input, Weapon weapon) {
+        //Waffe schießen
         weapon.attack();
 
-        float mouseX = input.getMouseX();
-        float mouseY = input.getMouseY();
+        //Zufälligen Wert für die Punktgenauigkeit des Schusses losen
+        float randomAccuracy = shotAccuracyRandomizer.nextFloat() * weapon.getAccuracy();
 
+        //Koordinaten des Mauszeigers auslesen (inkl. dem zufälligen Wert)
+        float mouseX = input.getMouseX() + randomAccuracy;
+        float mouseY = input.getMouseY() + randomAccuracy;
+
+        //asdasdasdqauiwgeoiahdoiuawopuiaiwpudpiquah
         float direction = weapon.getDirection();
         float offsetX = weapon.getOffsetX() + (weapon.getAmmoType().equals("PRIMARY") ? 20 : 0);
         float offsetY = weapon.getOffsetY() + (weapon.getAmmoType().equals("PRIMARY") ? 5 : 0);

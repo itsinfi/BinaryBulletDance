@@ -20,7 +20,7 @@ public abstract class Weapon extends Entity {
     protected String ammoType;
     protected short firerate;
     protected short fireTimer = 0;
-    protected double spread;
+    protected float accuracy;
     protected short range;
     protected short magazineSize;
     protected short bullets;
@@ -45,7 +45,7 @@ public abstract class Weapon extends Entity {
      * @param damagePerBullet Schaden pro Schuss (selbe Einheit wie HP)
      * @param ammoType Bezeichner für den Munitionstyp zur Unterscheidung verschiedener Typen
      * @param firerate Zeit in Frames, bis ein nächster Schuss erlaubt ist
-     * @param spread Faktor um den Genauigkeit der Waffe festzulegen
+     * @param accuracy Faktor um den Genauigkeit der Waffe festzulegen
      * @param range Reichweite eines Schusses der Waffe
      * @param magazineSize Größe eines vollen Magazins
      * @param bullets Anzahl der aktuell innerhalb der Waffe geladenen Menge an Munition
@@ -58,7 +58,7 @@ public abstract class Weapon extends Entity {
      * @param shootSound Sound, der gespielt werden soll, wenn die Waffe schießt
      * @param reloadSound Sound, der gespielt werden soll, wenn die Waffe nachlädt
      */
-    public Weapon(String spriteAsset, float centerX, float centerY, float direction, boolean isSecondary, short damagePerBullet, String ammoType, short firerate, double spread,
+    public Weapon(String spriteAsset, float centerX, float centerY, float direction, boolean isSecondary, short damagePerBullet, String ammoType, short firerate, float accuracy,
             short range, short magazineSize, short bullets, short reloadRate, boolean hasAutomaticFire, float offsetX, float offsetY, float bulletFireOffsetX, float bulletFireOffsetY, Sound shootSound, Sound reloadSound) throws SlickException {
         //Entity erzeugen
         super(spriteAsset, centerX, centerY, direction);
@@ -74,7 +74,7 @@ public abstract class Weapon extends Entity {
         this.damagePerBullet = damagePerBullet;
         this.ammoType = ammoType;
         this.firerate = firerate;
-        this.spread = spread;
+        this.accuracy = accuracy;
         this.range = range;
         this.magazineSize = magazineSize;
         this.bullets = bullets;
@@ -129,8 +129,8 @@ public abstract class Weapon extends Entity {
      * 
      * @return Faktor um den Genauigkeit der Waffe festzulegen
      */
-    public double getSpread() {
-        return spread;
+    public float getAccuracy() {
+        return accuracy;
     }
 
     /**
@@ -276,8 +276,8 @@ public abstract class Weapon extends Entity {
      * 
      * @param spread Faktor um den Genauigkeit der Waffe festzulegen
      */
-    public void setSpread(double spread) {
-        this.spread = spread;
+    public void setAccuracy(float spread) {
+        this.accuracy = spread;
     }
 
     /**
