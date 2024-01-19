@@ -21,13 +21,13 @@ public class Bullet {
     boolean isShooting = false;
     private Vector2f bulletDirection;
 
-    public Bullet(Vector2f bulletDirection, float xPos, float yPos, LivingEntity shootingEntity) {
-        this.xPos = xPos;
-        this.yPos = yPos;
+    public Bullet(Vector2f bulletDirection, float bulletX, float bulletY) {
+        this.xPos = bulletX;
+        this.yPos = bulletY;
         this.bulletDirection = bulletDirection;
         isShooting = true;
-        this.rotationX = shootingEntity.getShape().getCenterX();
-        this.rotationY = shootingEntity.getShape().getCenterY();
+        this.rotationX = this.xPos;
+        this.rotationY = this.yPos;
         this.rotationAngle = (float) Math.toDegrees(Math.atan2(bulletDirection.getY(), bulletDirection.getX()));
         // double angleRadians = bulletDirection.getTheta();
         // if (bulletDirection.getY() < 0) {

@@ -6,10 +6,12 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
+import Entities.LivingEntity;
 import Entities.Player;
 import Entities.Weapons.Primary;
 import Entities.Weapons.Secondary;
 import Entities.Weapon;
+import Entities.Animations.BulletFireAnimation;
 
 import java.util.HashMap;
 
@@ -36,14 +38,17 @@ public class PlayerController {
     //TODO: Spieler aus GameStateManager entfernen
     public static void init(GameContainer container) throws SlickException {
 
+        //Spieler erzeugen
+        player = new Player("assets/playertest_fixed.png", container);
+
         //Primärwaffe des Spielers erzeugen
-        Weapon primary = (Weapon) new Primary();
+        Weapon primary = (Weapon) new Primary((LivingEntity) player);
+        player.setPrimaryWeapon(primary);//TODO: mit addWeapon(Weapon) methode umsetzen!!! um primär und sekundär zu forcen und auto equippen
+        player.setEquippedWeapon(true);//TODO: mit addWeapon(Weapon) methode umsetzen!!! um primär und sekundär zu forcen und auto equippen
         
         //Sekundärwaffe des Spielers erzeugen
-        Weapon secondary = (Weapon) new Secondary();
-
-        //Spieler erzeugen
-        player = new Player("assets/playertest.png", container, primary, primary, secondary);
+        Weapon secondary = (Weapon) new Secondary((LivingEntity) player);
+        player.setSecondaryWeapon(secondary);//TODO: mit addWeapon(Weapon) methode umsetzen!!! um primär und sekundär zu forcen und auto equippen
 
         //Spieler Startmunition geben
         HashMap<String, Short> ammo = new HashMap<String, Short>();
@@ -82,22 +87,42 @@ public class PlayerController {
             player.setChangeEquippedWeaponTimer(--changeEquippedWeaponTimer);
         }
 
-        // Spielerbewegung
+        // Spielerbewegung (+ Waffen des Spielers) TODO: iwann schöner handlen mit bulletFire und und weapon movement updates
         float playerSpeed = player.getMovementSpeed();
+        Weapon primaryWeapon = player.getPrimaryWeapon();
+        Weapon secondaryWeapon = player.getSecondaryWeapon();
+        BulletFireAnimation primaryBulletFire = primaryWeapon.getBulletFire();
+        BulletFireAnimation secondaryBulletFire = secondaryWeapon.getBulletFire();
 
         if (input.isKeyDown(Input.KEY_W) && player.getShape().getY() > 0) {
             player.setY(player.getShape().getY() - playerSpeed * delta);
+            primaryWeapon.setY(primaryWeapon.getShape().getY() - playerSpeed * delta);
+            secondaryWeapon.setY(secondaryWeapon.getShape().getY() - playerSpeed * delta);
+            primaryBulletFire.setY(primaryBulletFire.getShape().getY() - playerSpeed * delta);
+            secondaryBulletFire.setY(secondaryBulletFire.getShape().getY() - playerSpeed * delta);
         }
         if (input.isKeyDown(Input.KEY_S)
                 && player.getShape().getY() < container.getHeight() - player.getShape().getHeight()) {
             player.setY(player.getShape().getY() + playerSpeed * delta);
+            primaryWeapon.setY(primaryWeapon.getShape().getY() + playerSpeed * delta);
+            secondaryWeapon.setY(secondaryWeapon.getShape().getY() + playerSpeed * delta);
+            primaryBulletFire.setY(primaryBulletFire.getShape().getY() + playerSpeed * delta);
+            secondaryBulletFire.setY(secondaryBulletFire.getShape().getY() + playerSpeed * delta);
         }
         if (input.isKeyDown(Input.KEY_A) && player.getShape().getX() > 0) {
             player.setX(player.getShape().getX() - playerSpeed * delta);
+            primaryWeapon.setX(primaryWeapon.getShape().getX() - playerSpeed * delta);
+            secondaryWeapon.setX(secondaryWeapon.getShape().getX() - playerSpeed * delta);
+            primaryBulletFire.setX(primaryBulletFire.getShape().getX() - playerSpeed * delta);
+            secondaryBulletFire.setX(secondaryBulletFire.getShape().getX() - playerSpeed * delta);
         }
         if (input.isKeyDown(Input.KEY_D)
                 && player.getShape().getX() < container.getWidth() - player.getShape().getWidth()) {
             player.setX(player.getShape().getX() + playerSpeed * delta);
+            primaryWeapon.setX(primaryWeapon.getShape().getX() + playerSpeed * delta);
+            secondaryWeapon.setX(secondaryWeapon.getShape().getX() + playerSpeed * delta);
+            primaryBulletFire.setX(primaryBulletFire.getShape().getX() + playerSpeed * delta);
+            secondaryBulletFire.setX(secondaryBulletFire.getShape().getX() + playerSpeed * delta);
         }
         
         // TODO: DEVELOPER TOOL, REMOVE LATER
@@ -108,15 +133,16 @@ public class PlayerController {
         // Spielerausrichtung
         float mouseX = input.getMouseX();
         float mouseY = input.getMouseY();
-        float playerX = player.getShape().getCenterX();
-        float playerY = player.getShape().getCenterY();
-        
-        Vector2f playerDirection = new Vector2f(mouseX - playerX, mouseY - playerY).normalise();
-        
-        float playerRotationAngle = (float) Math.toDegrees(Math.atan2(playerDirection.getY(), playerDirection.getX()));
-        player.setRotationAngle(playerRotationAngle);
+        float playerX = player.getShape().getX();
+        float playerY = player.getShape().getY();
 
-        
+        Vector2f playerDirection = new Vector2f(mouseX - playerX, mouseY - playerY).normalise();
+
+        float playerRotationAngle = (float) Math.toDegrees(Math.atan2(playerDirection.getY(), playerDirection.getX()));
+        player.setDirection(playerRotationAngle);
+        primaryWeapon.setDirection(playerRotationAngle);
+        secondaryWeapon.setDirection(playerRotationAngle);
+
         // Ausgerüstete Waffe lesen
         Weapon equippedWeapon = player.getEquippedWeapon();
 
@@ -126,7 +152,7 @@ public class PlayerController {
                 equippedWeapon.setReloadTimer((short) 0);
                 player.setEquippedWeapon(true);
             }
-            
+
             if (input.isKeyDown(Input.KEY_2) && equippedWeapon != player.getSecondaryWeapon()) {
                 equippedWeapon.setReloadTimer((short) 0);
                 player.setEquippedWeapon(false);
@@ -134,15 +160,16 @@ public class PlayerController {
         }
 
         //Prüfen, ob die Waffe nachgeladen wird oder bereits den nächsten Schuss abgeben darf oder aktuell noch nicht fertig ausgerüstet ist.
-        if (equippedWeapon.getReloadTimer() == 0 && equippedWeapon.getFireTimer() == 0 && player.getChangeEquippedWeaponTimer() == 0) {
+        if (equippedWeapon.getReloadTimer() == 0 && equippedWeapon.getFireTimer() == 0
+                && player.getChangeEquippedWeaponTimer() == 0) {
 
             //Prüfen, ob die Waffe automatisch ist und ob die linke Maustaste gedrückt (bzw. gehalten bei automatisch) wurde
             if ((equippedWeapon.getAutomaticFire() && input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
                     || (!equippedWeapon.getAutomaticFire() && input.isMousePressed(Input.MOUSE_LEFT_BUTTON))) {
-                
+
                 //Waffe schießen
                 if (player.getEquippedWeapon().getBullets() > 0) {
-                    WeaponController.shoot(input, player);
+                    WeaponController.shoot(input, equippedWeapon);
                 }
             }
         }
@@ -158,12 +185,11 @@ public class PlayerController {
                 && equippedWeapon.getBullets() < equippedWeapon.getMagazineSize()) {
             //ReloadTimer starten
             equippedWeapon.setReloadTimer(equippedWeapon.getReloadRate());
-        
-        //Waffe nachladen, sobald der Reload Timer abläuft
+
+            //Waffe nachladen, sobald der Reload Timer abläuft
         } else if (equippedWeapon.getReloadTimer() == 1) {
             player.reload();
         }
-
     }
     
     /**
@@ -175,5 +201,4 @@ public class PlayerController {
     public static void render(Graphics g) {
         player.render(g);
     }
-    
 }

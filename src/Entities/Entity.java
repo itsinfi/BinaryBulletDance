@@ -29,16 +29,27 @@ public abstract class Entity {
      * Die Attribute x, y, width und height werden hierbei verwendet, um ein Shape-Objekt zu erzeugen.
      * 
      * @param spriteAsset Pfad zum Image-Asset zur Darstellung der Entität
-     * @param x x-Koordinate der Position der Entität
-     * @param y y-Koordinate der Position der Entität
-     * @param width Räumliche Breite der Entität
-     * @param height Räumliche Höhe der Entität
+     * @param centerX Zentrale x-Koordinate der Position der Entität
+     * @param centerY Zentrale y-Koordinate der Position der Entität
      * @param direction Blickrichtung der Entität (in Grad)
      * @throws SlickException falls etwas bei der Erstellung des Sprites oder Shapes nicht klappt.
      */
-    public Entity(String spriteAsset, float x, float y, float width, float height, float direction) throws SlickException {
+    public Entity(String spriteAsset, float centerX, float centerY, float direction) throws SlickException {
+        //Sprite laden
         this.sprite = new Image(spriteAsset);
+
+        //Höhe und Breite des Sprites lesen
+        float width = sprite.getWidth();
+        float height = sprite.getHeight();
+
+        //Position der obersten linken Ecke der Shape bestimmen
+        float x = centerX - (width / 2);
+        float y = centerY - (height / 2);
+
+        //Shape erstellen
         this.shape = new Rectangle(x, y, width, height);
+
+        //Direction festlegen
         this.direction = direction;
     }
 
@@ -112,7 +123,7 @@ public abstract class Entity {
     }
 
     /**
-     * Diese Methode setzt die y-Koordinate des shape-Attributs der Entität auf einen neuen Wert.
+     * Diese Methode setzt die x-Koordinate des shape-Attributs der Entität auf einen neuen Wert.
      * 
      * @param x x-Koordinate der neuen Position
      */
@@ -122,12 +133,5 @@ public abstract class Entity {
 
 
     //Methoden
-
-    /**
-     * Diese Methode stellt die Entität visuell dar.
-     * 
-     * @param g Grafische Darstellung des Spiels durch die Slick2D-Library
-     */
-    public abstract void render(Graphics g);
 
 }

@@ -5,6 +5,6 @@ package Entities;
  * 
  * @author Hendrik Gomez
  */
-public class Medkit {
+public class Medkit extends Entity implements Renderable {
     //TODO:
 }
