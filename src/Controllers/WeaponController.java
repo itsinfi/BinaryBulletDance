@@ -142,11 +142,8 @@ public class WeaponController {
         float x = weaponX + rotatedOffsetX;
         float y = weaponY + rotatedOffsetY;
 
-
-        float bulletX = x;
-        float bulletY = y;
-        Vector2f bulletDirection = new Vector2f(mouseX - bulletX, mouseY - bulletY).normalise();
-        Bullet bullet = new Bullet(bulletDirection, bulletX, bulletY);
+        Vector2f bulletDirection = new Vector2f(mouseX - x, mouseY - y).normalise();
+        Bullet bullet = new Bullet(bulletDirection, x, y);
         bullets.add(bullet);
 
         //FireTimer setzen
