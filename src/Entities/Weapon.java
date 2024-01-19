@@ -1,6 +1,7 @@
 package Entities;
 
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 
 import Entities.Animations.BulletFireAnimation;
 
@@ -32,6 +33,8 @@ public abstract class Weapon extends Entity {
     protected BulletFireAnimation bulletFire;
     protected float bulletFireOffsetX;
     protected float bulletFireOffsetY;
+    protected Sound shootSound;
+    protected Sound reloadSound;
 
     //Konstruktoren
 
@@ -52,9 +55,11 @@ public abstract class Weapon extends Entity {
      * @param offsetY Anzahl an Pixel, um welche die Waffe vertikal (wenn man nach rechts schaut) versetzt zum Träger der Waffe gerendert werden soll
      * @param bulletFireOffsetX Anzahl an Pixel, um welche das Schussfeuer horizontal (wenn man nach rechts schaut) versetzt zum Träger der Waffe gerendert werden soll
      * @param bulletFireOffsetY Anzahl an Pixel, um welche das Schussfeuer vertikal (wenn man nach rechts schaut) versetzt zum Träger der Waffe gerendert werden soll
+     * @param shootSound Sound, der gespielt werden soll, wenn die Waffe schießt
+     * @param reloadSound Sound, der gespielt werden soll, wenn die Waffe nachlädt
      */
     public Weapon(String spriteAsset, float centerX, float centerY, float direction, boolean isSecondary, short damagePerBullet, String ammoType, short firerate, double spread,
-            short range, short magazineSize, short bullets, short reloadRate, boolean hasAutomaticFire, float offsetX, float offsetY, float bulletFireOffsetX, float bulletFireOffsetY) throws SlickException {
+            short range, short magazineSize, short bullets, short reloadRate, boolean hasAutomaticFire, float offsetX, float offsetY, float bulletFireOffsetX, float bulletFireOffsetY, Sound shootSound, Sound reloadSound) throws SlickException {
         //Entity erzeugen
         super(spriteAsset, centerX, centerY, direction);
 
@@ -77,6 +82,8 @@ public abstract class Weapon extends Entity {
         this.hasAutomaticFire = hasAutomaticFire;
         this.offsetX = offsetX;
         this.offsetY = offsetY;
+        this.shootSound = shootSound;
+        this.reloadSound = reloadSound;
     }
 
     //Getter
@@ -382,6 +389,9 @@ public abstract class Weapon extends Entity {
 
         //Waffe nachladen
         this.bullets = newBullets;
+
+        //Nachlade-Sound abspielen
+        this.playReloadSound();
     }
 
     //TODO:
@@ -398,7 +408,10 @@ public abstract class Weapon extends Entity {
         this.setBullets((short) (this.bullets - 1));
 
         //Schussfeuer animieren
-        this.getBulletFire().animate();
+        this.bulletFire.animate();
+
+        //Schuss-Sound abspielen
+        this.playShootSound();
     }
 
     /**
@@ -428,5 +441,23 @@ public abstract class Weapon extends Entity {
 
         //Schussfeuer rendern
         this.bulletFire.render();
+    }
+
+    /**
+     * Diese Methode spielt den Schuss-Sound der Waffe ab.
+     */
+    protected void playShootSound() {
+        if (shootSound != null) {
+            shootSound.play();
+        }
+    }
+
+    /**
+     * Diese Methode spielt den Nachlade-Sound der Waffe ab.
+     */
+    protected void playReloadSound() {
+        if (reloadSound != null) {
+            reloadSound.play();
+        }
     }
 }
