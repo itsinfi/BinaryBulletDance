@@ -48,7 +48,7 @@ public class BulletFireAnimation extends Entity implements Animatable {
         this.randomSpriteMirroringModifier = random.nextBoolean();
 
         //Zufällig entscheiden, ob das Sprite gespiegelt werden soll
-        this.randomDirectionModifier = random.nextFloat() * 27;
+        this.randomDirectionModifier = (random.nextFloat() - 0.5f) * 27;
     }
     
     public void update() {

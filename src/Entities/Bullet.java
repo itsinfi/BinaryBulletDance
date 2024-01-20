@@ -15,20 +15,22 @@ public class Bullet {
 
     private float xPos;
     private float yPos;
-    private float rotationX;
-    private float rotationY;
+    private float startX;
+    private float startY;
     private float rotationAngle;
     boolean isShooting = false;
     private Vector2f bulletDirection;
+    private float range;
 
-    public Bullet(Vector2f bulletDirection, float bulletX, float bulletY) {
+    public Bullet(Vector2f bulletDirection, float bulletX, float bulletY, float range) {
         this.xPos = bulletX;
         this.yPos = bulletY;
         this.bulletDirection = bulletDirection;
         isShooting = true;
-        this.rotationX = this.xPos;
-        this.rotationY = this.yPos;
+        this.startX = this.xPos;
+        this.startY = this.yPos;
         this.rotationAngle = (float) Math.toDegrees(Math.atan2(bulletDirection.getY(), bulletDirection.getX()));
+        this.range = range;
         // double angleRadians = bulletDirection.getTheta();
         // if (bulletDirection.getY() < 0) {
         //     angleRadians = 2 * Math.PI - angleRadians;
@@ -42,8 +44,9 @@ public class Bullet {
             xPos += bulletDirection.getX() * bulletSpeed * delta;
             yPos += bulletDirection.getY() * bulletSpeed * delta;
 
-            // Check for bullet collision with the screen boundaries
-            if (xPos < 0 || xPos > container.getWidth() || yPos < 0 || yPos > container.getHeight()) {
+            //Bullet entfernen sobald die maximale Reichweite erreicht wurde
+            Vector2f bulletDistanceVector = new Vector2f(xPos - startX, yPos - startY);
+            if (bulletDistanceVector.length() >= this.range) {
                 isShooting = false;
             }
         }
@@ -58,12 +61,12 @@ public class Bullet {
         return this.bulletDirection;
     }
 
-    public float getRotationX() {
-        return this.rotationX;
+    public float getStartX() {
+        return this.startX;
     }
 
-    public float getRotationY() {
-        return this.rotationY;
+    public float getStartY() {
+        return this.startY;
     }
 
     public float getRotationAngle() {

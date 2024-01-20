@@ -45,7 +45,7 @@ public abstract class Weapon extends Entity {
      * @param damagePerBullet Schaden pro Schuss (selbe Einheit wie HP)
      * @param ammoType Bezeichner für den Munitionstyp zur Unterscheidung verschiedener Typen
      * @param firerate Zeit in Frames, bis ein nächster Schuss erlaubt ist
-     * @param accuracy Faktor um den Genauigkeit der Waffe festzulegen
+     * @param accuracy Präzision der Waffe (Achtung: Wert ist empfindlicher je geringer die Reichweite ist)
      * @param range Reichweite eines Schusses der Waffe
      * @param magazineSize Größe eines vollen Magazins
      * @param bullets Anzahl der aktuell innerhalb der Waffe geladenen Menge an Munition
@@ -127,7 +127,7 @@ public abstract class Weapon extends Entity {
     /**
      * Diese Methode gibt zurück, wie präzise eine Waffe ist.
      * 
-     * @return Faktor um den Genauigkeit der Waffe festzulegen
+     * @return Präzision der Waffe (Achtung: Wert ist empfindlicher je geringer die Reichweite ist)
      */
     public float getAccuracy() {
         return accuracy;
@@ -274,10 +274,10 @@ public abstract class Weapon extends Entity {
     /**
      * Diese Methode legt die Präzision der Waffe fest.
      * 
-     * @param spread Faktor um den Genauigkeit der Waffe festzulegen
+     * @param accuracy Präzision der Waffe (Achtung: Wert ist empfindlicher je geringer die Reichweite ist)
      */
-    public void setAccuracy(float spread) {
-        this.accuracy = spread;
+    public void setAccuracy(float accuracy) {
+        this.accuracy = accuracy;
     }
 
     /**

@@ -64,7 +64,7 @@ public class WeaponController {
             if (bullet.getIsShooting()) {
                 bullet.updateBullet(container, bulletSpeed, delta);
             } else {
-                _it.remove();//ALTER LIVE SAVER SUPER WICHTIG MERKEN YO
+                _it.remove();
             }
         }
 
@@ -119,25 +119,36 @@ public class WeaponController {
     }
 
     //TODO: alles vernünftig überarbeiten
-    public static void shoot(Input input, Weapon weapon) {
+    public static void shoot(Input input, LivingEntity livingEntity) {
+
+        //Waffe auslesen
+        Weapon weapon = livingEntity.getEquippedWeapon();
+
+        //Prüfen, ob überhaupt eine Waffe ausgerüstet ist
+        if (weapon == null) {
+            System.out.println("Keine Waffe zum Schießen gefunden.");
+            return;
+        }
+
         //Waffe schießen
         weapon.attack();
 
-        //Zufälligen Wert für die Punktgenauigkeit des Schusses losen
-        float randomAccuracy = shotAccuracyRandomizer.nextFloat() * weapon.getAccuracy();
+        //Zufällige Werte für die Punktgenauigkeit des Schusses losen
+        float randomAccuracyX = (shotAccuracyRandomizer.nextFloat() - 0.5f) * weapon.getAccuracy();
+        float randomAccuracyY = (shotAccuracyRandomizer.nextFloat() - 0.5f) * weapon.getAccuracy();
 
         //Koordinaten des Mauszeigers auslesen (inkl. dem zufälligen Wert)
-        float mouseX = input.getMouseX() + randomAccuracy;
-        float mouseY = input.getMouseY() + randomAccuracy;
+        float mouseX = input.getMouseX();
+        float mouseY = input.getMouseY();
 
         //asdasdasdqauiwgeoiahdoiuawopuiaiwpudpiquah
         float direction = weapon.getDirection();
         float offsetX = weapon.getOffsetX() + (weapon.getAmmoType().equals("PRIMARY") ? 20 : 0);
         float offsetY = weapon.getOffsetY() + (weapon.getAmmoType().equals("PRIMARY") ? 5 : 0);
 
-        //Die Position der Waffe lesen
-        float weaponX = weapon.getShape().getCenterX();
-        float weaponY = weapon.getShape().getCenterY();
+        //Die Position der lebendigen Entität, die schießt, lesen
+        float livingEntityX = livingEntity.getShape().getCenterX();
+        float livingEntityY = livingEntity.getShape().getCenterY();
 
         //Den rotierten Offset berechnen (um die Waffe in der Hand darzustellen)
         float rotatedOffsetX = (float) (offsetX * Math.cos(Math.toRadians(direction))
@@ -147,11 +158,21 @@ public class WeaponController {
 
         
         //Den rotierten Offset zu den Waffenkoordinaten addieren
-        float x = weaponX + rotatedOffsetX;
-        float y = weaponY + rotatedOffsetY;
+        float x = livingEntityX + rotatedOffsetX;
+        float y = livingEntityY + rotatedOffsetY;
 
-        Vector2f bulletDirection = new Vector2f(mouseX - x, mouseY - y).normalise();
-        Bullet bullet = new Bullet(bulletDirection, x, y);
+        //Vektor in Richtung des Mauszeigers berechnen und Distanz auf die Reichweite der Waffe skalieren
+        Vector2f bulletDirection = new Vector2f(mouseX - x, mouseY - y).normalise().scale(weapon.getRange());
+
+        //Zu den Koordinaten die zufällige Treffergenauigkeit addieren
+        bulletDirection.x += randomAccuracyX;
+        bulletDirection.y += randomAccuracyY;
+
+        //Vektor normalisieren (Länge auf 1 setzen)
+        bulletDirection.normalise();
+
+        //Kugel erstellen
+        Bullet bullet = new Bullet(bulletDirection, x, y, weapon.getRange());
         bullets.add(bullet);
 
         //FireTimer setzen

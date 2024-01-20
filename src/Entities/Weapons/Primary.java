@@ -28,7 +28,7 @@ public class Primary extends Weapon {
 
         //Primärwaffe  erzeugen
         super("assets/demoPrimary.png", livingEntity.getShape().getCenterX(), livingEntity.getShape().getCenterY(),
-                livingEntity.getDirection(), false, (short) 30, "PRIMARY", (short) 5, 42f, (short) 200, (short) 30,
+                livingEntity.getDirection(), false, (short) 30, "PRIMARY", (short) 5, 42f, (short) 2000, (short) 30,
                 (short) 30, (short) 120, true, 20f, 12f, 50f, 15f,
                 new Sound("assets/sounds/primary_shoot.wav"), new Sound("assets/sounds/player_heal.wav"));
 

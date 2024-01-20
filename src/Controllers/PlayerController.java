@@ -169,7 +169,7 @@ public class PlayerController {
 
                 //Waffe schießen
                 if (player.getEquippedWeapon().getBullets() > 0) {
-                    WeaponController.shoot(input, equippedWeapon);
+                    WeaponController.shoot(input, player);
                 }
             }
         }
