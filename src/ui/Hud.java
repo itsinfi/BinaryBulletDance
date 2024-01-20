@@ -58,23 +58,11 @@ public abstract class Hud {
                 container.getHeight() - 40);
         g.drawString("HP: " + player.getHitpoints(), 10, container.getHeight() - 60);
         
-        // TODO: fix this shit
+        // Game Over Screen
         if(PlayerController.getPlayer().getHitpoints() <= 0) {
-        	try {
-        		gameOverFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
-            	gameOverFont = gameOverFont.deriveFont(200f);
-            	
-            	gameOverTTF = new TrueTypeFont (gameOverFont, true);
-        	} catch (Exception e) {
-        		e.printStackTrace();
-        	}
-        	
-//        	awtFont = awtFont.deriveFont(20f); // Set the font size
-        	
-        	g.setColor(Color.red);
-        	
-        	g.drawString("You died!", (container.getWidth()-12)/2, container.getHeight()/2);
+        	gameOverScreen(g, container);
         }
+        
 	}
 
 	/**
@@ -86,11 +74,30 @@ public abstract class Hud {
              Font awtFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
              awtFont = awtFont.deriveFont(12f); // Set the font size
              font = new TrueTypeFont(awtFont, true);
+             
+             gameOverFont = awtFont.deriveFont(50f);
+         	
+             gameOverTTF = new TrueTypeFont (gameOverFont, true);
          } catch (Exception e) {
              e.printStackTrace();
          }
      }
 	
 	// Methods
+
+     /**
+      * Displays a Game Over Screen
+      * @param g for modifying font color
+      * @param container for drawing Strings
+      */
+    public static void gameOverScreen(Graphics g, GameContainer container) {
+        	g.setFont(gameOverTTF);
+        	
+        	g.setColor(Color.red);
+        	
+        	g.drawString("You died!", (container.getWidth()-250)/2, (container.getHeight()-100)/2);
+        	g.drawString("Press E to exit!", (container.getWidth()-350)/2, (container.getHeight()+25)/2);
+    	
+    }
 
 }

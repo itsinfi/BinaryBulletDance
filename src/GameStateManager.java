@@ -105,6 +105,17 @@ public class GameStateManager extends BasicGame {
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
         Input input = container.getInput();
+        Player player = PlayerController.getPlayer();
+        
+        // stop game when player is dead
+    	if (player.getHitpoints()<=0) {
+    		
+    		if (input.isKeyDown(Input.KEY_E)) {
+    			container.exit();
+    		} else {
+    			return;
+    		}
+    	}
 
         //Spieler updaten
         PlayerController.update(input, delta, container);
