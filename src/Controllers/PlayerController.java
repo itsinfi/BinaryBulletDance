@@ -70,7 +70,7 @@ public class PlayerController {
     }
 
 
-    //Methodenb
+    //Methoden
 
     /**
      * Diese Methode aktualisiert den Spieler und verwaltet die Inputs der Maus und Tastatur im Spiel.
@@ -87,7 +87,7 @@ public class PlayerController {
             player.setChangeEquippedWeaponTimer(--changeEquippedWeaponTimer);
         }
 
-        // Spielerbewegung (+ Waffen des Spielers) TODO: iwann schöner handlen mit bulletFire und und weapon movement updates
+        // Spielerbewegung (+ Waffen des Spielers) TODO: iwann schöner handlen mit bulletFire und weapon movement updates
         float playerSpeed = player.getMovementSpeed();
         Weapon primaryWeapon = player.getPrimaryWeapon();
         Weapon secondaryWeapon = player.getSecondaryWeapon();

@@ -3,12 +3,16 @@ package Entities;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-public class sentinelEnemy extends Enemy {
+public class SentinelEnemy extends Enemy {
 	
 	// constructor
-	public sentinelEnemy(String spriteAsset, float centerX, float centerY, float direction) throws SlickException {
+	public SentinelEnemy(String spriteAsset, float centerX, float centerY, float direction) throws SlickException {
 		super(spriteAsset, centerX, centerY, direction);
 	}
+	
+//	public void update() {
+//		alignWithPlayer();
+//	}
 
 	/**
 	 * 
@@ -16,6 +20,10 @@ public class sentinelEnemy extends Enemy {
 	@Override
 	public void render(Graphics g) {
 		// TODO Auto-generated method stub
+		float x = this.shape.getX();
+		float y = this.shape.getY();
+		this.sprite.setRotation(direction);
+		this.sprite.draw(x, y);
 		
 	}
 

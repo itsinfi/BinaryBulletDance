@@ -9,9 +9,13 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.util.ResourceLoader;
 
 import Controllers.WeaponController;
+import Controllers.EnemyController;
 import Controllers.PlayerController;
+import Entities.Enemy;
 import Entities.LivingEntity;
 import Entities.Player;
+import Entities.SentinelEnemy;
+import Entities.SentinelEnemy;
 import Level.Level;
 import ui.Hud;
 
@@ -92,6 +96,10 @@ public class GameStateManager extends BasicGame {
 
         //Font für die GUI laden        
         Hud.init();
+        
+        // temporary enemy
+        SentinelEnemy sentinel = new SentinelEnemy("assets/enemySprites/sentinel.png", 100, 100, 90);
+        EnemyController.addEnemy(sentinel);
     }
 
     /**
@@ -122,6 +130,8 @@ public class GameStateManager extends BasicGame {
 
         //Waffen updaten
         WeaponController.update(input, BULLET_SPEED, delta, container, PlayerController.getPlayer());
+        
+        EnemyController.update(container);
     }
 
     /**
@@ -143,6 +153,8 @@ public class GameStateManager extends BasicGame {
 
         //Player rendern
         PlayerController.render(g);
+        
+        EnemyController.render(g);
 
         //Draw HUD
         Hud.render(g, container);
