@@ -99,7 +99,12 @@ public class GameStateManager extends BasicGame {
         
         // temporary enemy
         SentinelEnemy sentinel = new SentinelEnemy("assets/enemySprites/sentinel.png", 100, 100, 90);
+        SentinelEnemy sentinel2 = new SentinelEnemy("assets/enemySprites/sentinel.png", 200, 200, 90);
+        SentinelEnemy sentinel3 = new SentinelEnemy("assets/enemySprites/sentinel.png", 300, 300, 90);
+
         EnemyController.addEnemy(sentinel);
+        EnemyController.addEnemy(sentinel2);
+        EnemyController.addEnemy(sentinel3);
     }
 
     /**

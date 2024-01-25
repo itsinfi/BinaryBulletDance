@@ -9,11 +9,17 @@ import Entities.Weapon;
 import Controllers.PlayerController;
 
 import java.lang.Math;
+import java.util.random.*;
 
 public abstract class Enemy extends LivingEntity{
+	
+	float targetPosX;
+	float targetPosY;
 
 	public Enemy(String spriteAsset, float centerX, float centerY, float direction) throws SlickException {
 		super(spriteAsset, centerX, centerY, direction);
+		this.targetPosX = this.getShape().getX();
+		this.targetPosY = this.getShape().getY();
 		// TODO Auto-generated constructor stub
 	}
 
@@ -36,78 +42,85 @@ public abstract class Enemy extends LivingEntity{
 	 */
 	
 	public void move(int delta) {
+		
 		float enemyX = this.getShape().getCenterX();
 		float enemyY = this.getShape().getCenterY();
 		
 		float playerX = PlayerController.getPlayer().getShape().getCenterX();
 		float playerY = PlayerController.getPlayer().getShape().getCenterY();
 		
-//		deprecated
-//		float distanceX = enemyX-playerX;
-//		float distanceY = enemyY-playerY;
-//		
-//		System.out.println(distanceX);
-//		System.out.println(distanceY);
+		float distanceX = Math.abs(enemyX-targetPosX);
+		float distanceY = Math.abs(enemyY-targetPosY);
 		
-//		this.setX(this.getShape().getX() - 1);
+		float maxDistance = 10;
+//		float minDistance = 75;
 		
-//		if (distanceX > 100) {
-//			this.setX(this.getShape().getX() - this.movementSpeed * delta);
-////			this.setX(enemyX);
+		if (distanceX < maxDistance) {
+			if (Math.random()<0.5) {
+			this.targetPosX = (float) (playerX + Math.random()*150)+150;
+			} else {
+				this.targetPosX = (float) (playerX - Math.random()*150-150);
+			}
+			
+		}
+		
+		if (distanceY < maxDistance) {
+			if (Math.random()<0.5) {
+				this.targetPosY = (float) (playerY + Math.random()*150)+150;
+				} else {
+					this.targetPosY = (float) (playerY - Math.random()*150-150);
+				}
+		}
+		
+		if (enemyX > targetPosX) {
+			this.setX(this.getShape().getX() - this.movementSpeed * delta);
+		} else if (enemyX < targetPosX) {
+			this.setX(this.getShape().getX() + this.movementSpeed * delta);
+		}
+
+		if (enemyY > targetPosY) {
+			this.setY(this.getShape().getY() - this.movementSpeed * delta);
+		} else if (enemyY < targetPosY) {
+			this.setY(this.getShape().getY() + this.movementSpeed * delta);
+		}
+
+//		float distanceX = Math.abs(enemyX-playerX);
+//		float distanceY = Math.abs(enemyY-playerY);
+//		float maxDistance = 150;
+//		float minDistance = 75;
+//		if (distanceX > maxDistance) {
+//			if (enemyX > playerX) {
+//				this.setX(this.getShape().getX() - this.movementSpeed * delta);
+//			} else if (enemyX < playerX) {
+//				this.setX(this.getShape().getX() + this.movementSpeed * delta);
+//			}
 //			
-//		} else if(distanceX < 100) {
-//			this.setX(this.getShape().getX() + this.movementSpeed * delta);
-////			this.setX(enemyX);
-//		} else if (distanceX == 100) {
-////			this.setX(enemyX);
+//		}
+//		if (distanceY > maxDistance) {
+//			if (enemyY > playerY) {
+//				this.setY(this.getShape().getY() - this.movementSpeed * delta);
+//			} else if (enemyY < playerY) {
+//				this.setY(this.getShape().getY() + this.movementSpeed * delta);
+//			}
+//			
 //		}
 //		
-//		if (distanceY > 100) {
-//				this.setY(enemyY - this.movementSpeed * delta);
-////				this.setY(enemyY + this.movementSpeed * delta);
+//		if (distanceX < minDistance) {
+//			if (enemyX > playerX) {
+//				this.setX(this.getShape().getX() + this.movementSpeed * delta);
+//			} else if (enemyX < playerX) {
+//				this.setX(this.getShape().getX() - this.movementSpeed * delta);
+//			}
+//			
 //		}
-		
-		
-//		previous attempt
-		float distanceX = Math.abs(enemyX-playerX);
-		float distanceY = Math.abs(enemyY-playerY);
-		
-		float maxDistance = 150;
-		float minDistance = 75;
-		
-		if (distanceX > maxDistance) {
-			if (enemyX > playerX) {
-				this.setX(this.getShape().getX() - this.movementSpeed * delta);
-			} else if (enemyX < playerX) {
-				this.setX(this.getShape().getX() + this.movementSpeed * delta);
-			}
-			
-		}
-		if (distanceY > maxDistance) {
-			if (enemyY > playerY) {
-				this.setY(this.getShape().getY() - this.movementSpeed * delta);
-			} else if (enemyY < playerY) {
-				this.setY(this.getShape().getY() + this.movementSpeed * delta);
-			}
-			
-		}
-		
-		if (distanceX < minDistance) {
-			if (enemyX > playerX) {
-				this.setX(this.getShape().getX() + this.movementSpeed * delta);
-			} else if (enemyX < playerX) {
-				this.setX(this.getShape().getX() - this.movementSpeed * delta);
-			}
-			
-		}
-		if (distanceY < minDistance) {
-			if (enemyY > playerY) {
-				this.setY(this.getShape().getY() + this.movementSpeed * delta);
-			} else if (enemyY < playerY) {
-				this.setY(this.getShape().getY() - this.movementSpeed * delta);
-			}
-			
-		}
+//		if (distanceY < minDistance) {
+//			if (enemyY > playerY) {
+//				this.setY(this.getShape().getY() + this.movementSpeed * delta);
+//			} else if (enemyY < playerY) {
+//				this.setY(this.getShape().getY() - this.movementSpeed * delta);
+//			}
+//			
+//		}
 	}
 	
 	/**
