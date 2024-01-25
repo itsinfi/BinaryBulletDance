@@ -177,7 +177,7 @@ public class WeaponController {
         weapon.setFireTimer(weapon.getFirerate());
 
         //Hitscan durchführen
-        hitScan(weapon, bulletLine);
+        hitScan(weapon, bulletLine, livingEntity);
 
         //Bullet Trace Animation erzeugen und der Liste hinzufügen
         BulletTraceAnimation bulletTraceAnimation = new BulletTraceAnimation(bulletLine);
@@ -190,7 +190,7 @@ public class WeaponController {
      * @param weapon Waffe, mit der geschossen wurde
      * @param bulletLine Linie der Schusslaufbahn
      */
-    private static void hitScan(Weapon weapon, Line bulletLine) {
+    private static void hitScan(Weapon weapon, Line bulletLine, LivingEntity shootingEntity) {
 
         //Alle lebendigen Entitäten in einem HashSet abspeichern
         HashSet<LivingEntity> livingEntities = new HashSet<LivingEntity>();
@@ -203,11 +203,11 @@ public class WeaponController {
         //Distanz zum Startpunkt des Schusses speichern, um zu vergleichen, welches Objekt das Nächste ist.
         float nearestDistance = Float.MAX_VALUE;
 
-        //Alle lebendigen Entitäten iterieren, um zu bestimmen, welches getroffen wurde
+        //Alle lebendigen Entitäten iterieren, um zu bestimmen, welches getroffen wurde (schießende Entität hierzu ausschließen, weil Selbstmord ist uncool)
         for (LivingEntity livingEntity : livingEntities) {
             float distance = bulletLine.getStart().distance(new Vector2f(livingEntity.getShape().getCenterX(),
                     livingEntity.getShape().getCenterY()));
-            if (livingEntity.getShape().intersects(bulletLine) && distance < nearestDistance) {
+            if (!livingEntity.equals(shootingEntity) && livingEntity.getShape().intersects(bulletLine) && distance < nearestDistance) {
                 nearestDistance = distance;
                 nearestLivingEntity = livingEntity;
             }
