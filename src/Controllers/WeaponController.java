@@ -8,6 +8,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Vector2f;
 
 import Entities.Bullet;
@@ -137,7 +138,7 @@ public class WeaponController {
         float randomAccuracyX = (shotAccuracyRandomizer.nextFloat() - 0.5f) * weapon.getAccuracy();
         float randomAccuracyY = (shotAccuracyRandomizer.nextFloat() - 0.5f) * weapon.getAccuracy();
 
-        //asdasdasdqauiwgeoiahdoiuawopuiaiwpudpiquah
+        //Richtung und Offset zum Spieler für den Schuss bestimen
         float direction = weapon.getDirection();
         float offsetX = weapon.getOffsetX() + (weapon.getAmmoType().equals("PRIMARY") ? 20 : 0);
         float offsetY = weapon.getOffsetY() + (weapon.getAmmoType().equals("PRIMARY") ? 5 : 0);
@@ -151,7 +152,6 @@ public class WeaponController {
                 - offsetY * Math.sin(Math.toRadians(direction)));
         float rotatedOffsetY = (float) (offsetX * Math.sin(Math.toRadians(direction))
                 + offsetY * Math.cos(Math.toRadians(direction)));
-
         
         //Den rotierten Offset zu den Waffenkoordinaten addieren
         float x = livingEntityX + rotatedOffsetX;
@@ -169,6 +169,11 @@ public class WeaponController {
 
         //Vektor normalisieren (Länge auf 1 setzen)
         bulletDirection.normalise();
+
+        //Linie für die Laufbahn erzeugen
+        float lineX = (float) (weapon.getRange() * Math.cos(Math.toRadians(direction)));
+        float lineY = (float) (weapon.getRange() * Math.sin(Math.toRadians(direction)));
+        Line bulletLine = new Line(x, y, livingEntityX + lineX, livingEntityY + lineY);
 
         //Kugel erstellen
         Bullet bullet = new Bullet(bulletDirection, x, y, weapon.getRange());
