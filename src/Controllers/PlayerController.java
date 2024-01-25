@@ -83,18 +83,18 @@ public class PlayerController {
         // Spielerbewegung
         float playerSpeed = player.getMovementSpeed();
 
-        if (input.isKeyDown(Input.KEY_W) && player.getShape().getY() > 0) {
+        if (input.isKeyDown(Input.KEY_W) /*&& player.getShape().getY() > 0*/) {
             player.setY(player.getShape().getY() - playerSpeed * delta);
         }
         if (input.isKeyDown(Input.KEY_S)
-                && player.getShape().getY() < container.getHeight() - player.getShape().getHeight()) {
+                /*&& player.getShape().getY() < container.getHeight() - player.getShape().getHeight()*/) {
             player.setY(player.getShape().getY() + playerSpeed * delta);
         }
-        if (input.isKeyDown(Input.KEY_A) && player.getShape().getX() > 0) {
+        if (input.isKeyDown(Input.KEY_A) /*&& player.getShape().getX() > 0*/) {
             player.setX(player.getShape().getX() - playerSpeed * delta);
         }
         if (input.isKeyDown(Input.KEY_D)
-                && player.getShape().getX() < container.getWidth() - player.getShape().getWidth()) {
+                /*&& player.getShape().getX() < container.getWidth() - player.getShape().getWidth()*/) {
             player.setX(player.getShape().getX() + playerSpeed * delta);
         }
 
