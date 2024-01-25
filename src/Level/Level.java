@@ -51,4 +51,7 @@ public class Level {
         tiledLevel.render(0, 0);
     }
 
+    public void render(Graphics g, int spawnX, int spawnY) throws SlickException {
+        tiledLevel.render(spawnX, spawnY);
+    }
 }
