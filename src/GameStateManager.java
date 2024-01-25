@@ -1,27 +1,20 @@
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.TrueTypeFont;
-import org.newdawn.slick.util.ResourceLoader;
 
 import Controllers.WeaponController;
 import Controllers.EnemyController;
 import Controllers.PlayerController;
-import Entities.Enemy;
 import Entities.LivingEntity;
 import Entities.Player;
-import Entities.SentinelEnemy;
 import Entities.SentinelEnemy;
 import Level.Level;
 import ui.Hud;
 
-import java.io.InputStream;
 import java.util.HashSet;
-import java.awt.Font;
 
 /**
  * Diese Klasse verwaltet den Spielzustand und steuert den Ablauf des Spiels.
@@ -38,9 +31,7 @@ public class GameStateManager extends BasicGame {
 
     //TODO: Controller static machen und unnötige Werte entfernen
     private HashSet<LivingEntity> livingEntities = new HashSet<LivingEntity>();
-    private final float BULLET_SPEED  = 0.69f;//TODO: remove
     private Level mapAsset;
-    private PlayerController playerController;//TODO: make static
 
 
     //Konstruktoren
@@ -73,7 +64,7 @@ public class GameStateManager extends BasicGame {
         try {
             AppGameContainer app = new AppGameContainer(
                     new GameStateManager("ayo voll krasses game alter check this out!"));
-            app.setIcons(new String[] { "assets/appIcon.png" });
+            app.setIcons(new String[] { "assets/appIcon/appIcon.png" });
             app.setDisplayMode(800, 600, false);
             app.setTargetFrameRate(60);
             app.start();
@@ -129,7 +120,7 @@ public class GameStateManager extends BasicGame {
         PlayerController.update(input, delta, container);
 
         //Waffen updaten
-        WeaponController.update(input, BULLET_SPEED, delta, container, PlayerController.getPlayer());
+        WeaponController.update();
         
         EnemyController.update(container, delta);
     }

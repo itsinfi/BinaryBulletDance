@@ -8,8 +8,8 @@ import org.newdawn.slick.geom.Vector2f;
 
 import Entities.LivingEntity;
 import Entities.Player;
-import Entities.Weapons.Primary;
-import Entities.Weapons.Secondary;
+import Entities.Weapons.AssaultRifle;
+import Entities.Weapons.Pistol;
 import Entities.Weapon;
 import Entities.Animations.BulletFireAnimation;
 
@@ -42,12 +42,12 @@ public class PlayerController {
         player = new Player("assets/playertest_fixed.png", container);
 
         //Primärwaffe des Spielers erzeugen
-        Weapon primary = (Weapon) new Primary((LivingEntity) player);
+        Weapon primary = (Weapon) new AssaultRifle((LivingEntity) player);
         player.setPrimaryWeapon(primary);//TODO: mit addWeapon(Weapon) methode umsetzen!!! um primär und sekundär zu forcen und auto equippen
         player.setEquippedWeapon(true);//TODO: mit addWeapon(Weapon) methode umsetzen!!! um primär und sekundär zu forcen und auto equippen
         
         //Sekundärwaffe des Spielers erzeugen
-        Weapon secondary = (Weapon) new Secondary((LivingEntity) player);
+        Weapon secondary = (Weapon) new Pistol((LivingEntity) player);
         player.setSecondaryWeapon(secondary);//TODO: mit addWeapon(Weapon) methode umsetzen!!! um primär und sekundär zu forcen und auto equippen
 
         //Spieler Startmunition geben
@@ -140,7 +140,7 @@ public class PlayerController {
         Vector2f playerDirection = new Vector2f(mouseX - playerX, mouseY - playerY);
 
         //Prüfen, ob die Distanz den Mindestwert überschreitet (um zu verhindern, dass der Spieler z.B. sich selbst treffen kann)
-        if (playerDirection.length() > 70) {
+        if (playerDirection.length() > 50) {
 
             //Richtungsvektor normalisieren (Länge auf 1 setzen)
             playerDirection = playerDirection.normalise();

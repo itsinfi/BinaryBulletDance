@@ -32,7 +32,7 @@ public class BulletFireAnimation extends Entity implements Animatable {
 
     public BulletFireAnimation(float centerX, float centerY, float direction, float offsetX, float offsetY)
             throws SlickException {
-        super("assets/bulletFire.png", centerX, centerY, direction);
+        super("assets/weaponSprites/bulletFire.png", centerX, centerY, direction);
         this.offsetX = offsetX;
         this.offsetY = offsetY;
         this.random = new Random();

@@ -74,7 +74,7 @@ public class Bullet {
     }
 
     public void drawBullet(Graphics g) throws SlickException {
-        Image bulletAsset = new Image("assets/bullet.png");
+        Image bulletAsset = new Image("assets/weaponSprites/bullet.png");
         bulletAsset.rotate(this.getRotationAngle());
         bulletAsset.draw(xPos, yPos);
 

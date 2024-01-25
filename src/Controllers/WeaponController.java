@@ -24,20 +24,23 @@ public class WeaponController {
 
     //Attribute
 
-    // private static HashSet<LivingEntity> livingEntities;
     private static HashSet<BulletTraceAnimation> bulletTraces = new HashSet<BulletTraceAnimation>();
     private static HashSet<Weapon> weapons = new HashSet<Weapon>();//TODO:
     private static Random shotAccuracyRandomizer = new Random();
 
     //Konstruktoren
 
-    //TODO: Konstruktor updaten + Annotationen hinzufügen
-    // public WeaponController(HashSet<LivingEntity> livingEntities) {
-    //     this.livingEntities = livingEntities;
-    // }
-
     
     //Getter
+
+    /**
+     * Diese Methode gibt alle aktuell im Spiel vorhandenen Waffen aus
+     * 
+     * @return Liste aller im Spiel vorhandenen Waffen
+     */
+    public static HashSet<Weapon> getWeapons() {
+        return weapons;
+    }
     
 
     //Setter
@@ -45,17 +48,28 @@ public class WeaponController {
 
     //Methoden
 
+    /**
+     * Diese Methode fügt eine Waffe in die Liste aller Waffen hinzu
+     * 
+     * @param weapon Waffe, welche hinzugefügt werden soll
+     */
     public static void addWeapon(Weapon weapon) {
         weapons.add(weapon);
     }
 
+    /**
+     * Diese Methode entfernt eine Waffe aus der Liste aller Waffen
+     * 
+     * @param weapon Waffe, welche entfernt werden soll
+     */
     public static void removeWeapon(Weapon weapon) {
         weapons.remove(weapon);
     }
 
-    //TODO: Methoden updaten nach UML + Annotationen hinzufügen
-    public static void update(Input input, float bulletSpeed, int delta, GameContainer container,
-            LivingEntity livingEntity) {
+    /**
+     * Diese Methode updated alle Waffen und ihre zugehörigen Animationen
+     */
+    public static void update() {
 
         //Alle Waffen durchiterieren
         Iterator<Weapon> it = weapons.iterator();
@@ -74,20 +88,11 @@ public class WeaponController {
                 weapon.setFireTimer(--fireTimer);
             }
 
-            //TODO: Entscheidung: Brauchen wir das? Oder ist es too much?
-            if (weapon.getFireTimer() < 0) {
-                weapon.setFireTimer((short) 0);
-            }
-
-            //TODO: Entscheidung: Brauchen wir das? Oder ist es too much?
-            if (weapon.getReloadTimer() < 0) {
-                weapon.setReloadTimer((short) 0);
-            }
-
             //Schussfeueranimation updaten
             weapon.getBulletFire().update();
         }
-        
+
+        //TODO: Kommentar
         Iterator<BulletTraceAnimation> btaIterator = bulletTraces.iterator();
         while (btaIterator.hasNext()) {
             BulletTraceAnimation bulletTraceAnimation = btaIterator.next();
@@ -100,6 +105,11 @@ public class WeaponController {
         }
     }
 
+    /**
+     * Diese Methode rendert alle Waffen und ihre zugehörigen Animationen
+     * 
+     * @param g Grafische Darstellung des Spiels durch die Slick2D-Library
+     */
     public static void render(Graphics g) {
 
         //Schussfeueranimation von jeder Waffe aktualisieren
@@ -118,6 +128,11 @@ public class WeaponController {
         }
     }
 
+    /**
+     * Diese Methode führt alle nötigen Operationen durch, um eine Waffe zu schießen
+     * 
+     * @param livingEntity
+     */
     public static void shoot(LivingEntity livingEntity) {
 
         //Waffe auslesen
@@ -203,11 +218,18 @@ public class WeaponController {
         //Distanz zum Startpunkt des Schusses speichern, um zu vergleichen, welches Objekt das Nächste ist.
         float nearestDistance = Float.MAX_VALUE;
 
-        //Alle lebendigen Entitäten iterieren, um zu bestimmen, welches getroffen wurde (schießende Entität hierzu ausschließen, weil Selbstmord ist uncool)
+        //Alle lebendigen Entitäten iterieren, um zu bestimmen, welches getroffen wurde
         for (LivingEntity livingEntity : livingEntities) {
+            
+            //(schießende Entität hierzu ausschließen, weil Selbstmord ist uncool)
+            if (livingEntity.equals(shootingEntity)) {
+                continue;
+            }
+            
+            //Überprüfung der Distanz und als nächste Entität setzen
             float distance = bulletLine.getStart().distance(new Vector2f(livingEntity.getShape().getCenterX(),
                     livingEntity.getShape().getCenterY()));
-            if (!livingEntity.equals(shootingEntity) && livingEntity.getShape().intersects(bulletLine) && distance < nearestDistance) {
+            if (livingEntity.getShape().intersects(bulletLine) && distance < nearestDistance) {
                 nearestDistance = distance;
                 nearestLivingEntity = livingEntity;
             }
