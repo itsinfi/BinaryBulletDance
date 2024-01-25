@@ -13,7 +13,7 @@ import Entities.Weapon;
  * 
  * @author Sascha Angermann
  */
-public class Secondary extends Weapon {
+public class Pistol extends Weapon {
 
     //Attribute
 
@@ -23,10 +23,10 @@ public class Secondary extends Weapon {
     /**
      * Diese Methode erstellt eine Sekundärwaffe
      */
-    public Secondary(LivingEntity livingEntity) throws SlickException {
+    public Pistol(LivingEntity livingEntity) throws SlickException {
 
         //Sekundärwaffe erzeugen
-        super("assets/demoSecondary.png", livingEntity.getShape().getCenterX(), livingEntity.getShape().getCenterY(),
+        super("assets/weaponSprites/pistol.png", livingEntity.getShape().getCenterX(), livingEntity.getShape().getCenterY(),
                 livingEntity.getDirection(), true, (short) 30, "SECONDARY", (short) 15, 100f,
                 (short) 500, (short) 15, (short) 15, (short) 60, false, 5f, 13f, 18f, 15f,
                 new Sound("assets/sounds/secondary_shoot.wav"), new Sound("assets/sounds/player_heal.wav"));

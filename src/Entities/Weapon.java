@@ -400,8 +400,19 @@ public abstract class Weapon extends Entity {
      */
     public void attack() {
         //Prüfen, ob das Magazin leer ist, die Waffe nachgeladen wird, oder die Zeit zum letzten Schuss zu kurz für die Waffe ist
-        if (this.bullets <= 0 || fireTimer != 0 || reloadTimer != 0) {
+        if (this.bullets <= 0) {
             System.out.println("Magazin ist leer.");
+            return;
+        }
+
+        if (this.fireTimer != 0 ) {
+            System.out.println("Waffe kann noch nicht geschossen werden.");
+            return;
+        }
+
+        if (this.reloadTimer != 0) {
+            System.out.println("Waffe wird nachgeladen.");
+            return;
         }
 
         //Munition updaten
@@ -438,9 +449,6 @@ public abstract class Weapon extends Entity {
 
         //Sprite rendern
         this.sprite.draw(x, y);
-
-        //Schussfeuer rendern
-        this.bulletFire.render();
     }
 
     /**

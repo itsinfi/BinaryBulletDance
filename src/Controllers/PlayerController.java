@@ -8,8 +8,8 @@ import org.newdawn.slick.geom.Vector2f;
 
 import Entities.LivingEntity;
 import Entities.Player;
-import Entities.Weapons.Primary;
-import Entities.Weapons.Secondary;
+import Entities.Weapons.AssaultRifle;
+import Entities.Weapons.Pistol;
 import Entities.Weapon;
 import Entities.Animations.BulletFireAnimation;
 
@@ -42,12 +42,12 @@ public class PlayerController {
         player = new Player("assets/playertest_fixed.png", container);
 
         //Primärwaffe des Spielers erzeugen
-        Weapon primary = (Weapon) new Primary((LivingEntity) player);
+        Weapon primary = (Weapon) new AssaultRifle((LivingEntity) player);
         player.setPrimaryWeapon(primary);//TODO: mit addWeapon(Weapon) methode umsetzen!!! um primär und sekundär zu forcen und auto equippen
         player.setEquippedWeapon(true);//TODO: mit addWeapon(Weapon) methode umsetzen!!! um primär und sekundär zu forcen und auto equippen
         
         //Sekundärwaffe des Spielers erzeugen
-        Weapon secondary = (Weapon) new Secondary((LivingEntity) player);
+        Weapon secondary = (Weapon) new Pistol((LivingEntity) player);
         player.setSecondaryWeapon(secondary);//TODO: mit addWeapon(Weapon) methode umsetzen!!! um primär und sekundär zu forcen und auto equippen
 
         //Spieler Startmunition geben
@@ -136,12 +136,24 @@ public class PlayerController {
         float playerX = player.getShape().getX();
         float playerY = player.getShape().getY();
 
-        Vector2f playerDirection = new Vector2f(mouseX - playerX, mouseY - playerY).normalise();
+        //Vektor vom Spieler zum Mauszeiger berechnen
+        Vector2f playerDirection = new Vector2f(mouseX - playerX, mouseY - playerY);
 
-        float playerRotationAngle = (float) Math.toDegrees(Math.atan2(playerDirection.getY(), playerDirection.getX()));
-        player.setDirection(playerRotationAngle);
-        primaryWeapon.setDirection(playerRotationAngle);
-        secondaryWeapon.setDirection(playerRotationAngle);
+        //Prüfen, ob die Distanz den Mindestwert überschreitet (um zu verhindern, dass der Spieler z.B. sich selbst treffen kann)
+        if (playerDirection.length() > 50) {
+
+            //Richtungsvektor normalisieren (Länge auf 1 setzen)
+            playerDirection = playerDirection.normalise();
+
+            //Wert in Grad für den Vektor berechnen (um die Sprites zu rotieren)
+            float playerRotationAngle = (float) Math
+                    .toDegrees(Math.atan2(playerDirection.getY(), playerDirection.getX()));
+            
+            //Rotation des Spielers und seiner getragenen Waffen
+            player.setDirection(playerRotationAngle);
+            primaryWeapon.setDirection(playerRotationAngle);
+            secondaryWeapon.setDirection(playerRotationAngle);
+        }
 
         // Ausgerüstete Waffe lesen
         Weapon equippedWeapon = player.getEquippedWeapon();
@@ -169,7 +181,7 @@ public class PlayerController {
 
                 //Waffe schießen
                 if (player.getEquippedWeapon().getBullets() > 0) {
-                    WeaponController.shoot(input, player);
+                    WeaponController.shoot(player);
                 }
             }
         }

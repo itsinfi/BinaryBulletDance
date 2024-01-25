@@ -1,5 +1,7 @@
 package Entities;
 
+import org.newdawn.slick.Graphics;
+
 /**
  * Dieses Interface stellt die Basis für jegliche Animationen des Games dar.
  * 
@@ -20,6 +22,6 @@ public interface Animatable {
     /**
      * Diese Methode soll die Animationsframe darstellen
      */
-    public void render();
+    public void render(Graphics g);
 
 }

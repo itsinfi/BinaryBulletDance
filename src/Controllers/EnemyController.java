@@ -36,6 +36,7 @@ public class EnemyController {
 	public static void render(Graphics g) {
 		for (Enemy enemy : enemies) {
 			enemy.render(g);
+			g.drawString("HP: " + enemy.getHitpoints(), 200, 160);
 		}
 		
 	}

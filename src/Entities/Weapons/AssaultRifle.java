@@ -13,7 +13,7 @@ import Entities.Weapon;
  * 
  * @author Sascha Angermann
  */
-public class Primary extends Weapon {
+public class AssaultRifle extends Weapon {
 
 
     //Attribute
@@ -24,10 +24,10 @@ public class Primary extends Weapon {
     /**
      * Diese Methode erstellt eine Primärwaffe
      */
-    public Primary(LivingEntity livingEntity) throws SlickException {
+    public AssaultRifle(LivingEntity livingEntity) throws SlickException {
 
         //Primärwaffe  erzeugen
-        super("assets/demoPrimary.png", livingEntity.getShape().getCenterX(), livingEntity.getShape().getCenterY(),
+        super("assets/weaponSprites/assaultRifle.png", livingEntity.getShape().getCenterX(), livingEntity.getShape().getCenterY(),
                 livingEntity.getDirection(), false, (short) 30, "PRIMARY", (short) 5, 200f, (short) 600, (short) 30,
                 (short) 30, (short) 120, true, 20f, 12f, 50f, 15f,
                 new Sound("assets/sounds/primary_shoot.wav"), new Sound("assets/sounds/player_heal.wav"));
