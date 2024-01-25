@@ -119,7 +119,7 @@ public class WeaponController {
     }
 
     //TODO: alles vernünftig überarbeiten
-    public static void shoot(Input input, LivingEntity livingEntity) {
+    public static void shoot(LivingEntity livingEntity) {
 
         //Waffe auslesen
         Weapon weapon = livingEntity.getEquippedWeapon();
@@ -137,10 +137,6 @@ public class WeaponController {
         float randomAccuracyX = (shotAccuracyRandomizer.nextFloat() - 0.5f) * weapon.getAccuracy();
         float randomAccuracyY = (shotAccuracyRandomizer.nextFloat() - 0.5f) * weapon.getAccuracy();
 
-        //Koordinaten des Mauszeigers auslesen (inkl. dem zufälligen Wert)
-        float mouseX = input.getMouseX();
-        float mouseY = input.getMouseY();
-
         //asdasdasdqauiwgeoiahdoiuawopuiaiwpudpiquah
         float direction = weapon.getDirection();
         float offsetX = weapon.getOffsetX() + (weapon.getAmmoType().equals("PRIMARY") ? 20 : 0);
@@ -150,7 +146,7 @@ public class WeaponController {
         float livingEntityX = livingEntity.getShape().getCenterX();
         float livingEntityY = livingEntity.getShape().getCenterY();
 
-        //Den rotierten Offset berechnen (um die Waffe in der Hand darzustellen)
+        //Den rotierten Offset berechnen (um den Punkt, wo die Waffe abgeschossen wird, zu berechnen)
         float rotatedOffsetX = (float) (offsetX * Math.cos(Math.toRadians(direction))
                 - offsetY * Math.sin(Math.toRadians(direction)));
         float rotatedOffsetY = (float) (offsetX * Math.sin(Math.toRadians(direction))
@@ -161,8 +157,11 @@ public class WeaponController {
         float x = livingEntityX + rotatedOffsetX;
         float y = livingEntityY + rotatedOffsetY;
 
-        //Vektor in Richtung des Mauszeigers berechnen und Distanz auf die Reichweite der Waffe skalieren
-        Vector2f bulletDirection = new Vector2f(mouseX - x, mouseY - y).normalise().scale(weapon.getRange());
+        //Richtung der lebendigen Enittät auslesen und einen Vektor dazu berechnen
+        Vector2f livingEntityDirection = new Vector2f(livingEntity.getDirection());
+
+        //Distanz des Richtungsvektors auf die Reichweite der Waffe skalieren
+        Vector2f bulletDirection = livingEntityDirection.scale(weapon.getRange());
 
         //Zu den Koordinaten die zufällige Treffergenauigkeit addieren
         bulletDirection.x += randomAccuracyX;
@@ -175,7 +174,7 @@ public class WeaponController {
         Bullet bullet = new Bullet(bulletDirection, x, y, weapon.getRange());
         bullets.add(bullet);
 
-        //FireTimer setzen
+        //FireTimer setzen (Feuerrate der Waffe)
         weapon.setFireTimer(weapon.getFirerate());
     }
 
