@@ -131,7 +131,7 @@ public class GameStateManager extends BasicGame {
         //Waffen updaten
         WeaponController.update(input, BULLET_SPEED, delta, container, PlayerController.getPlayer());
         
-        EnemyController.update(container);
+        EnemyController.update(container, delta);
     }
 
     /**

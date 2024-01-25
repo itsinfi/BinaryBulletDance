@@ -26,9 +26,10 @@ public class EnemyController {
 		enemies.add(enemy);
 	}
 	
-	public static void update(GameContainer container) {
+	public static void update(GameContainer container, int delta) {
 		for (Enemy enemy : enemies) {
 			enemy.alignWithPlayer();
+			enemy.move(delta);
 		}
 	}
 	
