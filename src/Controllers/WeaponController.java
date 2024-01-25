@@ -29,6 +29,7 @@ public class WeaponController {
     private static HashSet<Bullet> bullets = new HashSet<Bullet>();//TODO: Zu Weapon Class ersetzen
     private static HashSet<Weapon> weapons = new HashSet<Weapon>();//TODO:
     private static Random shotAccuracyRandomizer = new Random();
+    private static Line bulletLine;
 
     //Konstruktoren
 
@@ -117,6 +118,10 @@ public class WeaponController {
         while (it.hasNext()) {
             it.next().getBulletFire().render();
         }
+
+        if (bulletLine != null) {
+            g.drawLine(bulletLine.getX1(), bulletLine.getY1(), bulletLine.getX2(), bulletLine.getY2());
+        }
     }
 
     //TODO: alles vernünftig überarbeiten
@@ -171,9 +176,9 @@ public class WeaponController {
         bulletDirection.normalise();
 
         //Linie für die Laufbahn erzeugen
-        float lineX = (float) (weapon.getRange() * Math.cos(Math.toRadians(direction)));
-        float lineY = (float) (weapon.getRange() * Math.sin(Math.toRadians(direction)));
-        Line bulletLine = new Line(x, y, livingEntityX + lineX, livingEntityY + lineY);
+        float lineX = (float) (weapon.getRange() * Math.cos(Math.toRadians(direction))) + randomAccuracyX;
+        float lineY = (float) (weapon.getRange() * Math.sin(Math.toRadians(direction))) + randomAccuracyY;
+        bulletLine = new Line(x, y, livingEntityX + lineX, livingEntityY + lineY);
 
         //Kugel erstellen
         Bullet bullet = new Bullet(bulletDirection, x, y, weapon.getRange());
