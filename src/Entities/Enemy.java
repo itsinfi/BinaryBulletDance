@@ -1,7 +1,6 @@
 package Entities;
 
 import java.util.HashMap;
-import java.util.concurrent.ThreadLocalRandom;
 
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
@@ -38,7 +37,7 @@ public abstract class Enemy extends LivingEntity{
 //    }
 	
 	/**
-	 * moves enemy dependant on player position and distance to player
+	 * moves enemy towards a randomly selected target position within a certain distance near the player
 	 * @param delta Millisekunden seit dem letzten Frame
 	 */
 	
@@ -55,7 +54,6 @@ public abstract class Enemy extends LivingEntity{
 		
 		float range = 150;
 		float maxDistance = 10;
-//		float minDistance = 75;
 		
 		Random random = new Random();
 		
@@ -64,13 +62,7 @@ public abstract class Enemy extends LivingEntity{
 			float min = playerX-range;
 			float max = playerX+range;
 			
-			this.targetPosX =  ThreadLocalRandom.current().nextFloat(min, max);
-	//		System.out.println("TargetPosX: " + this.targetPosX);
-			
-			System.out.println("playerx min range: " + min);
-			System.out.println("playerx max range: " + max);
-			System.out.println("player X: " + playerX);
-			System.out.println("TargetPos X: "+this.targetPosX);
+			this.targetPosX = random.nextFloat(min, max);
 			
 		}
 		
@@ -79,14 +71,7 @@ public abstract class Enemy extends LivingEntity{
 			float min = playerY-range;
 			float max = playerY+range;
 			
-			this.targetPosY = ThreadLocalRandom.current().nextFloat(min, max);
-	//		System.out.println("TargetPosY: " + this.targetPosY);
-			System.out.println("playery min range: " + min);
-			System.out.println("playery max range: " + max);
-			System.out.println("Player Y: " + playerY);
-			System.out.println("TargetPos Y: "+this.targetPosY);
-			
-//			float range = ThreadLocalRandom.current().nextFloat(min, max)
+			this.targetPosY = random.nextFloat(min, max);
 		
 		}
 
@@ -102,43 +87,6 @@ public abstract class Enemy extends LivingEntity{
 			this.setY(this.getShape().getY() + this.movementSpeed * delta);
 		}
 
-//		float distanceX = Math.abs(enemyX-playerX);
-//		float distanceY = Math.abs(enemyY-playerY);
-//		float maxDistance = 150;
-//		float minDistance = 75;
-//		if (distanceX > maxDistance) {
-//			if (enemyX > playerX) {
-//				this.setX(this.getShape().getX() - this.movementSpeed * delta);
-//			} else if (enemyX < playerX) {
-//				this.setX(this.getShape().getX() + this.movementSpeed * delta);
-//			}
-//			
-//		}
-//		if (distanceY > maxDistance) {
-//			if (enemyY > playerY) {
-//				this.setY(this.getShape().getY() - this.movementSpeed * delta);
-//			} else if (enemyY < playerY) {
-//				this.setY(this.getShape().getY() + this.movementSpeed * delta);
-//			}
-//			
-//		}
-//		
-//		if (distanceX < minDistance) {
-//			if (enemyX > playerX) {
-//				this.setX(this.getShape().getX() + this.movementSpeed * delta);
-//			} else if (enemyX < playerX) {
-//				this.setX(this.getShape().getX() - this.movementSpeed * delta);
-//			}
-//			
-//		}
-//		if (distanceY < minDistance) {
-//			if (enemyY > playerY) {
-//				this.setY(this.getShape().getY() + this.movementSpeed * delta);
-//			} else if (enemyY < playerY) {
-//				this.setY(this.getShape().getY() - this.movementSpeed * delta);
-//			}
-//			
-//		}
 	}
 	
 	/**
