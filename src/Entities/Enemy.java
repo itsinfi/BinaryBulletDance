@@ -1,6 +1,7 @@
 package Entities;
 
 import java.util.HashMap;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
@@ -9,7 +10,7 @@ import Entities.Weapon;
 import Controllers.PlayerController;
 
 import java.lang.Math;
-import java.util.random.*;
+import java.util.Random;
 
 public abstract class Enemy extends LivingEntity{
 	
@@ -52,26 +53,43 @@ public abstract class Enemy extends LivingEntity{
 		float distanceX = Math.abs(enemyX-targetPosX);
 		float distanceY = Math.abs(enemyY-targetPosY);
 		
+		float range = 150;
 		float maxDistance = 10;
 //		float minDistance = 75;
 		
+		Random random = new Random();
+		
 		if (distanceX < maxDistance) {
-			if (Math.random()<0.5) {
-			this.targetPosX = (float) (playerX + Math.random()*150)+150;
-			} else {
-				this.targetPosX = (float) (playerX - Math.random()*150-150);
-			}
+			
+			float min = playerX-range;
+			float max = playerX+range;
+			
+			this.targetPosX =  ThreadLocalRandom.current().nextFloat(min, max);
+	//		System.out.println("TargetPosX: " + this.targetPosX);
+			
+			System.out.println("playerx min range: " + min);
+			System.out.println("playerx max range: " + max);
+			System.out.println("player X: " + playerX);
+			System.out.println("TargetPos X: "+this.targetPosX);
 			
 		}
 		
 		if (distanceY < maxDistance) {
-			if (Math.random()<0.5) {
-				this.targetPosY = (float) (playerY + Math.random()*150)+150;
-				} else {
-					this.targetPosY = (float) (playerY - Math.random()*150-150);
-				}
-		}
+			
+			float min = playerY-range;
+			float max = playerY+range;
+			
+			this.targetPosY = ThreadLocalRandom.current().nextFloat(min, max);
+	//		System.out.println("TargetPosY: " + this.targetPosY);
+			System.out.println("playery min range: " + min);
+			System.out.println("playery max range: " + max);
+			System.out.println("Player Y: " + playerY);
+			System.out.println("TargetPos Y: "+this.targetPosY);
+			
+//			float range = ThreadLocalRandom.current().nextFloat(min, max)
 		
+		}
+
 		if (enemyX > targetPosX) {
 			this.setX(this.getShape().getX() - this.movementSpeed * delta);
 		} else if (enemyX < targetPosX) {
