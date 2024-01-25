@@ -7,13 +7,12 @@ import java.util.Random;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Vector2f;
 
-import Entities.Bullet;
 import Entities.LivingEntity;
 import Entities.Weapon;
+import Entities.Animations.BulletTraceAnimation;
 
 /**
  * Diese Klasse verwaltet alle Waffen im Game.
@@ -26,10 +25,9 @@ public class WeaponController {
     //Attribute
 
     // private static HashSet<LivingEntity> livingEntities;
-    private static HashSet<Bullet> bullets = new HashSet<Bullet>();//TODO: Zu Weapon Class ersetzen
+    private static HashSet<BulletTraceAnimation> bulletTraces = new HashSet<BulletTraceAnimation>();
     private static HashSet<Weapon> weapons = new HashSet<Weapon>();//TODO:
     private static Random shotAccuracyRandomizer = new Random();
-    private static Line bulletLine;
 
     //Konstruktoren
 
@@ -59,17 +57,6 @@ public class WeaponController {
     public static void update(Input input, float bulletSpeed, int delta, GameContainer container,
             LivingEntity livingEntity) {
 
-        // Update bullet position and check for collisions
-        Iterator<Bullet> _it = bullets.iterator();
-        while (_it.hasNext()) {
-            Bullet bullet = _it.next();
-            if (bullet.getIsShooting()) {
-                bullet.updateBullet(container, bulletSpeed, delta);
-            } else {
-                _it.remove();
-            }
-        }
-
         //Alle Waffen durchiterieren
         Iterator<Weapon> it = weapons.iterator();
         while (it.hasNext()) {
@@ -91,40 +78,46 @@ public class WeaponController {
             if (weapon.getFireTimer() < 0) {
                 weapon.setFireTimer((short) 0);
             }
-            
+
             //TODO: Entscheidung: Brauchen wir das? Oder ist es too much?
             if (weapon.getReloadTimer() < 0) {
                 weapon.setReloadTimer((short) 0);
             }
-            
+
             //Schussfeueranimation updaten
             weapon.getBulletFire().update();
-        } 
+        }
+        
+        Iterator<BulletTraceAnimation> btaIterator = bulletTraces.iterator();
+        while (btaIterator.hasNext()) {
+            BulletTraceAnimation bulletTraceAnimation = btaIterator.next();
+
+            if (bulletTraceAnimation.getAnimationTimer() > 0) {
+                bulletTraceAnimation.update();
+            } else {
+                btaIterator.remove();
+            }
+        }
     }
 
     public static void render(Graphics g) {
-        Iterator<Bullet> _it = bullets.iterator();
-        while (_it.hasNext()) {
-            try {
-                _it.next().drawBullet(g);
-            } catch (SlickException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
 
         //Schussfeueranimation von jeder Waffe aktualisieren
         Iterator<Weapon> it = weapons.iterator();
         while (it.hasNext()) {
-            it.next().getBulletFire().render();
+            it.next().getBulletFire().render(g);
         }
 
-        if (bulletLine != null) {
-            g.drawLine(bulletLine.getX1(), bulletLine.getY1(), bulletLine.getX2(), bulletLine.getY2());
+        Iterator<BulletTraceAnimation> btaIterator = bulletTraces.iterator();
+        while (btaIterator.hasNext()) {
+            BulletTraceAnimation bulletTraceAnimation = btaIterator.next();
+
+            if (bulletTraceAnimation.getAnimationTimer() > 0) {
+                bulletTraceAnimation.render(g);
+            }
         }
     }
 
-    //TODO: alles vernünftig überarbeiten
     public static void shoot(LivingEntity livingEntity) {
 
         //Waffe auslesen
@@ -135,9 +128,6 @@ public class WeaponController {
             System.out.println("Keine Waffe zum Schießen gefunden.");
             return;
         }
-
-        //Waffe schießen
-        weapon.attack();
 
         //Zufällige Werte für die Punktgenauigkeit des Schusses losen
         float randomAccuracyX = (shotAccuracyRandomizer.nextFloat() - 0.5f) * weapon.getAccuracy();
@@ -157,7 +147,7 @@ public class WeaponController {
                 - offsetY * Math.sin(Math.toRadians(direction)));
         float rotatedOffsetY = (float) (offsetX * Math.sin(Math.toRadians(direction))
                 + offsetY * Math.cos(Math.toRadians(direction)));
-        
+
         //Den rotierten Offset zu den Waffenkoordinaten addieren
         float x = livingEntityX + rotatedOffsetX;
         float y = livingEntityY + rotatedOffsetY;
@@ -178,14 +168,55 @@ public class WeaponController {
         //Linie für die Laufbahn erzeugen
         float lineX = (float) (weapon.getRange() * Math.cos(Math.toRadians(direction))) + randomAccuracyX;
         float lineY = (float) (weapon.getRange() * Math.sin(Math.toRadians(direction))) + randomAccuracyY;
-        bulletLine = new Line(x, y, livingEntityX + lineX, livingEntityY + lineY);
+        Line bulletLine = new Line(x, y, livingEntityX + lineX, livingEntityY + lineY);
 
-        //Kugel erstellen
-        Bullet bullet = new Bullet(bulletDirection, x, y, weapon.getRange());
-        bullets.add(bullet);
+        //Waffe schießen
+        weapon.attack();
 
         //FireTimer setzen (Feuerrate der Waffe)
         weapon.setFireTimer(weapon.getFirerate());
+
+        //Hitscan durchführen
+        hitScan(weapon, bulletLine);
+
+        //Bullet Trace Animation erzeugen und der Liste hinzufügen
+        BulletTraceAnimation bulletTraceAnimation = new BulletTraceAnimation(bulletLine);
+        bulletTraces.add(bulletTraceAnimation);
+    }
+    
+    /**
+     * Diese Methode berechnet, ob und wenn ja, welches Objekt die Kugellaufbahn (als Erstes) berührt
+     * 
+     * @param weapon Waffe, mit der geschossen wurde
+     * @param bulletLine Linie der Schusslaufbahn
+     */
+    private static void hitScan(Weapon weapon, Line bulletLine) {
+
+        //Alle lebendigen Entitäten in einem HashSet abspeichern
+        HashSet<LivingEntity> livingEntities = new HashSet<LivingEntity>();
+        livingEntities.add(PlayerController.getPlayer());
+        livingEntities.addAll(EnemyController.getEnemies());
+
+        //Variablen setzen, um hier das nächste Objekt zu speichern, das getroffen wurde (falls eines existiert)
+        LivingEntity nearestLivingEntity = null;
+
+        //Distanz zum Startpunkt des Schusses speichern, um zu vergleichen, welches Objekt das Nächste ist.
+        float nearestDistance = Float.MAX_VALUE;
+
+        //Alle lebendigen Entitäten iterieren, um zu bestimmen, welches getroffen wurde
+        for (LivingEntity livingEntity : livingEntities) {
+            float distance = bulletLine.getStart().distance(new Vector2f(livingEntity.getShape().getCenterX(),
+                    livingEntity.getShape().getCenterY()));
+            if (livingEntity.getShape().intersects(bulletLine) && distance < nearestDistance) {
+                nearestDistance = distance;
+                nearestLivingEntity = livingEntity;
+            }
+        }
+
+        //Der nächsten lebendigen Entität, die auf der Kugellaufbahn lag und getroffen wurde, Schaden geben
+        if (nearestLivingEntity != null) {
+            nearestLivingEntity.takeDamage(weapon.getDamagePerBullet());
+        }
     }
 
 }

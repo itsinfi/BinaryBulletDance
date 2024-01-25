@@ -9,6 +9,7 @@ public class SentinelEnemy extends Enemy {
 	public SentinelEnemy(String spriteAsset, float centerX, float centerY, float direction) throws SlickException {
 		super(spriteAsset, centerX, centerY, direction);
 		this.movementSpeed = 0.17f;
+		this.hitpoints = 100;
 	}
 	
 //	public void update() {

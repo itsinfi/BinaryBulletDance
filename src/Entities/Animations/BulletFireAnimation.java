@@ -2,6 +2,7 @@ package Entities.Animations;
 
 import java.util.Random;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -58,7 +59,7 @@ public class BulletFireAnimation extends Entity implements Animatable {
         }
     }
 
-    public void render() {
+    public void render(Graphics g) {
         //Prüfen, ob das Schussfeuer dargestellt werden soll
         if (animationTimer == 0) {
             return;
