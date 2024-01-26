@@ -143,6 +143,24 @@ public abstract class WeaponController {
             return;
         }
 
+        //Prüfen, ob die Waffe noch nachgeladen wird
+        if (weapon.getReloadTimer() != 0) {
+            System.out.println("Waffe wird noch nachgeladen.");
+            return;
+        }
+
+        //Prüfen, ob die Waffe bereits geschossen werden kann (Feuerrate)
+        if (weapon.getFireTimer() != 0) {
+            System.out.println("Waffe ist noch nicht bereit, geschossen zu werden.");
+            return;
+        }
+
+        //Prüfen, ob die Munition leer ist
+        if (weapon.getBullets() <= 0) {
+            System.out.println("Munition ist leer.");
+            return;
+        }
+
         //Zufällige Werte für die Punktgenauigkeit des Schusses losen
         float randomAccuracyX = (shotAccuracyRandomizer.nextFloat() - 0.5f) * weapon.getAccuracy();
         float randomAccuracyY = (shotAccuracyRandomizer.nextFloat() - 0.5f) * weapon.getAccuracy();
@@ -167,7 +185,7 @@ public abstract class WeaponController {
         float y = livingEntityY + rotatedOffsetY;
 
         //Richtung der lebendigen Enittät auslesen und einen Vektor dazu berechnen
-        Vector2f livingEntityDirection = new Vector2f(livingEntity.getDirection());
+        Vector2f livingEntityDirection = new Vector2f(direction);
 
         //Distanz des Richtungsvektors auf die Reichweite der Waffe skalieren
         Vector2f bulletDirection = livingEntityDirection.scale(weapon.getRange());
