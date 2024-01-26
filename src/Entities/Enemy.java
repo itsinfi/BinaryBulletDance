@@ -114,10 +114,5 @@ public abstract class Enemy extends LivingEntity{
 
 	}
 	
-	public void reload() {
-		short requiredBullets = (short) (this.equippedWeapon.getMagazineSize() - this.equippedWeapon.getBullets());
-		this.equippedWeapon.reload((short) 15);
-	}
-	
     
 }
