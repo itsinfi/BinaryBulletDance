@@ -6,6 +6,9 @@ import java.util.Random;
 
 import Entities.Animatable;
 
+/**
+ * Diese Klasse stellt einen Patikel innerhalb der Schusslaufbahnanimation einer Waffe dar.
+ */
 public class TraceParticle implements Animatable {
 
     private short animationTimer;
@@ -14,18 +17,33 @@ public class TraceParticle implements Animatable {
     float yPos;
     private Random random = new Random();
 
-    public TraceParticle(float xPos, float yPos, short animationTime){
+
+    /**
+     * Diese Methode erzeugt einen Schusslaufbahnpartikel
+     * 
+     * @param xPos x-Position
+     * @param yPos y-Position
+     * @param animationTime Dauer der Animation
+     */
+    public TraceParticle(float xPos, float yPos, short animationTime) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.animationTime = animationTime;
         animate();
     }
 
+
+    /**
+     * Diese Methode startet den Animationstimer.
+     */
     @Override
     public void animate() {
         animationTimer = animationTime;
     }
 
+    /**
+     * Diese Methode aktualisiert die Position des Partikels zufällig und aktualisiert den Animationstimer.
+     */
     @Override
     public void update() {
         if (animationTimer > 0) {
@@ -35,6 +53,11 @@ public class TraceParticle implements Animatable {
         }
     }
 
+    /**
+     * Diese Methode stellt den Partikel visuell dar.
+     * 
+     * @param g Grafische Darstellung des Spiels durch die Slick2D-Library
+     */
     @Override
     public void render(Graphics g) {
         if (animationTimer > 0) {

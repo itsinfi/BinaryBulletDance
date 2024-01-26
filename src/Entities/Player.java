@@ -40,7 +40,7 @@ public class Player extends LivingEntity {
 
         //Werte festlegen
         this.maxHitpoints = 100;
-        this.hitpoints = 100;
+        this.hitpoints = 20000;
         this.movementSpeed = 0.27f;
     }
     
@@ -87,33 +87,6 @@ public class Player extends LivingEntity {
     //Setter
 
     /**
-     * Diese Methode legt die Primärwaffe des Spielers fest.
-     * 
-     * @param primaryWeapon Primärwaffe des Spielers
-    */
-    public void setPrimaryWeapon(Weapon primaryWeapon) {
-        this.primaryWeapon = primaryWeapon;
-    }
-
-    /**
-     * Diese Methode legt die Sekundärwaffe des Spielers fest.
-     * 
-     * @param secondaryWeapon Sekundärwaffe des Spielers
-     */
-    public void setSecondaryWeapon(Weapon secondaryWeapon) {
-        this.secondaryWeapon = secondaryWeapon;
-    }
-
-    /**
-     * Diese Methode legt die Munition des Spielers fest.
-     * 
-     * @param ammo Munition des Spielers.
-     */
-    public void setAmmo(HashMap<String, Short> ammo) {
-        this.ammo = ammo;
-    }
-
-    /**
      * Diese Methode legt die aktuell ausgerüstete Waffe des Spielers fest.
      * 
      * @param isPrimary True = Primärwaffe wird ausgerüstet, False = Sekundärwaffe wird ausgerüstet.
@@ -134,6 +107,38 @@ public class Player extends LivingEntity {
     
 
     //Methoden
+
+    /**
+     * Diese Methode fügt dem Spieler eine neue Waffe hinzu.
+     * 
+     * @param weapon Neue Waffe, die ausgerüstet werden soll
+     */
+    public void addWeapon(Weapon weapon) {
+        if (weapon.isSecondary()) {
+            this.secondaryWeapon = weapon;
+        } else {
+            this.primaryWeapon = weapon;
+        }
+    }
+
+    /**
+     * Diese Methode fügt dem Spieler Munition eines bestimmten Typs hinzu.
+     * 
+     * @param ammo Munition des Spielers.
+     */
+    public void addAmmo(HashMap<String, Short> ammo) {
+        for (String key : ammo.keySet())
+
+            //Falls Munition bereits vorhanden ist: Addieren
+            if (this.ammo.containsKey(key)) {
+                short amount = (short) (this.ammo.get(key) + ammo.get(key));
+                this.ammo.put(key, amount);
+
+            //Ansonsten den Wert so wie er ist übernehmen
+            } else {
+                this.ammo.put(key, ammo.get(key));
+            }
+    }
 
     /**
      * Diese Methode stellt den Spieler visuell dar.

@@ -44,18 +44,18 @@ public abstract class PlayerController {
 
         //Primärwaffe des Spielers erzeugen
         Weapon primary = (Weapon) new AssaultRifle((LivingEntity) player);
-        player.setPrimaryWeapon(primary);//TODO: mit addWeapon(Weapon) methode umsetzen!!! um primär und sekundär zu forcen und auto equippen
-        player.setEquippedWeapon(true);//TODO: mit addWeapon(Weapon) methode umsetzen!!! um primär und sekundär zu forcen und auto equippen
+        player.addWeapon(primary);
+        player.setEquippedWeapon(true);
         
         //Sekundärwaffe des Spielers erzeugen
         Weapon secondary = (Weapon) new Pistol((LivingEntity) player);
-        player.setSecondaryWeapon(secondary);//TODO: mit addWeapon(Weapon) methode umsetzen!!! um primär und sekundär zu forcen und auto equippen
+        player.addWeapon(secondary);
 
         //Spieler Startmunition geben
         HashMap<String, Short> ammo = new HashMap<String, Short>();
         ammo.put("PRIMARY", (short) 200);
         ammo.put("SECONDARY", (short) 200);
-        player.setAmmo(ammo);//TODO: stattdessen addAmmo()-Methode, um nicht zu überschreiben
+        player.addAmmo(ammo);
     }
 
 
@@ -150,7 +150,7 @@ public abstract class PlayerController {
         Vector2f playerDirection = new Vector2f(mouseX - playerX, mouseY - playerY);
 
         //Prüfen, ob die Distanz den Mindestwert überschreitet (um zu verhindern, dass der Spieler z.B. sich selbst treffen kann)
-        if (playerDirection.length() > 50) {
+        if (playerDirection.length() > 80) {
 
             //Richtungsvektor normalisieren (Länge auf 1 setzen)
             playerDirection = playerDirection.normalise();
@@ -190,7 +190,7 @@ public abstract class PlayerController {
                     || (!equippedWeapon.getAutomaticFire() && input.isMousePressed(Input.MOUSE_LEFT_BUTTON))) {
                     
                     //Waffe schießen
-                    WeaponController.shoot(player);
+                    WeaponController.shoot(player, mouseX, mouseY);
             }
         }
 

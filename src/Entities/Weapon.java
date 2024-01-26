@@ -48,7 +48,6 @@ public abstract class Weapon extends Entity {
      * @param accuracy Präzision der Waffe (Achtung: Wert ist empfindlicher je geringer die Reichweite ist)
      * @param range Reichweite eines Schusses der Waffe
      * @param magazineSize Größe eines vollen Magazins
-     * @param bullets Anzahl der aktuell innerhalb der Waffe geladenen Menge an Munition
      * @param reloadRate Zeit in Frames, bis wann nicht erneut nachgeladen werden kann.
      * @param hasAutomaticFire True = Die Waffe verwendet automatisches Feuer, False = Die Waffe verwendet kein automatisches Feuer
      * @param offsetX Anzahl an Pixel, um welche die Waffe horizontal (wenn man nach rechts schaut) versetzt zum Träger der Waffe gerendert werden soll
@@ -59,7 +58,7 @@ public abstract class Weapon extends Entity {
      * @param reloadSound Sound, der gespielt werden soll, wenn die Waffe nachlädt
      */
     public Weapon(String spriteAsset, float centerX, float centerY, float direction, boolean isSecondary, short damagePerBullet, String ammoType, short firerate, float accuracy,
-            short range, short magazineSize, short bullets, short reloadRate, boolean hasAutomaticFire, float offsetX, float offsetY, float bulletFireOffsetX, float bulletFireOffsetY, Sound shootSound, Sound reloadSound) throws SlickException {
+            short range, short magazineSize, short reloadRate, boolean hasAutomaticFire, float offsetX, float offsetY, float bulletFireOffsetX, float bulletFireOffsetY, Sound shootSound, Sound reloadSound) throws SlickException {
         //Entity erzeugen
         super(spriteAsset, centerX, centerY, direction);
 
@@ -77,7 +76,7 @@ public abstract class Weapon extends Entity {
         this.accuracy = accuracy;
         this.range = range;
         this.magazineSize = magazineSize;
-        this.bullets = bullets;
+        this.bullets = magazineSize;
         this.reloadRate = reloadRate;
         this.hasAutomaticFire = hasAutomaticFire;
         this.offsetX = offsetX;
@@ -206,7 +205,7 @@ public abstract class Weapon extends Entity {
     }
 
     /**
-     * Diese Methode gibt zurück, wie hoch die Verschiebung auf der x-Achse zum Träger der Waffe ist
+     * Diese Methode gibt zurück, wie hoch die Verschiebung der Waffe auf der x-Achse zum Träger der Waffe ist
      * 
      * @return Anzahl an Pixel, um welche die Waffe horizontal (wenn man nach rechts schaut) versetzt zum Träger der Waffe gerendert werden soll
      */
@@ -215,11 +214,29 @@ public abstract class Weapon extends Entity {
     }
 
     /**
-     * Diese Methode gibt zurück, wie hoch die Verschiebung auf der y-Achse zum Träger der Waffe ist
+     * Diese Methode gibt zurück, wie hoch die Verschiebung der Waffe auf der y-Achse zum Träger der Waffe ist
      * 
      * @return Anzahl an Pixel, um welche die Waffe vertikal (wenn man nach rechts schaut) versetzt zum Träger der Waffe gerendert werden soll
      */
     public float getOffsetY() {
+        return offsetY;
+    }
+
+    /**
+     * Diese Methode gibt zurück, wie hoch die Verschiebung des Waffenfeuers auf der x-Achse zur Waffe ist
+     * 
+     * @return Anzahl an Pixel, um welche das Waffenfeuer horizontal (wenn man nach rechts schaut) versetzt zur Waffe gerendert werden soll
+     */
+    public float getBulletFireOffsetX() {
+        return offsetX;
+    }
+
+    /**
+     * Diese Methode gibt zurück, wie hoch die Verschiebung der Waffenfeuers auf der y-Achse zur Waffe ist
+     * 
+     * @return Anzahl an Pixel, um welche das Waffenfeuer vertikal (wenn man nach rechts schaut) versetzt zur Waffe gerendert werden soll
+     */
+    public float getBulletFireOffsetY() {
         return offsetY;
     }
 

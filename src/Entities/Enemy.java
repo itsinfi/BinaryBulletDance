@@ -147,5 +147,4 @@ public abstract class Enemy extends LivingEntity{
 		this.equippedWeapon.reload((short) 15);
 	}
 	
-    
 }
