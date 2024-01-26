@@ -44,18 +44,18 @@ public abstract class PlayerController {
 
         //Primärwaffe des Spielers erzeugen
         Weapon primary = (Weapon) new AssaultRifle((LivingEntity) player);
-        player.setPrimaryWeapon(primary);//TODO: mit addWeapon(Weapon) methode umsetzen!!! um primär und sekundär zu forcen und auto equippen
-        player.setEquippedWeapon(true);//TODO: mit addWeapon(Weapon) methode umsetzen!!! um primär und sekundär zu forcen und auto equippen
+        player.addWeapon(primary);
+        player.setEquippedWeapon(true);
         
         //Sekundärwaffe des Spielers erzeugen
         Weapon secondary = (Weapon) new Pistol((LivingEntity) player);
-        player.setSecondaryWeapon(secondary);//TODO: mit addWeapon(Weapon) methode umsetzen!!! um primär und sekundär zu forcen und auto equippen
+        player.addWeapon(secondary);
 
         //Spieler Startmunition geben
         HashMap<String, Short> ammo = new HashMap<String, Short>();
         ammo.put("PRIMARY", (short) 200);
         ammo.put("SECONDARY", (short) 200);
-        player.setAmmo(ammo);//TODO: stattdessen addAmmo()-Methode, um nicht zu überschreiben
+        player.addAmmo(ammo);//TODO: stattdessen addAmmo()-Methode, um nicht zu überschreiben
     }
 
 
