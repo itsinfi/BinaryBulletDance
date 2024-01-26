@@ -21,20 +21,20 @@ public class Pistol extends Weapon {
     //Konstruktoren
 
     /**
-     * Diese Methode erstellt eine Sekundärwaffe
+     * Diese Methode erstellt eine Pistol
      */
     public Pistol(LivingEntity livingEntity) throws SlickException {
 
-        //Sekundärwaffe erzeugen
+        //Pistol erzeugen
         super("assets/weaponSprites/pistol.png", livingEntity.getShape().getCenterX(), livingEntity.getShape().getCenterY(),
-                livingEntity.getDirection(), true, (short) 30, "SECONDARY", (short) 15, 100f,
+                livingEntity.getDirection(), true, (short) 30, "PISTOL", (short) 15, 100f,
                 (short) 500, (short) 15, (short) 15, (short) 60, false, 5f, 13f, 18f, 15f,
-                new Sound("assets/sounds/secondary_shoot.wav"), new Sound("assets/sounds/player_heal.wav"));
+                new Sound("assets/sounds/pistol.wav"), new Sound("assets/sounds/player_heal.wav"));
 
         //Einstellen, dass Munition für die Waffe unendlich sein soll.
         this.hasInfiniteAmmo = true;
 
-        //Sekundärwaffe dem WeaponController übergeben
+        //Pistol dem WeaponController übergeben
         WeaponController.addWeapon(this);
     }
 

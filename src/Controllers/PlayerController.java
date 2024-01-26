@@ -9,7 +9,10 @@ import org.newdawn.slick.geom.Vector2f;
 import Entities.LivingEntity;
 import Entities.Player;
 import Entities.Weapons.AssaultRifle;
+import Entities.Weapons.MachinePistol;
 import Entities.Weapons.Pistol;
+import Entities.Weapons.Shotgun;
+import Entities.Weapons.SniperRifle;
 import Entities.Weapon;
 import Entities.Animations.BulletFireAnimation;
 
@@ -42,18 +45,18 @@ public class PlayerController {
         player = new Player("assets/playertest_fixed.png", container);
 
         //Primärwaffe des Spielers erzeugen
-        Weapon primary = (Weapon) new AssaultRifle((LivingEntity) player);
+        Weapon primary = (Weapon) new Shotgun((LivingEntity) player);
         player.setPrimaryWeapon(primary);//TODO: mit addWeapon(Weapon) methode umsetzen!!! um primär und sekundär zu forcen und auto equippen
         player.setEquippedWeapon(true);//TODO: mit addWeapon(Weapon) methode umsetzen!!! um primär und sekundär zu forcen und auto equippen
         
         //Sekundärwaffe des Spielers erzeugen
-        Weapon secondary = (Weapon) new Pistol((LivingEntity) player);
+        Weapon secondary = (Weapon) new MachinePistol((LivingEntity) player);
         player.setSecondaryWeapon(secondary);//TODO: mit addWeapon(Weapon) methode umsetzen!!! um primär und sekundär zu forcen und auto equippen
 
         //Spieler Startmunition geben
         HashMap<String, Short> ammo = new HashMap<String, Short>();
-        ammo.put("PRIMARY", (short) 200);
-        ammo.put("SECONDARY", (short) 200);
+        ammo.put(primary.getAmmoType(), (short) 200);
+        ammo.put(secondary.getAmmoType(), (short) 200);
         player.setAmmo(ammo);//TODO: stattdessen addAmmo()-Methode, um nicht zu überschreiben
     }
 

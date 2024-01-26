@@ -4,15 +4,15 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
 
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Vector2f;
 
 import Entities.LivingEntity;
 import Entities.Weapon;
 import Entities.Animations.BulletTraceAnimation;
+import Entities.Weapons.Shotgun;
+import Entities.Weapons.SniperRifle;
 
 /**
  * Diese Klasse verwaltet alle Waffen im Game.
@@ -144,6 +144,12 @@ public class WeaponController {
             return;
         }
 
+        //Spezielle Schuss-Methode für Shotgun ausführen, falls die Waffe eine Shotgun ist (keine schöne Lösung)
+        if (weapon instanceof Shotgun) {
+            shootShotgun(livingEntity);
+            return;
+        }
+
         //Zufällige Werte für die Punktgenauigkeit des Schusses losen
         float randomAccuracyX = (shotAccuracyRandomizer.nextFloat() - 0.5f) * weapon.getAccuracy();
         float randomAccuracyY = (shotAccuracyRandomizer.nextFloat() - 0.5f) * weapon.getAccuracy();
@@ -198,14 +204,31 @@ public class WeaponController {
         BulletTraceAnimation bulletTraceAnimation = new BulletTraceAnimation(bulletLine);
         bulletTraces.add(bulletTraceAnimation);
     }
+
+    /**
+     * Diese Methode führt alle nötigen Operationen durch, um eine Shotgun zu schießen
+     * Speziell bei einer Shotgun: Der Schaden verringert sich mit der Reichweite + der Schuss splittert und trifft somit mehr auf näherer Reichweite
+     * 
+     * @param livingEntity
+     */
+    private static void shootShotgun(LivingEntity livingEntity) {
+
+    }
     
     /**
      * Diese Methode berechnet, ob und wenn ja, welches Objekt die Kugellaufbahn (als Erstes) berührt
      * 
      * @param weapon Waffe, mit der geschossen wurde
      * @param bulletLine Linie der Schusslaufbahn
+     * @param shootingEntity Schießende Entität
      */
     private static void hitScan(Weapon weapon, Line bulletLine, LivingEntity shootingEntity) {
+
+        //Spezielle HitScan-Methode eines Scharfschützengewehres ausführen, falls die Waffe eine ist (keine schöne Lösung)
+        if (weapon instanceof SniperRifle) {
+            hitScanSniperRifle(weapon, bulletLine, shootingEntity);
+            return;
+        }
 
         //Alle lebendigen Entitäten in einem HashSet abspeichern
         HashSet<LivingEntity> livingEntities = new HashSet<LivingEntity>();
@@ -220,12 +243,12 @@ public class WeaponController {
 
         //Alle lebendigen Entitäten iterieren, um zu bestimmen, welches getroffen wurde
         for (LivingEntity livingEntity : livingEntities) {
-            
+
             //(schießende Entität hierzu ausschließen, weil Selbstmord ist uncool)
             if (livingEntity.equals(shootingEntity)) {
                 continue;
             }
-            
+
             //Überprüfung der Distanz und als nächste Entität setzen
             float distance = bulletLine.getStart().distance(new Vector2f(livingEntity.getShape().getCenterX(),
                     livingEntity.getShape().getCenterY()));
@@ -238,6 +261,36 @@ public class WeaponController {
         //Der nächsten lebendigen Entität, die auf der Kugellaufbahn lag und getroffen wurde, Schaden geben
         if (nearestLivingEntity != null) {
             nearestLivingEntity.takeDamage(weapon.getDamagePerBullet());
+        }
+    }
+    
+    /**
+     * Diese Methode berechnet, ob und wenn ja, welche Objekte die Kugellaufbahn berühren
+     * Speziell beim Scharfschützengewehr: Es können mehere Entitäten mit einem Schuss getroffen werden!
+     * 
+     * @param weapon Waffe, mit der geschossen wurde
+     * @param bulletLine Linie der Schusslaufbahn
+     * @param shootingEntity Schießende Entität
+     */
+    private static void hitScanSniperRifle(Weapon weapon, Line bulletLine, LivingEntity shootingEntity) {
+
+        //Alle lebendigen Entitäten in einem HashSet abspeichern
+        HashSet<LivingEntity> livingEntities = new HashSet<LivingEntity>();
+        livingEntities.add(PlayerController.getPlayer());
+        livingEntities.addAll(EnemyController.getEnemies());
+
+        //Alle lebendigen Entitäten iterieren, um zu bestimmen, welches getroffen wurden
+        for (LivingEntity livingEntity : livingEntities) {
+
+            //(schießende Entität hierzu ausschließen, weil Selbstmord ist uncool)
+            if (livingEntity.equals(shootingEntity)) {
+                continue;
+            }
+
+            //Allen getroffenen Entitäten Schaden geben
+            if (livingEntity.getShape().intersects(bulletLine)) {
+                livingEntity.takeDamage(weapon.getDamagePerBullet());
+            }
         }
     }
 
