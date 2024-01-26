@@ -44,7 +44,20 @@ public abstract class EnemyController {
 			enemy.alignWithPlayer();
 
 			// shoot start
-	        WeaponController.shoot(enemy);
+
+			//Prüfen, ob die Waffe nachgeladen wird oder bereits den nächsten Schuss abgeben darf oder aktuell noch nicht fertig ausgerüstet ist.
+			Weapon equippedWeapon = enemy.getEquippedWeapon();
+
+			if (equippedWeapon.getBullets() > 0) {
+				WeaponController.shoot(enemy);
+			} else if (equippedWeapon.getReloadTimer()==0){
+				equippedWeapon.setReloadTimer(equippedWeapon.getReloadRate());
+			}
+			
+			if (equippedWeapon.getReloadTimer()==1) {
+				equippedWeapon.reload((equippedWeapon.getMagazineSize()));
+			}
+
 			// shoot end
 			
 //			WeaponController.shoot(enemy);
