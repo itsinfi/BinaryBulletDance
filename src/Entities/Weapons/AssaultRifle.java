@@ -28,8 +28,8 @@ public class AssaultRifle extends Weapon {
 
         //Primärwaffe  erzeugen
         super("assets/weaponSprites/assaultRifle.png", livingEntity.getShape().getCenterX(), livingEntity.getShape().getCenterY(),
-                livingEntity.getDirection(), false, (short) 30, "PRIMARY", (short) 5, 200f, (short) 600, (short) 30,
-                (short) 30, (short) 120, true, 20f, 12f, 50f, 15f,
+                livingEntity.getDirection(), false, (short) 30, "PRIMARY", (short) 5, 350f, (short) 1400, (short) 30,
+                (short) 120, true, 40f, 24f, 100f, 30f,
                 new Sound("assets/sounds/primary_shoot.wav"), new Sound("assets/sounds/player_heal.wav"));
 
         //Primärwaffe dem WeaponController übergeben

@@ -132,32 +132,32 @@ public abstract class WeaponController {
      * 
      * @param livingEntity
      */
-    public static void shoot(LivingEntity livingEntity) {
+    public static void shoot(LivingEntity livingEntity, float xCursor, float yCursor) {
 
         //Waffe auslesen
         Weapon weapon = livingEntity.getEquippedWeapon();
 
         //Prüfen, ob überhaupt eine Waffe ausgerüstet ist
         if (weapon == null) {
-            System.out.println("Keine Waffe zum Schießen gefunden.");
+            // System.out.println("Keine Waffe zum Schießen gefunden.");
             return;
         }
 
         //Prüfen, ob die Waffe noch nachgeladen wird
         if (weapon.getReloadTimer() != 0) {
-            System.out.println("Waffe wird noch nachgeladen.");
+            // System.out.println("Waffe wird noch nachgeladen.");
             return;
         }
 
         //Prüfen, ob die Waffe bereits geschossen werden kann (Feuerrate)
         if (weapon.getFireTimer() != 0) {
-            System.out.println("Waffe ist noch nicht bereit, geschossen zu werden.");
+            // System.out.println("Waffe ist noch nicht bereit, geschossen zu werden.");
             return;
         }
 
         //Prüfen, ob die Munition leer ist
         if (weapon.getBullets() <= 0) {
-            System.out.println("Munition ist leer.");
+            // System.out.println("Munition ist leer.");
             return;
         }
 
@@ -167,8 +167,8 @@ public abstract class WeaponController {
 
         //Richtung und Offset zum Spieler für den Schuss bestimen
         float direction = livingEntity.getDirection();
-        float offsetX = weapon.getOffsetX() + (weapon.getAmmoType().equals("PRIMARY") ? 20 : 0);
-        float offsetY = weapon.getOffsetY() + (weapon.getAmmoType().equals("PRIMARY") ? 5 : 0);
+        float offsetX = weapon.getOffsetX()  + weapon.getBulletFireOffsetX();
+        float offsetY = weapon.getOffsetY()  + weapon.getBulletFireOffsetY() - 20;
 
         //Die Position der lebendigen Entität, die schießt, lesen
         float livingEntityX = livingEntity.getShape().getCenterX();
@@ -185,7 +185,7 @@ public abstract class WeaponController {
         float y = livingEntityY + rotatedOffsetY;
 
         //Richtung der lebendigen Enittät auslesen und einen Vektor dazu berechnen
-        Vector2f livingEntityDirection = new Vector2f(direction);
+        Vector2f livingEntityDirection = new Vector2f(xCursor - x, yCursor - y);
 
         //Distanz des Richtungsvektors auf die Reichweite der Waffe skalieren
         Vector2f bulletDirection = livingEntityDirection.scale(weapon.getRange());
@@ -198,9 +198,10 @@ public abstract class WeaponController {
         bulletDirection.normalise();
 
         //Linie für die maximale Laufbahn der Kugel erzeugen
-        float lineX = (float) (weapon.getRange() * Math.cos(Math.toRadians(direction))) + randomAccuracyX;
-        float lineY = (float) (weapon.getRange() * Math.sin(Math.toRadians(direction))) + randomAccuracyY;
-        Line bulletLine = new Line(x, y, livingEntityX + lineX, livingEntityY + lineY);
+        float bulletDirectionInDegrees = (float) bulletDirection.getTheta(); 
+        float lineX = (float) (weapon.getRange() * Math.cos(Math.toRadians(bulletDirectionInDegrees))) + randomAccuracyX;
+        float lineY = (float) (weapon.getRange() * Math.sin(Math.toRadians(bulletDirectionInDegrees))) + randomAccuracyY;
+        Line bulletLine = new Line(x, y, x + lineX, y + lineY);
 
         //Waffe schießen
         weapon.attack();
@@ -251,9 +252,9 @@ public abstract class WeaponController {
                 nearestDistance = distance;
 
                 //Überprüfung auf Friendly Fire (falls ja, soll kein Schaden gegeben werden)
-                if (entityIsEnemy && livingEntity instanceof Player) {
+                if (!entityIsEnemy || entityIsEnemy && livingEntity instanceof Player) {
                     nearestLivingEntity = livingEntity;
-                } else {
+                }  else {
                     nearestLivingEntity = null;
                 }
             }

@@ -17,6 +17,7 @@ Dies ist ein Projekt im Rahmen der Prüfungsleistung im dualen Studium im Studie
 Überblick über alle wichtigen Dateien und Verzeichnisse:
 - src/ => beinhaltet den Code des Games
 - src/GameStateManager.java => Main-Datei zum Starten des Games
+    - In der Main-Methode kann hier auch die Auflösung festgelegt werden und ob Vollbild verwendet werden soll.
 - assets/ => beinhaltet Sounds und Sprites für Game-Inhalte
 - .gitignore => Hier können Dateien und Ordner aus dem Tracking von Git entfernt werden
 - javadoc/ => beinhaltet die Javadoc für die Slick2D-Bibliothek
