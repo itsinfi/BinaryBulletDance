@@ -5,6 +5,6 @@ package Controllers;
  * 
  * @author Hendrik Gomez
  */
-public class ItemController {
+public abstract class ItemController {
     //TODO:
 }

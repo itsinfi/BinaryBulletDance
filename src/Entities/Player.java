@@ -146,6 +146,7 @@ public class Player extends LivingEntity {
         this.sprite.setRotation(direction);
         this.sprite.draw(x, y);
         this.getEquippedWeapon().render();
+        this.damageAnimation.render(g);
     }
 
     /**

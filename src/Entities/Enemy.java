@@ -80,14 +80,18 @@ public abstract class Enemy extends LivingEntity{
 
 		if (enemyX > targetPosX) {
 			this.setX(this.getShape().getX() - this.movementSpeed * delta);
+			damageAnimation.setX(damageAnimation.getShape().getX() - this.movementSpeed * delta);
 		} else if (enemyX < targetPosX) {
 			this.setX(this.getShape().getX() + this.movementSpeed * delta);
+			damageAnimation.setX(damageAnimation.getShape().getX() + this.movementSpeed * delta);
 		}
 
 		if (enemyY > targetPosY) {
 			this.setY(this.getShape().getY() - this.movementSpeed * delta);
+			damageAnimation.setY(damageAnimation.getShape().getY() - this.movementSpeed * delta);
 		} else if (enemyY < targetPosY) {
 			this.setY(this.getShape().getY() + this.movementSpeed * delta);
+			damageAnimation.setY(damageAnimation.getShape().getY() + this.movementSpeed * delta);
 		}
 
 	}
@@ -106,6 +110,7 @@ public abstract class Enemy extends LivingEntity{
 		Vector2f enemyDirection = new Vector2f(playerX - enemyX, playerY - enemyY).normalise();
 		float enemyRotationAngle = (float) Math.toDegrees(Math.atan2(enemyDirection.getY(), enemyDirection.getX()));
 		this.setDirection(enemyRotationAngle);
+		damageAnimation.setDirection(enemyRotationAngle);
 
 	}
 	
