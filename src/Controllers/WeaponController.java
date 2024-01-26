@@ -149,7 +149,7 @@ public class WeaponController {
         float randomAccuracyY = (shotAccuracyRandomizer.nextFloat() - 0.5f) * weapon.getAccuracy();
 
         //Richtung und Offset zum Spieler für den Schuss bestimen
-        float direction = weapon.getDirection();
+        float direction = livingEntity.getDirection();
         float offsetX = weapon.getOffsetX() + (weapon.getAmmoType().equals("PRIMARY") ? 20 : 0);
         float offsetY = weapon.getOffsetY() + (weapon.getAmmoType().equals("PRIMARY") ? 5 : 0);
 

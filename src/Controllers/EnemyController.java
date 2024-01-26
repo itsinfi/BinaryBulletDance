@@ -58,7 +58,7 @@ public class EnemyController {
 	            }
 	        }
 			// shoot end
-			WeaponController.shoot(enemy);
+//			WeaponController.shoot(enemy);
 			enemy.move(delta);
 		}
 	}
