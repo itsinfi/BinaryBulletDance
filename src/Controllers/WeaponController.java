@@ -4,9 +4,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
 
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -20,7 +18,7 @@ import Entities.Animations.BulletTraceAnimation;
  * @author Sascha Angermann
  */
 //TODO: ANNOTATIONEN!!!
-public class WeaponController {
+public abstract class WeaponController {
 
     //Attribute
 
@@ -128,6 +126,7 @@ public class WeaponController {
         }
     }
 
+    //TODO: Aufräumen
     /**
      * Diese Methode führt alle nötigen Operationen durch, um eine Waffe zu schießen
      * 

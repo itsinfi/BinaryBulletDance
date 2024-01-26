@@ -12,6 +12,7 @@ import Entities.Weapons.AssaultRifle;
 import Entities.Weapons.Pistol;
 import Entities.Weapon;
 import Entities.Animations.BulletFireAnimation;
+import Entities.Animations.DamageAnimation;
 
 import java.util.HashMap;
 
@@ -20,7 +21,7 @@ import java.util.HashMap;
  * 
  * @author Jeremy Adam
  */
-public class PlayerController {
+public abstract class PlayerController {
 
     
     //Attribute
@@ -93,6 +94,7 @@ public class PlayerController {
         Weapon secondaryWeapon = player.getSecondaryWeapon();
         BulletFireAnimation primaryBulletFire = primaryWeapon.getBulletFire();
         BulletFireAnimation secondaryBulletFire = secondaryWeapon.getBulletFire();
+        DamageAnimation damageAnimation = player.getDamageAnimation();
 
         if (input.isKeyDown(Input.KEY_W) && player.getShape().getY() > 0) {
             player.setY(player.getShape().getY() - playerSpeed * delta);
@@ -100,6 +102,7 @@ public class PlayerController {
             secondaryWeapon.setY(secondaryWeapon.getShape().getY() - playerSpeed * delta);
             primaryBulletFire.setY(primaryBulletFire.getShape().getY() - playerSpeed * delta);
             secondaryBulletFire.setY(secondaryBulletFire.getShape().getY() - playerSpeed * delta);
+            damageAnimation.setY(damageAnimation.getShape().getY() - playerSpeed * delta);
         }
         if (input.isKeyDown(Input.KEY_S)
                 && player.getShape().getY() < container.getHeight() - player.getShape().getHeight()) {
@@ -108,6 +111,7 @@ public class PlayerController {
             secondaryWeapon.setY(secondaryWeapon.getShape().getY() + playerSpeed * delta);
             primaryBulletFire.setY(primaryBulletFire.getShape().getY() + playerSpeed * delta);
             secondaryBulletFire.setY(secondaryBulletFire.getShape().getY() + playerSpeed * delta);
+            damageAnimation.setY(damageAnimation.getShape().getY() + playerSpeed * delta);
         }
         if (input.isKeyDown(Input.KEY_A) && player.getShape().getX() > 0) {
             player.setX(player.getShape().getX() - playerSpeed * delta);
@@ -115,6 +119,7 @@ public class PlayerController {
             secondaryWeapon.setX(secondaryWeapon.getShape().getX() - playerSpeed * delta);
             primaryBulletFire.setX(primaryBulletFire.getShape().getX() - playerSpeed * delta);
             secondaryBulletFire.setX(secondaryBulletFire.getShape().getX() - playerSpeed * delta);
+            damageAnimation.setX(damageAnimation.getShape().getX() - playerSpeed * delta);
         }
         if (input.isKeyDown(Input.KEY_D)
                 && player.getShape().getX() < container.getWidth() - player.getShape().getWidth()) {
@@ -123,6 +128,7 @@ public class PlayerController {
             secondaryWeapon.setX(secondaryWeapon.getShape().getX() + playerSpeed * delta);
             primaryBulletFire.setX(primaryBulletFire.getShape().getX() + playerSpeed * delta);
             secondaryBulletFire.setX(secondaryBulletFire.getShape().getX() + playerSpeed * delta);
+            damageAnimation.setX(damageAnimation.getShape().getX() + playerSpeed * delta);
         }
         
         // TODO: DEVELOPER TOOL, REMOVE LATER
@@ -153,6 +159,7 @@ public class PlayerController {
             player.setDirection(playerRotationAngle);
             primaryWeapon.setDirection(playerRotationAngle);
             secondaryWeapon.setDirection(playerRotationAngle);
+            damageAnimation.setDirection(playerRotationAngle);
         }
 
         // Ausgerüstete Waffe lesen

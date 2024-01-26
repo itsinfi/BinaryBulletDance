@@ -5,6 +5,6 @@ package Controllers;
  * 
  * @author Hendrik Gomez
  */
-public class LevelController {
+public abstract class LevelController {
     //TODO:
 }

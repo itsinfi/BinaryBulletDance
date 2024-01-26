@@ -2,6 +2,8 @@ package Entities;
 
 import org.newdawn.slick.SlickException;
 
+import Entities.Animations.DamageAnimation;
+
 /**
  * Diese Klasse stellt die Vorgabe für alle lebendigen Entitäten im Game dar, sprich Spieler und Gegner
  * 
@@ -17,6 +19,7 @@ public abstract class LivingEntity extends Entity implements Renderable {
     protected short maxHitpoints = 100;
     protected short invincibilityTime = 0;
     protected float movementSpeed = 0.27f;
+    protected DamageAnimation damageAnimation;
 
 
     //Konstruktoren
@@ -34,6 +37,7 @@ public abstract class LivingEntity extends Entity implements Renderable {
      */
     public LivingEntity(String spriteAsset, float centerX, float centerY, float direction) throws SlickException {
         super(spriteAsset, centerX, centerY, direction);
+        this.damageAnimation = new DamageAnimation(spriteAsset, this.shape.getCenterX(), this.shape.getCenterY(), this.direction);
     }
 
 
@@ -73,6 +77,15 @@ public abstract class LivingEntity extends Entity implements Renderable {
      */
     public float getMovementSpeed() {
         return movementSpeed;
+    }
+
+    /**
+     * Diese Methode gibt die Schadensanimation der Entität zurück.
+     * 
+     * @return Schadensanimation
+     */
+    public DamageAnimation getDamageAnimation() {
+        return damageAnimation;
     }
 
 
@@ -139,9 +152,12 @@ public abstract class LivingEntity extends Entity implements Renderable {
     	if(finalAmount <= 0) {
     		this.setHitpoints((short) (0));
     		this.die();
-    	} else {
-    		this.setHitpoints(finalAmount);
-    	}
+        } else {
+            this.setHitpoints(finalAmount);
+        }
+        
+        //Schadensanimation abspielen
+        damageAnimation.animate();
     }
 
     /**

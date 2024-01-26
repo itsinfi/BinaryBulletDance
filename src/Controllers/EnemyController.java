@@ -7,13 +7,14 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
 import Entities.Enemy;
+import Entities.Animations.DamageAnimation;
 
 /**
  * Diese Klasse verwaltet alle Gegner im Game.
  * 
  * @author Jeremy Adam
  */
-public class EnemyController {
+public abstract class EnemyController {
     //TODO:
 	
 	private static HashSet<Enemy> enemies = new HashSet<Enemy>();
@@ -42,6 +43,7 @@ public class EnemyController {
 			}
 			enemy.alignWithPlayer();
 			enemy.move(delta);
+			enemy.getDamageAnimation().update();
 		}
 	}
 	
@@ -49,6 +51,7 @@ public class EnemyController {
 		for (Enemy enemy : enemies) {
 			enemy.render(g);
 			g.drawString("HP: " + enemy.getHitpoints(), 200, 160);
+			enemy.getDamageAnimation().render(g);
 		}
 		
 	}
