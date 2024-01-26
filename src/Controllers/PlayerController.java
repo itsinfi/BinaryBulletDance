@@ -180,7 +180,7 @@ public class PlayerController {
                     || (!equippedWeapon.getAutomaticFire() && input.isMousePressed(Input.MOUSE_LEFT_BUTTON))) {
 
                 //Waffe schießen
-                if (player.getEquippedWeapon().getBullets() > 0) {
+                if (equippedWeapon.getBullets() > 0) {
                     WeaponController.shoot(player);
                 }
             }

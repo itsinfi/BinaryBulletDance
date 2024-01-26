@@ -65,7 +65,7 @@ public class GameStateManager extends BasicGame {
             AppGameContainer app = new AppGameContainer(
                     new GameStateManager("ayo voll krasses game alter check this out!"));
             app.setIcons(new String[] { "assets/appIcon/appIcon.png" });
-            app.setDisplayMode(1600, 900, true);
+            app.setDisplayMode(1600, 900, false);
             app.setTargetFrameRate(60);
             app.start();
         } catch (SlickException e) {

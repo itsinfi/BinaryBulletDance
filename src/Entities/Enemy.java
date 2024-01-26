@@ -8,14 +8,16 @@ import org.newdawn.slick.geom.Vector2f;
 import Entities.Weapon;
 import Controllers.EnemyController;
 import Controllers.PlayerController;
+import Controllers.WeaponController;
 
 import java.lang.Math;
 import java.util.Random;
 
 public abstract class Enemy extends LivingEntity{
 	
-	float targetPosX;
-	float targetPosY;
+	protected float targetPosX;
+	protected float targetPosY;
+	
 
 	public Enemy(String spriteAsset, float centerX, float centerY, float direction) throws SlickException {
 		super(spriteAsset, centerX, centerY, direction);
@@ -106,5 +108,6 @@ public abstract class Enemy extends LivingEntity{
 		this.setDirection(enemyRotationAngle);
 
 	}
+	
     
 }

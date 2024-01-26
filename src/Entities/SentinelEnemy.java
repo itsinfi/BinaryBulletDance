@@ -1,15 +1,20 @@
 package Entities;
 
+import java.util.HashMap;
+
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 import Controllers.EnemyController;
+import Entities.Weapons.Pistol;
 
 public class SentinelEnemy extends Enemy {
 	
 	// constructor
 	public SentinelEnemy(String spriteAsset, float centerX, float centerY, float direction) throws SlickException {
 		super(spriteAsset, centerX, centerY, direction);
+		Weapon w = (Weapon) new Pistol((LivingEntity) this);
+		this.setEquippedWeapon(w);
 		this.movementSpeed = 0.17f;
 		this.hitpoints = 100;
 	}
@@ -41,6 +46,11 @@ public class SentinelEnemy extends Enemy {
 	public void reload() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	// getters and setters
+	public void setEquippedWeapon(Weapon w) {
+		this.equippedWeapon = w;
 	}
 
 }

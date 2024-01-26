@@ -5,8 +5,10 @@ import java.util.Iterator;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 
 import Entities.Enemy;
+import Entities.Weapon;
 
 /**
  * Diese Klasse verwaltet alle Gegner im Game.
@@ -41,6 +43,22 @@ public class EnemyController {
 				continue;
 			}
 			enemy.alignWithPlayer();
+			// shoot start
+			//Prüfen, ob die Waffe nachgeladen wird oder bereits den nächsten Schuss abgeben darf oder aktuell noch nicht fertig ausgerüstet ist.
+			Weapon equippedWeapon = enemy.getEquippedWeapon();
+	        if (equippedWeapon.getReloadTimer() == 0 && equippedWeapon.getFireTimer() == 0) {
+
+	            //Prüfen, ob die Waffe automatisch ist und ob die linke Maustaste gedrückt (bzw. gehalten bei automatisch) wurde
+	            if ((equippedWeapon.getAutomaticFire()) || (!equippedWeapon.getAutomaticFire())) {
+
+	                //Waffe schießen
+	                if (equippedWeapon.getBullets() > 0) {
+	                    WeaponController.shoot(enemy);
+	                }
+	            }
+	        }
+			// shoot end
+			WeaponController.shoot(enemy);
 			enemy.move(delta);
 		}
 	}
