@@ -132,7 +132,7 @@ public abstract class WeaponController {
      * 
      * @param livingEntity
      */
-    public static void shoot(LivingEntity livingEntity, float xCursor, float yCursor) {
+    public static void shoot(LivingEntity livingEntity, Float xCursor, Float yCursor) {
 
         //Waffe auslesen
         Weapon weapon = livingEntity.getEquippedWeapon();
@@ -184,8 +184,19 @@ public abstract class WeaponController {
         float x = livingEntityX + rotatedOffsetX;
         float y = livingEntityY + rotatedOffsetY;
 
-        //Richtung der lebendigen Enittät auslesen und einen Vektor dazu berechnen
-        Vector2f livingEntityDirection = new Vector2f(xCursor - x, yCursor - y);
+        //Richtung der lebendigen Enittät auslesen und einen Vektor dazu berechnen (falls xCursor und yCursor null sind)
+        Vector2f livingEntityDirection;
+        if (xCursor == null && yCursor == null) {
+            livingEntityDirection = new Vector2f(direction);
+
+        //Position eines Punktes berechnen, und Vektor dazu berechnen (falls xCursor und yCursor nicht null sind)
+        } else if (xCursor != null && yCursor != null) {
+            livingEntityDirection = new Vector2f(xCursor - x, yCursor - y);
+        
+        //Andernfalls returnen, weil es sollen beide Werte null oder nicht null sein
+        } else {
+            return;
+        }
 
         //Distanz des Richtungsvektors auf die Reichweite der Waffe skalieren
         Vector2f bulletDirection = livingEntityDirection.scale(weapon.getRange());

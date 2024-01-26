@@ -6,6 +6,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
 import Entities.Weapon;
+import Entities.Animations.BulletFireAnimation;
 import Controllers.EnemyController;
 import Controllers.PlayerController;
 import Controllers.WeaponController;
@@ -71,27 +72,33 @@ public abstract class Enemy extends LivingEntity{
 		}
 		
 		if (distanceY < maxDistance) {
-			
-			float min = playerY-range;
-			float max = playerY+range;
-			
+
+			float min = playerY - range;
+			float max = playerY + range;
+
 			this.targetPosY = random.nextFloat(min, max);
-		
+
 		}
+		
+		BulletFireAnimation bulletFireAnimation = equippedWeapon.getBulletFire();
 
 		if (enemyX > targetPosX) {
 			this.setX(this.getShape().getX() - this.movementSpeed * delta);
+			bulletFireAnimation.setX(bulletFireAnimation.getShape().getX() - this.movementSpeed * delta);
 			damageAnimation.setX(damageAnimation.getShape().getX() - this.movementSpeed * delta);
 		} else if (enemyX < targetPosX) {
 			this.setX(this.getShape().getX() + this.movementSpeed * delta);
+			bulletFireAnimation.setX(bulletFireAnimation.getShape().getX() + this.movementSpeed * delta);
 			damageAnimation.setX(damageAnimation.getShape().getX() + this.movementSpeed * delta);
 		}
 
 		if (enemyY > targetPosY) {
 			this.setY(this.getShape().getY() - this.movementSpeed * delta);
+			bulletFireAnimation.setY(bulletFireAnimation.getShape().getY() - this.movementSpeed * delta);
 			damageAnimation.setY(damageAnimation.getShape().getY() - this.movementSpeed * delta);
 		} else if (enemyY < targetPosY) {
 			this.setY(this.getShape().getY() + this.movementSpeed * delta);
+			bulletFireAnimation.setY(bulletFireAnimation.getShape().getY() + this.movementSpeed * delta);
 			damageAnimation.setY(damageAnimation.getShape().getY() + this.movementSpeed * delta);
 		}
 
@@ -125,7 +132,7 @@ public abstract class Enemy extends LivingEntity{
 		
 		this.setDirection(enemyRotationAngle);
 		damageAnimation.setDirection(enemyRotationAngle);
-
+		equippedWeapon.getBulletFire().setDirection(enemyRotationAngle);
 	}
 	
 	protected int turnLeftOrRight(float currentDirection, float targetDirection) {
