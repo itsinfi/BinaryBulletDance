@@ -113,19 +113,19 @@ public abstract class Hud {
     	
     }
     
-    /**
+    /**TODO:
      * Diese Methode spielt den Sound, wenn der Spieler stirbt (ein zufälliger aus 4)
      */
     public static void playDeathDialogSound() {
         if (deathDialog == null) {
-            int randomInt = random.nextInt(4) + 1;
-            String fileName = "assets/sounds/death_dialog_" + randomInt + ".wav";
-            try {
-                deathDialog = new Sound(fileName);
-                deathDialog.play();
-            } catch (SlickException e) {
-                System.out.println(e);
-            }
+        //     int randomInt = random.nextInt(4) + 1;
+        //     String fileName = "assets/sounds/death_dialog_" + randomInt + ".wav";
+        //     try {
+        //         deathDialog = new Sound(fileName);
+        //         deathDialog.play();
+        //     } catch (SlickException e) {
+        //         System.out.println(e);
+        //     }
         }
     }
 }

@@ -96,6 +96,10 @@ public abstract class PlayerController {
         BulletFireAnimation secondaryBulletFire = secondaryWeapon.getBulletFire();
         DamageAnimation damageAnimation = player.getDamageAnimation();
 
+        //Damage-Animation updaten
+        damageAnimation.update();
+
+        //Keyboard-Input auslesen
         if (input.isKeyDown(Input.KEY_W) && player.getShape().getY() > 0) {
             player.setY(player.getShape().getY() - playerSpeed * delta);
             primaryWeapon.setY(primaryWeapon.getShape().getY() - playerSpeed * delta);
