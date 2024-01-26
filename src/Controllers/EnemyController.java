@@ -55,6 +55,9 @@ public abstract class EnemyController {
 	                //Waffe schießen
 	                if (equippedWeapon.getBullets() > 0) {
 	                    WeaponController.shoot(enemy);
+	                } else {
+	                	equippedWeapon.setReloadTimer(equippedWeapon.getReloadRate());
+	                	equippedWeapon.reload((short)(15));
 	                }
 	            }
 	        }
