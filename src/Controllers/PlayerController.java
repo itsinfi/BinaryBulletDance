@@ -96,6 +96,10 @@ public abstract class PlayerController {
         BulletFireAnimation secondaryBulletFire = secondaryWeapon.getBulletFire();
         DamageAnimation damageAnimation = player.getDamageAnimation();
 
+        //Damage-Animation updaten
+        damageAnimation.update();
+
+        //Keyboard-Input auslesen
         if (input.isKeyDown(Input.KEY_W) && player.getShape().getY() > 0) {
             player.setY(player.getShape().getY() - playerSpeed * delta);
             primaryWeapon.setY(primaryWeapon.getShape().getY() - playerSpeed * delta);
@@ -178,18 +182,15 @@ public abstract class PlayerController {
             }
         }
 
-        //Prüfen, ob die Waffe nachgeladen wird oder bereits den nächsten Schuss abgeben darf oder aktuell noch nicht fertig ausgerüstet ist.
-        if (equippedWeapon.getReloadTimer() == 0 && equippedWeapon.getFireTimer() == 0
-                && player.getChangeEquippedWeaponTimer() == 0) {
+        //Prüfen, ob die Waffe aktuell noch nicht fertig ausgerüstet ist.
+        if (player.getChangeEquippedWeaponTimer() == 0) {
 
             //Prüfen, ob die Waffe automatisch ist und ob die linke Maustaste gedrückt (bzw. gehalten bei automatisch) wurde
             if ((equippedWeapon.getAutomaticFire() && input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
                     || (!equippedWeapon.getAutomaticFire() && input.isMousePressed(Input.MOUSE_LEFT_BUTTON))) {
-
-                //Waffe schießen
-                if (equippedWeapon.getBullets() > 0) {
+                    
+                    //Waffe schießen
                     WeaponController.shoot(player);
-                }
             }
         }
 
