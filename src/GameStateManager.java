@@ -50,7 +50,7 @@ public class GameStateManager extends BasicGame {
 
 
     //Setter
- 
+
 
     //Methoden
 
@@ -65,7 +65,7 @@ public class GameStateManager extends BasicGame {
             AppGameContainer app = new AppGameContainer(
                     new GameStateManager("ayo voll krasses game alter check this out!"));
             app.setIcons(new String[] { "assets/appIcon/appIcon.png" });
-            app.setDisplayMode(800, 600, false);
+            app.setDisplayMode(1600, 900, true);
             app.setTargetFrameRate(60);
             app.start();
         } catch (SlickException e) {
@@ -83,7 +83,7 @@ public class GameStateManager extends BasicGame {
     public void init(GameContainer container) throws SlickException {
         PlayerController.init(container);
         livingEntities.add(PlayerController.getPlayer());
-        mapAsset = new Level("assets/mapTest1.png");
+        mapAsset = new Level("assets/mapTest2.png");
 
         //Font für die GUI laden        
         Hud.init();

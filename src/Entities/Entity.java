@@ -36,7 +36,8 @@ public abstract class Entity {
      */
     public Entity(String spriteAsset, float centerX, float centerY, float direction) throws SlickException {
         //Sprite laden
-        this.sprite = new Image(spriteAsset);
+        Image image = new Image(spriteAsset);
+        this.sprite = image.getScaledCopy(2);
 
         //Höhe und Breite des Sprites lesen
         float width = sprite.getWidth();
