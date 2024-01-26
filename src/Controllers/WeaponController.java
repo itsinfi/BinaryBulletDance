@@ -8,7 +8,9 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Vector2f;
 
+import Entities.Enemy;
 import Entities.LivingEntity;
+import Entities.Player;
 import Entities.Weapon;
 import Entities.Animations.BulletTraceAnimation;
 
@@ -210,10 +212,6 @@ public abstract class WeaponController {
 
         //Hitscan durchführen
         hitScan(weapon, bulletLine, livingEntity);
-
-        //Bullet Trace Animation erzeugen und der Liste hinzufügen
-        BulletTraceAnimation bulletTraceAnimation = new BulletTraceAnimation(bulletLine);
-        bulletTraces.add(bulletTraceAnimation);
     }
     
     /**
@@ -228,6 +226,9 @@ public abstract class WeaponController {
         HashSet<LivingEntity> livingEntities = new HashSet<LivingEntity>();
         livingEntities.add(PlayerController.getPlayer());
         livingEntities.addAll(EnemyController.getEnemies());
+
+        //Bestimmen, ob die schießende Entität ein Gegner ist
+        boolean entityIsEnemy = shootingEntity instanceof Enemy;
 
         //Variablen setzen, um hier das nächste Objekt zu speichern, das getroffen wurde (falls eines existiert)
         LivingEntity nearestLivingEntity = null;
@@ -248,6 +249,9 @@ public abstract class WeaponController {
                     livingEntity.getShape().getCenterY()));
             if (livingEntity.getShape().intersects(bulletLine) && distance < nearestDistance) {
                 nearestDistance = distance;
+                
+                //Friendly Fire ausschließen
+                if (entityIsEnemy && livingEntity instanceof Player)
                 nearestLivingEntity = livingEntity;
             }
         }
@@ -255,7 +259,17 @@ public abstract class WeaponController {
         //Der nächsten lebendigen Entität, die auf der Kugellaufbahn lag und getroffen wurde, Schaden geben
         if (nearestLivingEntity != null) {
             nearestLivingEntity.takeDamage(weapon.getDamagePerBullet());
+
+            //Schussbahn um die Distanz zum Aufprallpunkt verkürzen, falls ein Objekt getroffen wurde
+            double ratio = nearestDistance / bulletLine.length();
+            float newEndX = (float) (bulletLine.getX1() + (bulletLine.getX2() - bulletLine.getX1()) * ratio);
+            float newEndY = (float) (bulletLine.getY1() + (bulletLine.getY2() - bulletLine.getY1()) * ratio);
+            bulletLine.set(bulletLine.getX1(), bulletLine.getY1(), newEndX, newEndY);
         }
+
+        //Bullet Trace Animation erzeugen und der Liste hinzufügen
+        BulletTraceAnimation bulletTraceAnimation = new BulletTraceAnimation(bulletLine);
+        bulletTraces.add(bulletTraceAnimation);
     }
 
 }
