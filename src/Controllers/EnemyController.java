@@ -1,6 +1,7 @@
 package Controllers;
 
 import java.util.HashSet;
+import java.util.Iterator;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -26,8 +27,19 @@ public class EnemyController {
 		enemies.add(enemy);
 	}
 	
+	public static void removeEnemy(Enemy enemy) {
+		enemies.remove(enemy);
+	}
+	
 	public static void update(GameContainer container, int delta) {
-		for (Enemy enemy : enemies) {
+		Iterator<Enemy> it = enemies.iterator();
+		while (it.hasNext()) {
+			Enemy enemy =  it.next();
+			if (enemy.getHitpoints()<=0) {
+				enemy.die();
+				it.remove();
+				continue;
+			}
 			enemy.alignWithPlayer();
 			enemy.move(delta);
 		}

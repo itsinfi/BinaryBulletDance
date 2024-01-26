@@ -3,6 +3,8 @@ package Entities;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
+import Controllers.EnemyController;
+
 public class SentinelEnemy extends Enemy {
 	
 	// constructor

@@ -6,6 +6,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
 import Entities.Weapon;
+import Controllers.EnemyController;
 import Controllers.PlayerController;
 
 import java.lang.Math;
@@ -27,14 +28,14 @@ public abstract class Enemy extends LivingEntity{
 
     
 
-//	/**
-//	 * 
-//	 */
-//    @Override
-//    public void die() {
-//        // TODO: Auto-generated method stub
-//        throw new UnsupportedOperationException("Unimplemented method 'die'");
-//    }
+	/**
+	 * 
+	 */
+    @Override
+    public void die() {
+    	
+//    	throw new UnsupportedOperationException("Unimplemented method 'die'");
+    }
 	
 	/**
 	 * moves enemy towards a randomly selected target position within a certain distance near the player
