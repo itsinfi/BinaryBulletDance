@@ -29,7 +29,7 @@ public class BulletTraceAnimation implements Animatable {
             float randomFloat = random.nextFloat();
             float x = line.getStart().getX() + randomFloat * (line.getEnd().getX() - line.getStart().getX());
             float y = line.getStart().getY() + randomFloat * (line.getEnd().getY() - line.getStart().getY());
-            TraceParticle traceParticle = new TraceParticle(x + (random.nextFloat() * 3), y + (random.nextFloat() * 3), animationTime);
+            TraceParticle traceParticle = new TraceParticle(x + (random.nextFloat() * 6), y + (random.nextFloat() * 6), animationTime);
             traceParticles.add(traceParticle);
         }
     }
@@ -55,14 +55,14 @@ public class BulletTraceAnimation implements Animatable {
     @Override
     public void render(Graphics g) {
         if (animationTimer > 0) {
-            Color color = new Color(200, 200, 200, animationTimer);
+            Color color = new Color(220, 170, 100, animationTimer * 4);
             g.setColor(color);
 
             Iterator<TraceParticle> it = traceParticles.iterator();
             while (it.hasNext()) {
             TraceParticle traceParticle = it.next();
             traceParticle.render(g);
-        }
+            }
         }
     }
 

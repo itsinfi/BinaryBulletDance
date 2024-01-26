@@ -38,7 +38,7 @@ public class TraceParticle implements Animatable {
     @Override
     public void render(Graphics g) {
         if (animationTimer > 0) {
-            g.fillRect(xPos, yPos, 1.5f, 1.5f);
+            g.fillRect(xPos, yPos, 3f, 3f);
         }
     }
     
