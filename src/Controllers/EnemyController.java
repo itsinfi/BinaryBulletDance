@@ -41,11 +41,11 @@ public abstract class EnemyController {
 				it.remove();
 				continue;
 			}
-			enemy.alignWithPlayer();
+			enemy.alignWithPlayer(delta);
 
 			// shoot start
 
-			//Prüfen, ob die Waffe nachgeladen wird oder bereits den nächsten Schuss abgeben darf oder aktuell noch nicht fertig ausgerüstet ist.
+//			check if magazine is empty and whether reload timer needs to be set off
 			Weapon equippedWeapon = enemy.getEquippedWeapon();
 
 			if (equippedWeapon.getBullets() > 0) {
@@ -60,7 +60,6 @@ public abstract class EnemyController {
 
 			// shoot end
 			
-//			WeaponController.shoot(enemy);
 			enemy.move(delta);
 			enemy.getDamageAnimation().update();
 		}

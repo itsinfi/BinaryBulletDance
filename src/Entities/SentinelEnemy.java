@@ -15,13 +15,10 @@ public class SentinelEnemy extends Enemy {
 		super(spriteAsset, centerX, centerY, direction);
 		Weapon w = (Weapon) new Pistol((LivingEntity) this);
 		this.setEquippedWeapon(w);
-		this.movementSpeed = 0.17f;
+		this.movementSpeed = 0.15f;
+		this.rotationSpeed = 0.15f;
 		this.hitpoints = 100;
 	}
-	
-//	public void update() {
-//		alignWithPlayer();
-//	}
 
 	/**
 	 * 

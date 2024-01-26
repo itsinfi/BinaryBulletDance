@@ -17,6 +17,7 @@ public abstract class Enemy extends LivingEntity{
 	
 	protected float targetPosX;
 	protected float targetPosY;
+	protected float rotationSpeed;
 	
 
 	public Enemy(String spriteAsset, float centerX, float centerY, float direction) throws SlickException {
@@ -100,7 +101,7 @@ public abstract class Enemy extends LivingEntity{
 	 * aligns Enemy automatically with player
 	 */
 	// TODO check if there's a wall between player and enemy
-	public void alignWithPlayer() {
+	public void alignWithPlayer(int delta) {
 		float enemyX = this.getShape().getCenterX();
 		float enemyY = this.getShape().getCenterY();
 		
@@ -108,11 +109,38 @@ public abstract class Enemy extends LivingEntity{
 		float playerY = PlayerController.getPlayer().getShape().getCenterY();
 		
 		Vector2f enemyDirection = new Vector2f(playerX - enemyX, playerY - enemyY).normalise();
-		float enemyRotationAngle = (float) Math.toDegrees(Math.atan2(enemyDirection.getY(), enemyDirection.getX()));
+		float targetRotationAngle = (float) Math.toDegrees(Math.atan2(enemyDirection.getY(), enemyDirection.getX()));
+		
+		float enemyRotationAngle;
+		
+		int turnDirection = turnLeftOrRight(this.direction, targetRotationAngle);
+		if (turnDirection > 0) {
+			enemyRotationAngle = this.direction + this.rotationSpeed * delta;
+		} else if(turnDirection < 0) {
+			enemyRotationAngle = this.direction - this.rotationSpeed * delta;
+		} else {
+			enemyRotationAngle = targetRotationAngle;
+		}
+		
+		
 		this.setDirection(enemyRotationAngle);
 		damageAnimation.setDirection(enemyRotationAngle);
 
 	}
+	
+	protected int turnLeftOrRight(float currentDirection, float targetDirection) {
+//		Quelle: ChatGPT
+		
+		float angleDifference = targetDirection - currentDirection;
+		angleDifference = (angleDifference + 180) % 360 - 180;
+		if (angleDifference > 0) {
+			return 1; // Rotate right is shorter
+			} else if (angleDifference < 0) {
+				return -1;  // Rotate left is shorter
+				} else {
+					return 0;  // Angles are the same
+					}
+		}
 	
 	public void reload() {
 		short requiredBullets = (short) (this.equippedWeapon.getMagazineSize() - this.equippedWeapon.getBullets());
