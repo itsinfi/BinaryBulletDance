@@ -32,6 +32,7 @@
         "Tileset01.tsx"
     ],
     "project": "BBD.tiled-project",
+    "property.type": "bool",
     "recentFiles": [
         "Tileset01.tsx",
         "Level01.tmx"

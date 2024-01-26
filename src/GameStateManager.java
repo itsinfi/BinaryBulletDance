@@ -119,7 +119,7 @@ public class GameStateManager extends BasicGame {
     public void render(GameContainer container, Graphics g) throws SlickException {
 
         // Map rendern
-        mapAsset.render(g);
+        mapAsset.render();
 
         // Weapons rendern
         weaponController.render(g);
