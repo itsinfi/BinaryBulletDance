@@ -19,7 +19,6 @@ import Entities.Animations.BulletTraceAnimation;
  * 
  * @author Sascha Angermann
  */
-//TODO: ANNOTATIONEN!!!
 public abstract class WeaponController {
 
     //Attribute
@@ -92,7 +91,7 @@ public abstract class WeaponController {
             weapon.getBulletFire().update();
         }
 
-        //TODO: Kommentar
+        //Alle Schussanimationen aktualisieren (oder entfernen falls abgelaufen)
         Iterator<BulletTraceAnimation> btaIterator = bulletTraces.iterator();
         while (btaIterator.hasNext()) {
             BulletTraceAnimation bulletTraceAnimation = btaIterator.next();
@@ -128,7 +127,6 @@ public abstract class WeaponController {
         }
     }
 
-    //TODO: Aufräumen
     /**
      * Diese Methode führt alle nötigen Operationen durch, um eine Waffe zu schießen
      * 
@@ -199,7 +197,7 @@ public abstract class WeaponController {
         //Vektor normalisieren (Länge auf 1 setzen)
         bulletDirection.normalise();
 
-        //Linie für die Laufbahn erzeugen
+        //Linie für die maximale Laufbahn der Kugel erzeugen
         float lineX = (float) (weapon.getRange() * Math.cos(Math.toRadians(direction))) + randomAccuracyX;
         float lineY = (float) (weapon.getRange() * Math.sin(Math.toRadians(direction))) + randomAccuracyY;
         Line bulletLine = new Line(x, y, livingEntityX + lineX, livingEntityY + lineY);
@@ -236,7 +234,7 @@ public abstract class WeaponController {
         //Distanz zum Startpunkt des Schusses speichern, um zu vergleichen, welches Objekt das Nächste ist.
         float nearestDistance = Float.MAX_VALUE;
 
-        //Alle lebendigen Entitäten iterieren, um zu bestimmen, welches getroffen wurde
+        //Alle lebendigen Entitäten iterieren, um zu bestimmen, welche evtl. getroffen wurde
         for (LivingEntity livingEntity : livingEntities) {
             
             //(schießende Entität hierzu ausschließen, weil Selbstmord ist uncool)
@@ -244,15 +242,20 @@ public abstract class WeaponController {
                 continue;
             }
             
-            //Überprüfung der Distanz und als nächste Entität setzen
+            //Überprüfung auf Überschneidung und falls ja, Abspeichern der Distanz und der Entität
             float distance = bulletLine.getStart().distance(new Vector2f(livingEntity.getShape().getCenterX(),
                     livingEntity.getShape().getCenterY()));
             if (livingEntity.getShape().intersects(bulletLine) && distance < nearestDistance) {
+
+                //Kugelabprall durch neuen Distanzwert sicherstellen
                 nearestDistance = distance;
-                
-                //Friendly Fire ausschließen
-                if (entityIsEnemy && livingEntity instanceof Player)
-                nearestLivingEntity = livingEntity;
+
+                //Überprüfung auf Friendly Fire (falls ja, soll kein Schaden gegeben werden)
+                if (entityIsEnemy && livingEntity instanceof Player) {
+                    nearestLivingEntity = livingEntity;
+                } else {
+                    nearestLivingEntity = null;
+                }
             }
         }
 
@@ -267,7 +270,7 @@ public abstract class WeaponController {
             bulletLine.set(bulletLine.getX1(), bulletLine.getY1(), newEndX, newEndY);
         }
 
-        //Bullet Trace Animation erzeugen und der Liste hinzufügen
+        //Bullet Trace Animation erzeugen und der Liste an Bullet Trace Animationen hinzufügen
         BulletTraceAnimation bulletTraceAnimation = new BulletTraceAnimation(bulletLine);
         bulletTraces.add(bulletTraceAnimation);
     }

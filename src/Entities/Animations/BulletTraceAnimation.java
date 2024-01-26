@@ -19,26 +19,55 @@ public class BulletTraceAnimation implements Animatable {
     private Random random = new Random();
     private HashSet<TraceParticle> traceParticles = new HashSet<TraceParticle>();
 
+
+    /**
+     * Diese Methode erzeugt eine Schusslaufbahnanimation
+     * 
+     * @param line Linie der Schusslaufbahn
+     */
     public BulletTraceAnimation(Line line) {
         animate();
         createTraceParticles(line);
     }
     
+
+    /**
+     * Diese Methode erstellt die Partikel, welche auf der Linie platziert werden sollen
+     * 
+     * @param line Linie der Schusslaufbahn
+     */
     public void createTraceParticles(Line line) {
+
+        //1/4 der Länge in Pixel an Partikeln hinzufügen
         for (int i = 0; i < (line.length() / 4); i++) {
+
+            //Zufälligen Wert für Position auf der Linie bestimmen
             float randomFloat = random.nextFloat();
+
+            //x- und y-Koordinaten ausrechnen
             float x = line.getStart().getX() + randomFloat * (line.getEnd().getX() - line.getStart().getX());
             float y = line.getStart().getY() + randomFloat * (line.getEnd().getY() - line.getStart().getY());
-            TraceParticle traceParticle = new TraceParticle(x + (random.nextFloat() * 6), y + (random.nextFloat() * 6), animationTime);
+
+            //Partikelanimation erstellen (mit zufälliger Platzierung um der Linie herum)
+            TraceParticle traceParticle = new TraceParticle(x + (random.nextFloat() * 6), y + (random.nextFloat() * 6),
+                    animationTime);
+
+            //Partikel der Liste an Partikeln hinzufügen
             traceParticles.add(traceParticle);
         }
     }
 
+    /**
+     * Diese Methode startet den Animationstimer.
+     */
     @Override
     public void animate() {
         animationTimer = animationTime;
     }
 
+    /**
+     * Diese Methode updatet den Animationstimer und startet die update-Methode aller Partikel.
+     */
     @Override
     public void update() {
         if (animationTimer > 0) {
@@ -52,6 +81,11 @@ public class BulletTraceAnimation implements Animatable {
         }
     }
 
+    /**
+     * Diese Methode setzt eine Farbe und startet die render-Funktion aller Partikel.
+     * 
+     * @param g Grafische Darstellung des Spiels durch die Slick2D-Library
+     */
     @Override
     public void render(Graphics g) {
         if (animationTimer > 0) {
@@ -60,12 +94,17 @@ public class BulletTraceAnimation implements Animatable {
 
             Iterator<TraceParticle> it = traceParticles.iterator();
             while (it.hasNext()) {
-            TraceParticle traceParticle = it.next();
-            traceParticle.render(g);
+                TraceParticle traceParticle = it.next();
+                traceParticle.render(g);
             }
         }
     }
 
+    /**
+     * Diese Methode gibt den aktuellen Wert des Animationstimers aus.
+     * 
+     * @return Aktueller Wert des Animationstimers
+     */
     public short getAnimationTimer() {
         return animationTimer;
     }
