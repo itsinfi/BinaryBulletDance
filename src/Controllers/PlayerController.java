@@ -150,7 +150,9 @@ public abstract class PlayerController {
         Vector2f playerDirection = new Vector2f(mouseX - playerX, mouseY - playerY);
 
         //Prüfen, ob die Distanz den Mindestwert überschreitet (um zu verhindern, dass der Spieler z.B. sich selbst treffen kann)
-        if (playerDirection.length() > 80) {
+        boolean playerIsTooNear = true;
+        if (playerDirection.length() > 150) {
+            playerIsTooNear = false;
 
             //Richtungsvektor normalisieren (Länge auf 1 setzen)
             playerDirection = playerDirection.normalise();
@@ -190,7 +192,7 @@ public abstract class PlayerController {
                     || (!equippedWeapon.getAutomaticFire() && input.isMousePressed(Input.MOUSE_LEFT_BUTTON))) {
                     
                     //Waffe schießen
-                    WeaponController.shoot(player, mouseX, mouseY);
+                    WeaponController.shoot(player, playerIsTooNear ? null : mouseX, playerIsTooNear ? null : mouseY);
             }
         }
 
