@@ -41,7 +41,6 @@ public abstract class EnemyController {
 				it.remove();
 				continue;
 			}
-			enemy.alignWithPlayer(delta);
 
 			// shoot start
 
@@ -59,6 +58,8 @@ public abstract class EnemyController {
 			}
 
 			// shoot end
+			
+			enemy.alignWithPlayer(delta);
 			
 			enemy.move(delta);
 			enemy.getDamageAnimation().update();
