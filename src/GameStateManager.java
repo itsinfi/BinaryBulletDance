@@ -7,6 +7,7 @@ import org.newdawn.slick.SlickException;
 
 import Controllers.WeaponController;
 import Controllers.EnemyController;
+import Controllers.MusicController;
 import Controllers.PlayerController;
 import Entities.LivingEntity;
 import Entities.Player;
@@ -96,6 +97,9 @@ public class GameStateManager extends BasicGame {
         EnemyController.addEnemy(sentinel);
         EnemyController.addEnemy(sentinel2);
         EnemyController.addEnemy(sentinel3);
+
+        MusicController.init();
+        MusicController.startMusic();
     }
 
     /**

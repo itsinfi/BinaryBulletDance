@@ -12,6 +12,7 @@ import org.newdawn.slick.Sound;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.util.ResourceLoader;
 
+import Controllers.MusicController;
 import Controllers.PlayerController;
 import Entities.Player;
 
@@ -70,7 +71,8 @@ public abstract class Hud {
         g.drawString("Y: "+ player.getShape().getCenterY(), 200, 180);
         
         // Game Over Screen
-        if(PlayerController.getPlayer().getHitpoints() <= 0) {
+        if (PlayerController.getPlayer().getHitpoints() <= 0) {
+            MusicController.stopMusic();
         	gameOverScreen(g, container);
         }
         
