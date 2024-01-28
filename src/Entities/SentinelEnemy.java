@@ -11,13 +11,21 @@ import Entities.Weapons.Pistol;
 public class SentinelEnemy extends Enemy {
 	
 	// constructor
+	/**
+	 * creates a new Sentinel
+	 * @param spriteAsset - where the sprite is located
+	 * @param centerX - where the sentinel is spawned on the x-axis
+	 * @param centerY - where the sentinel is spawned on the y-axis
+	 * @param direction - starting direction where the sentinel is looking towards
+	 * @throws SlickException
+	 */
 	public SentinelEnemy(String spriteAsset, float centerX, float centerY, float direction) throws SlickException {
 		super(spriteAsset, centerX, centerY, direction);
 		Weapon w = (Weapon) new Pistol((LivingEntity) this);
 		this.setEquippedWeapon(w);
 		this.movementSpeed = 0.15f;
 		this.rotationSpeed = 0.15f;
-		this.hitpoints = 100;
+		this.hitpoints = 25;
 	}
 
 	/**

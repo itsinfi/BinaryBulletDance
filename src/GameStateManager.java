@@ -89,14 +89,11 @@ public class GameStateManager extends BasicGame {
         //Font für die GUI laden        
         Hud.init();
         
-        // temporary enemy
-        SentinelEnemy sentinel = new SentinelEnemy("assets/enemySprites/sentinel.png", 100, 100, 0);
-        SentinelEnemy sentinel2 = new SentinelEnemy("assets/enemySprites/sentinel.png", 200, 200, 90);
-        SentinelEnemy sentinel3 = new SentinelEnemy("assets/enemySprites/sentinel.png", 300, 300, 90);
-
-        EnemyController.addEnemy(sentinel);
-        EnemyController.addEnemy(sentinel2);
-        EnemyController.addEnemy(sentinel3);
+        // temporary enemy        
+        EnemyController.createSentinel(100, 100, 0);
+        EnemyController.createSentinel(200, 200, 0);
+        EnemyController.createSentinel(300, 300, 0);
+        EnemyController.createGuardian(100, 100, 0);
 
         MusicController.init();
         MusicController.startMusic();

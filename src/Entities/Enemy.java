@@ -57,7 +57,10 @@ public abstract class Enemy extends LivingEntity{
 		float distanceX = Math.abs(enemyX-targetPosX);
 		float distanceY = Math.abs(enemyY-targetPosY);
 		
-		float range = 150;
+		// how far the target point from the enemy can be next to player
+		float range = 500;
+		// how close the enemy needs to get to target point befor generating a new one
+		// needs to be above 0 or else the enemy will only approximately reach the target and never generate a new one
 		float maxDistance = 10;
 		
 		Random random = new Random();
