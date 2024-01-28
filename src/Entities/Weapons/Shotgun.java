@@ -14,6 +14,9 @@ import Entities.Weapon;
  */
 public class Shotgun extends Weapon {
 
+    private float spread = 80.0f;
+    private short spreadAmount = 20;
+
 
     //Attribute
 
@@ -27,8 +30,8 @@ public class Shotgun extends Weapon {
 
         //Shotgun erzeugen
         super("assets/weaponSprites/shotgun.png", livingEntity.getShape().getCenterX(), livingEntity.getShape().getCenterY(),
-                livingEntity.getDirection(), false, (short) 200, "SHOTGUN", (short) 60, 3f, (short) 150, (short) 8,
-                (short) 8, (short) 120, false, 14f, 13f, 34f, 16f,
+                livingEntity.getDirection(), false, (short) 200, "SHOTGUN", (short) 30, 3f, (short) 200, (short) 8,
+                (short) 120, false, 28f, 26f, 68f, 32f,
                 new Sound("assets/sounds/assault_rifle_shoot.wav"), new Sound("assets/sounds/player_heal.wav"));
 
         //Shotgun dem WeaponController übergeben
@@ -37,6 +40,24 @@ public class Shotgun extends Weapon {
 
 
     //Getter
+
+    /**
+     * Diese Methode gibt den Grad der Splitterung des Schusses der Shotgun zurück
+     * 
+     * @return Grad der Splitterung des Schusses der Shotgun
+     */
+    public float getSpread() {
+        return spread;
+    }
+
+    /**
+     * Diese Methode gibt die Anzahl der Splitterungen pro Schuss zurück
+     * 
+     * @return Anzahl der Splitterungen
+     */
+    public float getSpreadAmount() {
+        return spreadAmount;
+    }
 
 
     //Setter

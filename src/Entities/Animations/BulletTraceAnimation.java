@@ -18,16 +18,19 @@ public class BulletTraceAnimation implements Animatable {
     private short animationTimer = 0;
     private Random random = new Random();
     private HashSet<TraceParticle> traceParticles = new HashSet<TraceParticle>();
+    private boolean entityIsEnemy;
 
 
     /**
      * Diese Methode erzeugt eine Schusslaufbahnanimation
      * 
      * @param line Linie der Schusslaufbahn
+     * @param entityIsEnemy True falls die Entität ein Gegner ist, False falls sie ein Spieler ist
      */
-    public BulletTraceAnimation(Line line) {
+    public BulletTraceAnimation(Line line, boolean entityIsEnemy) {
         animate();
         createTraceParticles(line);
+        this.entityIsEnemy = entityIsEnemy;
     }
     
 
@@ -89,7 +92,7 @@ public class BulletTraceAnimation implements Animatable {
     @Override
     public void render(Graphics g) {
         if (animationTimer > 0) {
-            Color color = new Color(220, 170, 100, animationTimer * 4);
+            Color color = entityIsEnemy ? new Color(255, 90, 90, animationTimer * 4) : new Color(220, 170, 100, animationTimer * 4);
             g.setColor(color);
 
             Iterator<TraceParticle> it = traceParticles.iterator();

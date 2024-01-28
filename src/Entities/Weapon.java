@@ -41,6 +41,10 @@ public abstract class Weapon extends Entity {
     /**
      * Diese Methode erzeugt und initialisiert eine Waffe (ausgeführt aus einer Unterklasse).
      * 
+     * @param spriteAsset Pfad zum Image-Asset zur Darstellung der Entität
+     * @param centerX Zentrale x-Koordinate der Position der Entität
+     * @param centerY Zentrale y-Koordinate der Position der Entität
+     * @param direction Blickrichtung der Entität (in Grad)
      * @param isSecondary True, falls die Waffe eine Sekundärwaffe sein soll, false, falls sie eine Primärwaffe sein soll
      * @param damagePerBullet Schaden pro Schuss (selbe Einheit wie HP)
      * @param ammoType Bezeichner für den Munitionstyp zur Unterscheidung verschiedener Typen
