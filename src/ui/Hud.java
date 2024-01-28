@@ -59,7 +59,7 @@ public abstract class Hud {
         g.drawString("Current Ammo: " + player.getEquippedWeapon().getBullets(), 10, container.getHeight() - 20);
         g.drawString(
                 "Ammo in Inventory: " + (!player.getEquippedWeapon().getInfiniteAmmo()
-                        ? player.getAmmo().get(player.getEquippedWeapon().getAmmoType())
+                        ? player.getAmmo().get(player.getEquippedWeapon().getAmmoType()) == null ? 0 : player.getAmmo().get(player.getEquippedWeapon().getAmmoType())
                         : "unforseeable."),
                 10,
                 container.getHeight() - 40);
