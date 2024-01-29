@@ -84,7 +84,7 @@ public class GameStateManager extends BasicGame {
     public void init(GameContainer container) throws SlickException {
         PlayerController.init(container);
         livingEntities.add(PlayerController.getPlayer());
-        mapAsset = new Level("assets/mapTest2.png");
+        mapAsset = new Level("src/Level/Tiled/Level01.tmx");
 
         //Font für die GUI laden        
         Hud.init();
@@ -143,7 +143,7 @@ public class GameStateManager extends BasicGame {
     public void render(GameContainer container, Graphics g) throws SlickException {
 
         //Map rendern
-        mapAsset.render(g);
+        mapAsset.render();
 
         //Weapons rendern
         WeaponController.render(g);

@@ -103,7 +103,7 @@ public abstract class PlayerController {
         damageAnimation.update();
 
         //Keyboard-Input auslesen
-        if (input.isKeyDown(Input.KEY_W) && player.getShape().getY() > 0) {
+        if (input.isKeyDown(Input.KEY_W) /*&& player.getShape().getY() > 0*/) {
             player.setY(player.getShape().getY() - playerSpeed * delta);
             primaryWeapon.setY(primaryWeapon.getShape().getY() - playerSpeed * delta);
             secondaryWeapon.setY(secondaryWeapon.getShape().getY() - playerSpeed * delta);
@@ -112,7 +112,7 @@ public abstract class PlayerController {
             damageAnimation.setY(damageAnimation.getShape().getY() - playerSpeed * delta);
         }
         if (input.isKeyDown(Input.KEY_S)
-                && player.getShape().getY() < container.getHeight() - player.getShape().getHeight()) {
+                /*&& player.getShape().getY() < container.getHeight() - player.getShape().getHeight()*/) {
             player.setY(player.getShape().getY() + playerSpeed * delta);
             primaryWeapon.setY(primaryWeapon.getShape().getY() + playerSpeed * delta);
             secondaryWeapon.setY(secondaryWeapon.getShape().getY() + playerSpeed * delta);
@@ -120,7 +120,7 @@ public abstract class PlayerController {
             secondaryBulletFire.setY(secondaryBulletFire.getShape().getY() + playerSpeed * delta);
             damageAnimation.setY(damageAnimation.getShape().getY() + playerSpeed * delta);
         }
-        if (input.isKeyDown(Input.KEY_A) && player.getShape().getX() > 0) {
+        if (input.isKeyDown(Input.KEY_A) /*&& player.getShape().getX() > 0*/) {
             player.setX(player.getShape().getX() - playerSpeed * delta);
             primaryWeapon.setX(primaryWeapon.getShape().getX() - playerSpeed * delta);
             secondaryWeapon.setX(secondaryWeapon.getShape().getX() - playerSpeed * delta);
@@ -129,7 +129,7 @@ public abstract class PlayerController {
             damageAnimation.setX(damageAnimation.getShape().getX() - playerSpeed * delta);
         }
         if (input.isKeyDown(Input.KEY_D)
-                && player.getShape().getX() < container.getWidth() - player.getShape().getWidth()) {
+                /*&& player.getShape().getX() < container.getWidth() - player.getShape().getWidth()*/) {
             player.setX(player.getShape().getX() + playerSpeed * delta);
             primaryWeapon.setX(primaryWeapon.getShape().getX() + playerSpeed * delta);
             secondaryWeapon.setX(secondaryWeapon.getShape().getX() + playerSpeed * delta);
