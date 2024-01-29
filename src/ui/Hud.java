@@ -12,9 +12,11 @@ import org.newdawn.slick.Sound;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.util.ResourceLoader;
 
+import Controllers.LevelController;
 import Controllers.MusicController;
 import Controllers.PlayerController;
 import Entities.Player;
+import Level.Level;
 
 /**
  * Diese Klasse ist für die Darstellung der HUD-Darstellung verantwortlich.
@@ -48,7 +50,10 @@ public abstract class Hud {
 	}
 	
 	public static void render(Graphics g, GameContainer container) {
-		g.setFont(Hud.getFont());
+        g.setFont(Hud.getFont());
+        
+        float maxWidth = container.getWidth() + LevelController.getCameraX();
+        float maxHeight = container.getHeight() + LevelController.getCameraY();
         
         Player player = PlayerController.getPlayer();
 
@@ -57,21 +62,16 @@ public abstract class Hud {
             if (player.getChangeEquippedWeaponTimer() != 0) {
                 g.setColor(Color.gray);
             }
-            g.drawString("Current Ammo: " + player.getEquippedWeapon().getBullets(), 10, container.getHeight() - 20);
+            g.drawString("Current Ammo: " + player.getEquippedWeapon().getBullets(), 10, maxHeight - 20);
             g.drawString(
                     "Ammo in Inventory: " + (!player.getEquippedWeapon().getInfiniteAmmo()
                             ? player.getAmmo().get(player.getEquippedWeapon().getAmmoType()) == null ? 0 : player.getAmmo().get(player.getEquippedWeapon().getAmmoType())
                             : "unforseeable."),
                     10,
-                    container.getHeight() - 40);
+                    maxHeight - 40);
         }
         
-        g.drawString("HP: " + player.getHitpoints(), 10, container.getHeight() - 60);
-        
-        // used for testing
-        
-        g.drawString("X: " + player.getShape().getCenterX(), 200, 200);
-        g.drawString("Y: "+ player.getShape().getCenterY(), 200, 180);
+        g.drawString("HP: " + player.getHitpoints(), 10, maxHeight - 60);
         
         // Game Over Screen
         if (PlayerController.getPlayer().getHitpoints() <= 0) {
