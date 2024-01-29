@@ -27,7 +27,7 @@ public abstract class LevelController {
     public static float getLevelWidth() {
         return level.getWidth();
     }
-    
+
     public static float getLevelHeight() {
         return level.getHeight();
     }
@@ -35,7 +35,7 @@ public abstract class LevelController {
     public static float getCameraX() {
         return Camera.getX();
     }
-    
+
     public static float getCameraY() {
         return Camera.getY();
     }
@@ -51,7 +51,7 @@ public abstract class LevelController {
     }
 
     public static void loadLevel(String levelNumber) throws SlickException {
-        level = new Level("src/Level/Tiled/Level" + levelNumber + ".tmx");
+        level = new Level("src/Level/Tiled/Levels/Level" + levelNumber + ".tmx");
         generateMedkits((short) 5);
     }
 
@@ -76,7 +76,7 @@ public abstract class LevelController {
             }
         }
     }
-    
+
     public static void render(Graphics g) throws SlickException {
         level.render();
 
@@ -86,7 +86,7 @@ public abstract class LevelController {
             medkit.render(g);
         }
     }
-    
+
     public static void translateCamera(Graphics g) {
         Camera.tranlateTiledCoordinates(g);
     }

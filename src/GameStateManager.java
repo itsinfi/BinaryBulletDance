@@ -89,10 +89,10 @@ public class GameStateManager extends BasicGame {
         Hud.init();
         
         // temporary enemy        
-        // EnemyController.createSentinel(100, 100, 0);
-        // EnemyController.createSentinel(200, 200, 0);
-        // EnemyController.createSentinel(300, 300, 0);
-        // EnemyController.createGuardian(100, 100, 0);
+         EnemyController.createSentinel(100, 100, 0);
+         EnemyController.createSentinel(200, 200, 0);
+         EnemyController.createSentinel(300, 300, 0);
+         EnemyController.createGuardian(100, 100, 0);
 
         MusicController.init();
         MusicController.startMusic();
