@@ -128,6 +128,10 @@ public abstract class PlayerController {
             direction = !LevelController.getIsHittingCollision(player.getShape()) ? Direction.RIGHT : Direction.LEFT;
             movePlayer(delta, playerSpeed, primaryWeapon, secondaryWeapon, primaryBulletFire, secondaryBulletFire, damageAnimation);
         }
+        
+        if (input.isKeyDown(Input.KEY_H)) {
+        	player.takeDamage((short) 1);
+        }
 
         // Spielerausrichtung
         float mouseX = input.getMouseX() + LevelController.getCameraX();
