@@ -3,39 +3,32 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "Level01.tmx",
+    "activeFile": "",
     "expandedProjectPaths": [
     ],
     "fileStates": {
-        "Level01.tmx": {
-            "scale": 0.75,
+        "Map01.tmx": {
+            "scale": 0.12973437499999999,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 916,
-                "y": 1192
+                "x": 3206.5518487293757,
+                "y": 3202.697820065037
             }
-        },
-        "Tileset01.tsx": {
-            "scaleInDock": 1,
-            "scaleInEditor": 1
         }
     },
-    "last.imagePath": "C:/Users/hg/OneDrive - Netopsie Technologies GmbH/Dokumente/BinaryBulletDance/src/Level/Tiled",
-    "map.height": 32,
+    "last.imagePath": "C:/Users/hg/OneDrive - Netopsie Technologies GmbH/Dokumente/BinaryBulletDance/src/Level/Tiled/Tilesets",
+    "map.height": 100,
     "map.lastUsedFormat": "tmx",
     "map.renderOrder": null,
     "map.tileHeight": 64,
     "map.tileWidth": 64,
-    "map.width": 32,
+    "map.width": 100,
     "openFiles": [
-        "Level01.tmx",
-        "Tileset01.tsx"
     ],
     "project": "BBD.tiled-project",
     "property.type": "bool",
     "recentFiles": [
-        "Tileset01.tsx",
-        "Level01.tmx"
+        "Map01.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
