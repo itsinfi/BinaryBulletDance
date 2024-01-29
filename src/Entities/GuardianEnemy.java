@@ -23,7 +23,7 @@ public class GuardianEnemy extends Enemy{
 			super(spriteAsset, centerX, centerY, direction);
 			Weapon w = (Weapon) new AssaultRifle((LivingEntity) this);
 			this.setEquippedWeapon(w);
-			this.ammoType = "PRIMARY";
+			this.ammoType = "ASSAULT_RIFLE";
 			this.movementSpeed = 0.1f;
 			this.rotationSpeed = 0.1f;
 			this.hitpoints = 75;
@@ -47,7 +47,6 @@ public class GuardianEnemy extends Enemy{
 			// replenish ammo for player when defeated
 		    HashMap<String, Short> a = new HashMap<String, Short>();
 		    a.put(this.ammoType, (short)(30));
-		    System.out.println("fired GuardianEnemy.die()");
 			PlayerController.getPlayer().addAmmo(a);
 			
 		}
