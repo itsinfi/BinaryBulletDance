@@ -29,6 +29,7 @@ public abstract class WeaponController {
     private static HashSet<Weapon> weapons = new HashSet<Weapon>();
     private static Random shotAccuracyRandomizer = new Random();
 
+
     //Konstruktoren
 
     
@@ -130,9 +131,11 @@ public abstract class WeaponController {
     }
 
     /**
-     * Diese Methode führt alle nötigen Operationen durch, um eine Waffe zu schießen
+     * Diese Methode führt alle nötigen Prüfungen durch, bevor eine Waffe geschossen werden kann
      * 
-     * @param shootingEntity
+     * @param shootingEntity Die schießende lebendige Entität
+     * @param xCursor (Optional) x-Koordinate für Punkt, welche in der Schusslaufbahn enthalten sein soll (wichtig für Mauszeiger)
+     * @param yCursor (Optional) y-Koordinate für Punkt, welche in der Schusslaufbahn enthalten sein soll (wichtig für Mauszeiger)
      */
     public static void shoot(LivingEntity shootingEntity, Float xCursor, Float yCursor) {
 
@@ -176,6 +179,16 @@ public abstract class WeaponController {
 
     }
     
+    /**
+     * Diese Methode führt alle nötigen Berechnungen durch, um die maximale Schusslaufbahn eines Schusses zu bestimmen.
+     * 
+     * @param weapon Waffe, mit welcher geschossen wird
+     * @param shootingEntity Die schießende lebendige Entität
+     * @param xCursor (Optional) x-Koordinate für Punkt, welche in der Schusslaufbahn enthalten sein soll (wichtig für Mauszeiger)
+     * @param yCursor (Optional) y-Koordinate für Punkt, welche in der Schusslaufbahn enthalten sein soll (wichtig für Mauszeiger)
+     * @param accuracy Zielgenauigkeit des Schusses
+     * @param range Maximale Reichweite des Schusses
+     */
     public static void calculateShot(Weapon weapon, LivingEntity shootingEntity, Float xCursor, Float yCursor, float accuracy, short range) {
 
         //Zufällige Werte für die Punktgenauigkeit des Schusses losen
@@ -202,13 +215,13 @@ public abstract class WeaponController {
         float y = shootingEntityY + rotatedOffsetY;
 
         //Richtung der lebendigen Enittät auslesen und einen Vektor dazu berechnen (falls xCursor und yCursor null sind)
-        Vector2f livingEntityDirection;
+        Vector2f shootingEntityDirection;
         if (xCursor == null && yCursor == null) {
-            livingEntityDirection = new Vector2f(direction);
+            shootingEntityDirection = new Vector2f(direction);
 
             //Position eines Punktes berechnen, und Vektor dazu berechnen (falls xCursor und yCursor nicht null sind)
         } else if (xCursor != null && yCursor != null) {
-            livingEntityDirection = new Vector2f(xCursor - x, yCursor - y);
+            shootingEntityDirection = new Vector2f(xCursor - x, yCursor - y);
 
             //Andernfalls returnen, weil es sollen beide Werte null oder nicht null sein
         } else {
@@ -216,7 +229,7 @@ public abstract class WeaponController {
         }
 
         //Distanz des Richtungsvektors auf die Reichweite der Waffe skalieren
-        Vector2f bulletDirection = livingEntityDirection.scale(range);
+        Vector2f bulletDirection = shootingEntityDirection.scale(range);
 
         //Zu den Koordinaten die zufällige Treffergenauigkeit addieren
         bulletDirection.x += randomAccuracyX;

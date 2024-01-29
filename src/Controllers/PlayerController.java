@@ -46,7 +46,7 @@ public abstract class PlayerController {
         player = new Player("assets/playertest_fixed.png", container);
 
         //Primärwaffe des Spielers erzeugen
-        Weapon primary = (Weapon) new Shotgun((LivingEntity) player);
+        Weapon primary = (Weapon) new AssaultRifle((LivingEntity) player);
         player.addWeapon(primary);
         player.setEquippedWeapon(true);
         
@@ -56,7 +56,7 @@ public abstract class PlayerController {
 
         //Spieler Startmunition geben
         HashMap<String, Short> ammo = new HashMap<String, Short>();
-        ammo.put("SHOTGUN", (short) 200);
+        ammo.put("ASSAULT_RIFLE", (short) 200);
         ammo.put("PISTOL", (short) 200);
         player.addAmmo(ammo);
     }
