@@ -29,7 +29,7 @@ public class SniperRifle extends Weapon {
         super("assets/weaponSprites/sniperRifle.png", livingEntity.getShape().getCenterX(), livingEntity.getShape().getCenterY(),
                 livingEntity.getDirection(), false, (short) 500, "SNIPER_RIFLE", (short) 120, 1f, (short) 3000, (short) 5,
                 (short) 240, false, 25f, 24f, 60f, 15f,
-                new Sound("assets/sounds/sniper_rifle_shoot.wav"), new Sound("assets/sounds/player_heal.wav"));
+                new Sound("assets/sounds/sniper_rifle_shoot.wav"));
 
         //SniperRifle dem WeaponController übergeben
         WeaponController.addWeapon((Weapon) this);

@@ -62,7 +62,7 @@ public abstract class Weapon extends Entity {
      * @param reloadSound Sound, der gespielt werden soll, wenn die Waffe nachlädt
      */
     public Weapon(String spriteAsset, float centerX, float centerY, float direction, boolean isSecondary, short damagePerBullet, String ammoType, short firerate, float accuracy,
-            short range, short magazineSize, short reloadRate, boolean hasAutomaticFire, float offsetX, float offsetY, float bulletFireOffsetX, float bulletFireOffsetY, Sound shootSound, Sound reloadSound) throws SlickException {
+            short range, short magazineSize, short reloadRate, boolean hasAutomaticFire, float offsetX, float offsetY, float bulletFireOffsetX, float bulletFireOffsetY, Sound shootSound) throws SlickException {
         //Entity erzeugen
         super(spriteAsset, centerX, centerY, direction);
 
@@ -86,7 +86,7 @@ public abstract class Weapon extends Entity {
         this.offsetX = offsetX;
         this.offsetY = offsetY;
         this.shootSound = shootSound;
-        this.reloadSound = reloadSound;
+        this.reloadSound = new Sound("assets/sounds/reload.wav");
     }
 
     //Getter

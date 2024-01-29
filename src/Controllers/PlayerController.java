@@ -113,19 +113,19 @@ public abstract class PlayerController {
 
         //Keyboard-Input auslesen und Spielerkollisionen checken
         if (input.isKeyDown(Input.KEY_W) && player.getShape().getY() > 0) {
-            direction = !LevelController.getIsHittingCollision(player.getShape()) ? Direction.UP : Direction.DOWN;
+            direction = !LevelController.getIsHittingCollision(player.getShape()) ? Direction.UP : Direction.UP;
             movePlayer(delta, playerSpeed, primaryWeapon, secondaryWeapon, primaryBulletFire, secondaryBulletFire, damageAnimation);
         }
         if (input.isKeyDown(Input.KEY_S) && player.getShape().getY() < (container.getHeight() + LevelController.getCameraY()) - player.getShape().getHeight()) {
-            direction = !LevelController.getIsHittingCollision(player.getShape()) ? Direction.DOWN : Direction.UP;
+            direction = !LevelController.getIsHittingCollision(player.getShape()) ? Direction.DOWN : Direction.DOWN;
             movePlayer(delta, playerSpeed, primaryWeapon, secondaryWeapon, primaryBulletFire, secondaryBulletFire, damageAnimation);
         }
         if (input.isKeyDown(Input.KEY_A) && player.getShape().getX() > 0) {
-            direction = !LevelController.getIsHittingCollision(player.getShape()) ? Direction.LEFT : Direction.RIGHT;
+            direction = !LevelController.getIsHittingCollision(player.getShape()) ? Direction.LEFT : Direction.LEFT;
             movePlayer(delta, playerSpeed, primaryWeapon, secondaryWeapon, primaryBulletFire, secondaryBulletFire, damageAnimation);
         }
         if (input.isKeyDown(Input.KEY_D) && player.getShape().getX() < (container.getWidth() + LevelController.getCameraX()) - player.getShape().getWidth()) {
-            direction = !LevelController.getIsHittingCollision(player.getShape()) ? Direction.RIGHT : Direction.LEFT;
+            direction = !LevelController.getIsHittingCollision(player.getShape()) ? Direction.RIGHT : Direction.RIGHT;
             movePlayer(delta, playerSpeed, primaryWeapon, secondaryWeapon, primaryBulletFire, secondaryBulletFire, damageAnimation);
         }
         
