@@ -52,8 +52,8 @@ public abstract class Hud {
 	public static void render(Graphics g, GameContainer container) {
         g.setFont(Hud.getFont());
         
-        float maxWidth = container.getWidth() + LevelController.getCameraX();
-        float maxHeight = container.getHeight() + LevelController.getCameraY();
+        float maxWidth = LevelController.getCameraX();
+        float maxHeight = LevelController.getCameraY();
         
         Player player = PlayerController.getPlayer();
 
@@ -62,16 +62,16 @@ public abstract class Hud {
             if (player.getChangeEquippedWeaponTimer() != 0) {
                 g.setColor(Color.gray);
             }
-            g.drawString("Current Ammo: " + player.getEquippedWeapon().getBullets(), 10, maxHeight - 20);
+            g.drawString("Current Ammo: " + player.getEquippedWeapon().getBullets(), maxWidth + 15, maxHeight + 850);
             g.drawString(
                     "Ammo in Inventory: " + (!player.getEquippedWeapon().getInfiniteAmmo()
                             ? player.getAmmo().get(player.getEquippedWeapon().getAmmoType()) == null ? 0 : player.getAmmo().get(player.getEquippedWeapon().getAmmoType())
                             : "unforseeable."),
-                    10,
-                    maxHeight - 40);
+                    maxWidth + 15,
+                    maxHeight + 870);
         }
         
-        g.drawString("HP: " + player.getHitpoints(), 10, maxHeight - 60);
+        g.drawString("HP: " + player.getHitpoints(), maxWidth + 15, maxHeight + 830);
         
         // Game Over Screen
         if (PlayerController.getPlayer().getHitpoints() <= 0) {
@@ -110,9 +110,6 @@ public abstract class Hud {
         	g.setFont(gameOverTTF);
         	
         	g.setColor(Color.red);
-        	
-        	g.drawString("You died!", (container.getWidth()-250)/2, (container.getHeight()-100)/2);
-            g.drawString("Press E to exit!", (container.getWidth() - 350) / 2, (container.getHeight() + 25) / 2);
             
             playDeathDialogSound();
     	
