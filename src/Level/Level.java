@@ -83,19 +83,6 @@ public class Level {
             }
         }
 
-        collisionMap[0][0] = true;
-        collisionMap[0][1] = true;
-        collisionMap[0][2] = true;
-        collisionMap[0][3] = true;
-        collisionMap[0][4] = true;
-        collisionMap[0][5] = true;
-        collisionMap[1][0] = true;
-        collisionMap[2][0] = true;
-        for (int i = 0; i < 32; i++) {
-            for (int k = 0; k < 32; k++) {
-                System.out.println(collisionMap[i][k]);
-            }
-        }
         return collisionMap;
     }
 

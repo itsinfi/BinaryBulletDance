@@ -113,19 +113,52 @@ public abstract class PlayerController {
 
         //Keyboard-Input auslesen und Spielerkollisionen checken
         if (input.isKeyDown(Input.KEY_W) && player.getShape().getY() > 0) {
-            direction = !LevelController.getIsHittingCollision(player.getShape()) ? Direction.UP : Direction.DOWN;
-            movePlayer(delta, playerSpeed, primaryWeapon, secondaryWeapon, primaryBulletFire, secondaryBulletFire, damageAnimation);
-        }
+        	
+//            direction = !LevelController.getIsHittingCollision(player.getShape()) ? Direction.UP : Direction.DOWN;
+            
+            float currentY = player.getShape().getY();
+            
+            direction = Direction.UP;
+            
+            if ((LevelController.getCollision(player.getShape().getX(), currentY - playerSpeed * delta))) {
+            		movePlayer(delta, playerSpeed, primaryWeapon, secondaryWeapon, primaryBulletFire, secondaryBulletFire, damageAnimation);
+            	}
+            }
+            
+            
         if (input.isKeyDown(Input.KEY_S) && player.getShape().getY() < (container.getHeight() + LevelController.getCameraY()) - player.getShape().getHeight()) {
-            direction = !LevelController.getIsHittingCollision(player.getShape()) ? Direction.DOWN : Direction.UP;
-            movePlayer(delta, playerSpeed, primaryWeapon, secondaryWeapon, primaryBulletFire, secondaryBulletFire, damageAnimation);
+//            direction = !LevelController.getIsHittingCollision(player.getShape()) ? Direction.DOWN : Direction.UP;
+        	
+        	float currentY = player.getShape().getY();
+            
+            direction = Direction.DOWN;
+            
+            if ((LevelController.getCollision(player.getShape().getX(), currentY + playerSpeed * delta))) {
+            	movePlayer(delta, playerSpeed, primaryWeapon, secondaryWeapon, primaryBulletFire, secondaryBulletFire, damageAnimation);
+        	}
         }
+        
         if (input.isKeyDown(Input.KEY_A) && player.getShape().getX() > 0) {
-            direction = !LevelController.getIsHittingCollision(player.getShape()) ? Direction.LEFT : Direction.RIGHT;
-            movePlayer(delta, playerSpeed, primaryWeapon, secondaryWeapon, primaryBulletFire, secondaryBulletFire, damageAnimation);
+//            direction = !LevelController.getIsHittingCollision(player.getShape()) ? Direction.LEFT : Direction.RIGHT;
+        	float currentX = player.getShape().getX();
+            
+            direction = Direction.LEFT;
+            
+            if ((LevelController.getCollision(player.getShape().getX(), currentX - playerSpeed * delta))) {
+            	movePlayer(delta, playerSpeed, primaryWeapon, secondaryWeapon, primaryBulletFire, secondaryBulletFire, damageAnimation);
+        	}
         }
         if (input.isKeyDown(Input.KEY_D) && player.getShape().getX() < (container.getWidth() + LevelController.getCameraX()) - player.getShape().getWidth()) {
-            direction = !LevelController.getIsHittingCollision(player.getShape()) ? Direction.RIGHT : Direction.LEFT;
+//            direction = !LevelController.getIsHittingCollision(player.getShape()) ? Direction.RIGHT : Direction.LEFT;
+        	float currentX = player.getShape().getX();
+            
+            direction = Direction.RIGHT;
+            
+            if ((LevelController.getCollision(player.getShape().getX(), currentX + playerSpeed * delta))) {
+            	movePlayer(delta, playerSpeed, primaryWeapon, secondaryWeapon, primaryBulletFire, secondaryBulletFire, damageAnimation);
+        	}
+        	
+        	
             movePlayer(delta, playerSpeed, primaryWeapon, secondaryWeapon, primaryBulletFire, secondaryBulletFire, damageAnimation);
         }
         

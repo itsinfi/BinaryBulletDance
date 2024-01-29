@@ -41,14 +41,33 @@ public abstract class LevelController {
     }
 
     public static boolean getIsHittingCollision(Shape shape) {
-        int x = (int) ((shape.getCenterX() - shape.getWidth()) / 64);
-        int y = (int) ((shape.getCenterY() - shape.getHeight()) / 64);
-        if (x < 0 || x >= 31 || y < 0 || y >= 32) {
+    	
+        int x = (int) ((shape.getX() - shape.getWidth()) / 64);
+        int y = (int) ((shape.getY() - shape.getHeight()) / 64);
+        
+        boolean[][] collisionMap = level.getCollisionMap();
+        
+        if (x < 0 || x > collisionMap.length || y < 0 || y > collisionMap[0].length) {
             return true;
         }
-        boolean[][] collisionMap = level.getCollisionMap();
+        
         return collisionMap[x][y];
     }
+    
+  public static boolean getCollision(float x, float y) {
+    	
+        int xConverted = (int) (x / 64);
+        int yConverted = (int) (y/ 64);
+        
+        boolean[][] collisionMap = level.getCollisionMap();
+        
+        if (x < 0 || x > collisionMap.length || y < 0 || y > collisionMap[0].length) {
+            return true;
+        }
+        
+        return collisionMap[xConverted][yConverted];
+    }
+
 
     public static void loadLevel(String levelNumber) throws SlickException {
         level = new Level("src/Level/Tiled/Levels/Level" + levelNumber + ".tmx");
