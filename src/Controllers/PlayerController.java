@@ -9,7 +9,10 @@ import org.newdawn.slick.geom.Vector2f;
 import Entities.LivingEntity;
 import Entities.Player;
 import Entities.Weapons.AssaultRifle;
+import Entities.Weapons.MachinePistol;
 import Entities.Weapons.Pistol;
+import Entities.Weapons.Shotgun;
+import Entities.Weapons.SniperRifle;
 import Entities.Weapon;
 import Entities.Animations.BulletFireAnimation;
 import Entities.Animations.DamageAnimation;
@@ -53,8 +56,8 @@ public abstract class PlayerController {
 
         //Spieler Startmunition geben
         HashMap<String, Short> ammo = new HashMap<String, Short>();
-        ammo.put("PRIMARY", (short) 200);
-        ammo.put("SECONDARY", (short) 200);
+        ammo.put("ASSAULT_RIFLE", (short) 200);
+        ammo.put("PISTOL", (short) 200);
         player.addAmmo(ammo);
     }
 

@@ -26,6 +26,7 @@ public class BulletFireAnimation extends Entity implements Animatable {
     private Random random;
     private float randomDirectionModifier;
     private boolean randomSpriteMirroringModifier;
+    private Image lightEffect = new Image("assets/weaponSprites/bulletFireLight.png");
 
     
     //Konstruktor
@@ -84,6 +85,9 @@ public class BulletFireAnimation extends Entity implements Animatable {
 
         //Rotation hinzufügen
         image.setRotation(direction + randomDirectionModifier);
+
+        //Lichteffekt rendern
+        lightEffect.draw(x, y);
 
         //Sprite rendern
         image.draw(x, y);

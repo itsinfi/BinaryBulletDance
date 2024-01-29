@@ -39,7 +39,7 @@ public class Player extends LivingEntity {
         super(playerAsset, container.getWidth() / 2, container.getHeight() / 2, 0);
 
         //Werte festlegen
-        this.maxHitpoints = 100;
+        this.maxHitpoints = 100;//TODO: yo das braucht noch einen zweck oder?
         this.hitpoints = 2000;
         this.movementSpeed = 0.27f;
     }
@@ -150,7 +150,9 @@ public class Player extends LivingEntity {
         float y = this.shape.getY();
         this.sprite.setRotation(direction);
         this.sprite.draw(x, y);
-        this.getEquippedWeapon().render();
+        if (this.equippedWeapon != null) {
+            this.getEquippedWeapon().render();
+        }
         this.damageAnimation.render(g);
     }
 

@@ -51,18 +51,21 @@ public abstract class Hud {
 		g.setFont(Hud.getFont());
         
         Player player = PlayerController.getPlayer();
-        
-        g.setColor(player.getEquippedWeapon().getReloadTimer() == 0 ? Color.orange : Color.red);
-        if (player.getChangeEquippedWeaponTimer() != 0) {
-            g.setColor(Color.gray);
+
+        if (player.getEquippedWeapon() != null) {
+            g.setColor(player.getEquippedWeapon().getReloadTimer() == 0 ? Color.orange : Color.red);
+            if (player.getChangeEquippedWeaponTimer() != 0) {
+                g.setColor(Color.gray);
+            }
+            g.drawString("Current Ammo: " + player.getEquippedWeapon().getBullets(), 10, container.getHeight() - 20);
+            g.drawString(
+                    "Ammo in Inventory: " + (!player.getEquippedWeapon().getInfiniteAmmo()
+                            ? player.getAmmo().get(player.getEquippedWeapon().getAmmoType()) == null ? 0 : player.getAmmo().get(player.getEquippedWeapon().getAmmoType())
+                            : "unforseeable."),
+                    10,
+                    container.getHeight() - 40);
         }
-        g.drawString("Current Ammo: " + player.getEquippedWeapon().getBullets(), 10, container.getHeight() - 20);
-        g.drawString(
-                "Ammo in Inventory: " + (!player.getEquippedWeapon().getInfiniteAmmo()
-                        ? player.getAmmo().get(player.getEquippedWeapon().getAmmoType())
-                        : "unforseeable."),
-                10,
-                container.getHeight() - 40);
+        
         g.drawString("HP: " + player.getHitpoints(), 10, container.getHeight() - 60);
         
         // used for testing
