@@ -110,6 +110,13 @@ public abstract class Hud {
         	g.setFont(gameOverTTF);
         	
         	g.setColor(Color.red);
+        	
+        	float maxWidth = LevelController.getCameraX();
+            float maxHeight = LevelController.getCameraY();
+
+            g.drawString("You died!", maxWidth + 675, maxHeight + 400);
+            g.drawString("Press E to exit!", maxWidth + 625, maxHeight + 450);
+            
             
             playDeathDialogSound();
     	
