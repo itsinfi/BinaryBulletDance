@@ -39,8 +39,8 @@ public class Player extends LivingEntity {
         super(playerAsset, container.getWidth() / 2, container.getHeight() / 2, 0);
 
         //Werte festlegen
-        this.maxHitpoints = 100;//TODO: yo das braucht noch einen zweck oder?
-        this.hitpoints = 200;
+        this.hitpoints = 2000;
+        this.maxHitpoints = 100;
         this.movementSpeed = 0.27f;
     }
     
