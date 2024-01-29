@@ -7,12 +7,12 @@ import org.newdawn.slick.SlickException;
 
 import Controllers.WeaponController;
 import Controllers.EnemyController;
+import Controllers.LevelController;
 import Controllers.MusicController;
 import Controllers.PlayerController;
 import Entities.LivingEntity;
 import Entities.Player;
 import Entities.SentinelEnemy;
-import Level.Level;
 import ui.Hud;
 
 import java.util.HashSet;
@@ -32,7 +32,6 @@ public class GameStateManager extends BasicGame {
 
     //TODO: Controller static machen und unnötige Werte entfernen
     private HashSet<LivingEntity> livingEntities = new HashSet<LivingEntity>();
-    private Level mapAsset;
 
 
     //Konstruktoren
@@ -84,16 +83,16 @@ public class GameStateManager extends BasicGame {
     public void init(GameContainer container) throws SlickException {
         PlayerController.init(container);
         livingEntities.add(PlayerController.getPlayer());
-        mapAsset = new Level("src/Level/Tiled/Level01.tmx");
+        LevelController.loadLevel("01");
 
         //Font für die GUI laden        
         Hud.init();
         
         // temporary enemy        
-        EnemyController.createSentinel(100, 100, 0);
-        EnemyController.createSentinel(200, 200, 0);
-        EnemyController.createSentinel(300, 300, 0);
-        EnemyController.createGuardian(100, 100, 0);
+        // EnemyController.createSentinel(100, 100, 0);
+        // EnemyController.createSentinel(200, 200, 0);
+        // EnemyController.createSentinel(300, 300, 0);
+        // EnemyController.createGuardian(100, 100, 0);
 
         MusicController.init();
         MusicController.startMusic();
@@ -113,14 +112,17 @@ public class GameStateManager extends BasicGame {
         Player player = PlayerController.getPlayer();
         
         // stop game when player is dead
-    	if (player.getHitpoints()<=0) {
-    		
-    		if (input.isKeyDown(Input.KEY_E)) {
-    			container.exit();
-    		} else {
-    			return;
-    		}
-    	}
+        if (player.getHitpoints() <= 0) {
+
+            if (input.isKeyDown(Input.KEY_E)) {
+                container.exit();
+            } else {
+                return;
+            }
+        }
+        
+        //Level updaten
+        LevelController.update(container, delta);
 
         //Spieler updaten
         PlayerController.update(input, delta, container);
@@ -142,8 +144,10 @@ public class GameStateManager extends BasicGame {
     @Override
     public void render(GameContainer container, Graphics g) throws SlickException {
 
+        LevelController.translateCamera(g);
+
         //Map rendern
-        mapAsset.render();
+        LevelController.render(g);
 
         //Weapons rendern
         WeaponController.render(g);
@@ -155,6 +159,8 @@ public class GameStateManager extends BasicGame {
 
         //Draw HUD
         Hud.render(g, container);
+
+        LevelController.resetCameraTranslation(g);
         
     }
     
