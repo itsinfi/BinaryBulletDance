@@ -96,7 +96,7 @@ public class GameStateManager extends BasicGame {
         Hud.init();
         
         // spawn computers TODO:  add actual coordinates 
-        EnemyController.createComputer(1155, 237, 0, 100, 100);
+        EnemyController.createComputer(1155, 170, 0, 100, 100);
         EnemyController.createComputer(4000, 390, 0, 100, 100);
         EnemyController.createComputer(5850, 5440, 0, 100, 100);
         EnemyController.createComputer(1400, 6000, 0, 100, 100);
