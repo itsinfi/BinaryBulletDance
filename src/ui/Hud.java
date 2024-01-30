@@ -7,6 +7,7 @@ import java.util.Random;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.TrueTypeFont;
@@ -78,6 +79,56 @@ public abstract class Hud {
         // draw player coordinates
         g.drawString("X: " + player.getShape().getCenterX(), maxWidth+200, maxHeight+200);
         g.drawString("Y: "+ player.getShape().getCenterY(), maxWidth+200, maxHeight+180);
+        
+        // draw amount of computers destroyed
+        Image intact;
+        Image destroyed;
+        
+        Image c1;
+        Image c2;
+        Image c3;
+        Image c4;
+		try {
+			
+			intact = new Image("assets/enemySprites/computer.png");
+			destroyed = new Image("assets/enemySprites/computer_broken.png");
+			
+			c1 = intact;
+			c2 = intact;
+			c3 = intact;
+			c4 = intact;
+			
+			switch(EnemyController.getAmountOfComputers()) {
+			case 3:
+				c1 = destroyed;
+				break;
+			case 2:
+				c1 = destroyed;
+				c2 = destroyed;
+				break;
+			case 1:
+				c1 = destroyed;
+				c2 = destroyed;
+				c3 = destroyed;
+				break;
+			case 0:
+				c1 = destroyed;
+				c2 = destroyed;
+				c3 = destroyed;
+				c4 = destroyed;
+			}
+			
+			g.drawImage(c1, maxWidth+1500, maxHeight+1000);
+			g.drawImage(c2, maxWidth+1600, maxHeight+1000);
+			g.drawImage(c3, maxWidth+1700, maxHeight+1000);
+			g.drawImage(c4, maxWidth+1800, maxHeight+1000);
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        
+//        g.drawString("")
         
         // Win Screen
         if (EnemyController.getAmountOfComputers()==0) {
