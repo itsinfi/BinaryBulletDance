@@ -1,4 +1,4 @@
-package Entities;
+package Entities.Enemies;
 
 import java.util.HashMap;
 
@@ -6,6 +6,9 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 import Controllers.PlayerController;
+import Entities.Enemy;
+import Entities.LivingEntity;
+import Entities.Weapon;
 import Entities.Weapons.AssaultRifle;
 
 public class GuardianEnemy extends Enemy{
@@ -39,7 +42,7 @@ public class GuardianEnemy extends Enemy{
 			float y = this.shape.getY();
 			this.sprite.setRotation(direction);
 			this.sprite.draw(x, y);
-			
+			this.equippedWeapon.render();
 		}
 
 		@Override

@@ -4,8 +4,6 @@ import org.newdawn.slick.Graphics;
 
 import java.util.Random;
 
-import Entities.Animatable;
-
 /**
  * Diese Klasse stellt einen Patikel innerhalb der Schusslaufbahnanimation einer Waffe dar.
  */

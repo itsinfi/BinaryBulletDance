@@ -108,6 +108,9 @@ public abstract class PlayerController {
         BulletFireAnimation secondaryBulletFire = secondaryWeapon.getBulletFire();
         DamageAnimation damageAnimation = player.getDamageAnimation();
 
+        // Ausgerüstete Waffe lesen
+        Weapon equippedWeapon = player.getEquippedWeapon();
+
         //Damage-Animation updaten
         damageAnimation.update();
 
@@ -144,7 +147,7 @@ public abstract class PlayerController {
 
         //Prüfen, ob die Distanz den Mindestwert überschreitet (um zu verhindern, dass der Spieler z.B. sich selbst treffen kann)
         boolean playerIsTooNear = true;
-        if (playerDirection.length() > 150) {
+        if (playerDirection.length() > equippedWeapon.getOffsetX() + equippedWeapon.getShape().getWidth() + 30) {
             playerIsTooNear = false;
 
             //Richtungsvektor normalisieren (Länge auf 1 setzen)
@@ -160,9 +163,6 @@ public abstract class PlayerController {
             secondaryWeapon.setDirection(playerRotationAngle);
             damageAnimation.setDirection(playerRotationAngle);
         }
-
-        // Ausgerüstete Waffe lesen
-        Weapon equippedWeapon = player.getEquippedWeapon();
 
         // Weapon Slot wechseln
         if (changeEquippedWeaponTimer == 0) {

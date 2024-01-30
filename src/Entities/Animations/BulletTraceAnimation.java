@@ -8,8 +8,6 @@ import java.util.Random;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import Entities.Animatable;
-
 /**
  * Diese Klasse stellt die Schusslaufbahn des Schusses einer Waffe visuell dar.
  */

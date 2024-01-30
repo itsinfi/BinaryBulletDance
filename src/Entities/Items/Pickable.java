@@ -1,4 +1,4 @@
-package Entities;
+package Entities.Items;
 
 /**
  * Dieses Interface erzwingt die Implementation der Methode pickUp(), um etwas für den Spieler "aufhebbar" zu machen.

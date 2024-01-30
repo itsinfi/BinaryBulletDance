@@ -1,4 +1,4 @@
-package Entities;
+package Entities.Animations;
 
 import org.newdawn.slick.Graphics;
 
