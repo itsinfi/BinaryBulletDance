@@ -14,8 +14,8 @@ import Entities.Weapon;
  */
 public class Shotgun extends Weapon {
 
-    private float spread = 80.0f;
-    private short spreadAmount = 20;
+    private float spread = 100.0f;
+    private short spreadAmount = 30;
 
 
     //Attribute
@@ -30,8 +30,8 @@ public class Shotgun extends Weapon {
 
         //Shotgun erzeugen
         super("assets/weaponSprites/shotgun.png", livingEntity.getShape().getCenterX(), livingEntity.getShape().getCenterY(),
-                livingEntity.getDirection(), (short) 200, "SHOTGUN", (short) 30, 3f, (short) 200, (short) 8,
-                (short) 120, false, 28f, 26f, 68f, 32f,
+                livingEntity.getDirection(), (short) 30, "SHOTGUN", (short) 60, 1f, (short) 500, (short) 8,
+                (short) 120, false, 43f, 26f, 45f, 5f,
                 new Sound("assets/sounds/assault_rifle_shoot.wav"));
 
         //Shotgun dem WeaponController übergeben

@@ -33,7 +33,7 @@ public class Player extends LivingEntity {
      * Diese Klasse erstellt und initialisiert den Spieler und dessen Attribute.
      * 
      * @param playerAsset Pfad zum Image-Asset zur Darstellung der Entität
-     * @param container Zur Berechnung der Koordinaten für das "shape"-Attribut
+     * @param container container of the window
      * @throws SlickException falls etwas bei der Erstellung des Sprites oder Shapes nicht klappt.
      */
     public Player(String playerAsset, GameContainer container) throws SlickException {
@@ -45,8 +45,8 @@ public class Player extends LivingEntity {
         super(playerAsset, 2624, 2304, 0);
 
         //Werte festlegen
-        this.hitpoints = 20000;
-        this.maxHitpoints = 20000;
+        this.hitpoints = 1000;
+        this.maxHitpoints = 1000;
         this.movementSpeed = 0.4f;
     }
     
@@ -189,13 +189,13 @@ public class Player extends LivingEntity {
      * @param g Grafische Darstellung des Spiels durch die Slick2D-Library
      */
     public void render(Graphics g) {
+        if (this.equippedWeapon != null) {
+            this.getEquippedWeapon().render();
+        }
         float x = this.shape.getX();
         float y = this.shape.getY();
         this.sprite.setRotation(direction);
         this.sprite.draw(x, y);
-        if (this.equippedWeapon != null) {
-            this.getEquippedWeapon().render();
-        }
         this.damageAnimation.render(g);
     }
 

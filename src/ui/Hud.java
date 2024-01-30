@@ -125,8 +125,9 @@ public abstract class Hud {
         	float maxWidth = LevelController.getCameraX();
             float maxHeight = LevelController.getCameraY();
 
-            g.drawString("You died!", maxWidth + 675, maxHeight + 400);
-            g.drawString("Press E to restart game!", maxWidth + 530, maxHeight + 450);
+            g.drawString("You died!", maxWidth + 835, maxHeight + 470);
+            g.drawString("Press E to restart game!", maxWidth + 680, maxHeight + 520);
+            g.drawString("Press Escape to close.", maxWidth + 680, maxHeight + 570);
             
             
             playDeathDialogSound();
@@ -140,8 +141,9 @@ public abstract class Hud {
     	float maxWidth = LevelController.getCameraX();
         float maxHeight = LevelController.getCameraY();
 
-        g.drawString("You won!", maxWidth + 675, maxHeight + 400);
-        g.drawString("Press E to restart game!", maxWidth + 530, maxHeight + 450);
+        g.drawString("You won!", maxWidth + 835, maxHeight + 470);
+        g.drawString("Press E to restart game!", maxWidth + 680, maxHeight + 520);
+        g.drawString("Press Escape to close.", maxWidth + 680, maxHeight + 570);
     }
     
     /**TODO:

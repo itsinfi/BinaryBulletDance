@@ -44,7 +44,7 @@ public abstract class PlayerController {
     /**
      * Diese Methode erstellt den PlayerController und den Spieler.
      * 
-     * @param container Game Container des Games
+     * @param container container of the window
      */
     //TODO: Spieler aus GameStateManager entfernen
     public static void init(GameContainer container) throws SlickException {
@@ -77,9 +77,9 @@ public abstract class PlayerController {
         HashMap<String, Short> ammo = new HashMap<String, Short>();
         ammo.put("ASSAULT_RIFLE", (short) 200);
         ammo.put("MACHINE_PISTOL", (short) 200);
-        ammo.put("SHOTGUN", (short) 200);
-        ammo.put("SNIPER_RIFLE", (short) 200);
-        ammo.put("PISTOL", (short) 200);
+        ammo.put("SHOTGUN", (short) 100);
+        ammo.put("SNIPER_RIFLE", (short) 50);
+        ammo.put("PISTOL", (short) 1);
         player.addAmmo(ammo);
     }
 
@@ -103,7 +103,7 @@ public abstract class PlayerController {
      * 
      * @param input Mouse- und Keyboard-Input
      * @param delta  Millisekunden seit dem letzten Frame
-     * @param container GameContainer des Games
+     * @param container container of the window
      */
     public static void update(Input input, int delta, GameContainer container) {
 
@@ -183,7 +183,7 @@ public abstract class PlayerController {
         }
 
         if (input.isKeyDown(Input.KEY_H)) {
-        	player.takeDamage((short) 1);
+        	player.takeDamage((short) 100);
         }
 
         // Spielerausrichtung

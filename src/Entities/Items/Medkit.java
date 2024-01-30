@@ -15,7 +15,7 @@ import Entities.Renderable;
  */
 public class Medkit extends Entity implements Renderable, Pickable {
 
-    private short healAmount = 100;
+    private short healAmount = 500;
     private Sound healSound = new Sound("assets/sounds/player_heal.wav");
 
     public Medkit(float centerX, float centerY) throws SlickException {

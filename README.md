@@ -25,3 +25,4 @@ Dies ist ein Projekt im Rahmen der Prüfungsleistung im dualen Studium im Studie
 - 4 Waffenslot 4
 - 5 Waffenslot 5
 - E Spiel neustarten (Bei Tod oder Spielabschluss)
+- ESC Spiel beenden
