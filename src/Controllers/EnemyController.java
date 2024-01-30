@@ -1,16 +1,21 @@
 package Controllers;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Random;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Line;
 
 import Entities.Enemy;
-import Entities.GuardianEnemy;
-import Entities.SentinelEnemy;
+import Entities.Player;
 import Entities.Weapon;
+import Entities.Enemies.Computer;
+import Entities.Enemies.GuardianEnemy;
+import Entities.Enemies.SentinelEnemy;
 
 /**
  * Diese Klasse verwaltet alle Gegner im Game.
@@ -18,9 +23,10 @@ import Entities.Weapon;
  * @author Jeremy Adam
  */
 public abstract class EnemyController {
-    //TODO:
 	
-	private static HashSet<Enemy> enemies = new HashSet<Enemy>();
+	private static HashSet<Enemy> enemies;
+	private static ArrayList<Computer> computers;
+	private static Random random = new Random();
 	
 	// methods
 	/**
@@ -30,6 +36,19 @@ public abstract class EnemyController {
 	public static void addEnemy(Enemy enemy) {
 		enemies.add(enemy);
 	}
+
+	/**
+	 * Adds a computer to HashSet computer containing all computers in the game
+	 * @param enemy Computer to add to HashSet computers
+	 */
+	public static void addComputer(Computer computer) {
+		computers.add(computer);
+	}
+
+	public static void init() {
+		enemies = new HashSet<Enemy>();
+		computers = new ArrayList<Computer>();
+	}
 	
 	/**
 	 * 
@@ -38,14 +57,23 @@ public abstract class EnemyController {
 	 * @param d starting direction where the sentinel is looking at
 	 * @throws SlickException 
 	 */
-	public static void createSentinel(int x, int y, float d) throws SlickException {
+	public static void createSentinel(float x, float y, float d) throws SlickException {
 		SentinelEnemy s = new SentinelEnemy("assets/enemySprites/sentinel.png", x, y, d);
 		EnemyController.addEnemy(s);
 	}
 	
-	public static void createGuardian(int x, int y, float d) throws SlickException {
+	public static void createGuardian(float x, float y, float d) throws SlickException {
 		GuardianEnemy g = new GuardianEnemy("assets/enemySprites/guardian.png", x, y, d);
 		EnemyController.addEnemy(g);
+	}
+
+	public static void createComputer(float x, float y, float d) throws SlickException {
+		Computer c = new Computer(x, y);
+		EnemyController.addComputer(c);
+		createSentinel(x + 100, y, d);
+		createSentinel(x, y + 100, 90);
+		createSentinel(x - 100, y, 180);
+		createGuardian(x, y - 100, -90);
 	}
 	
 	public static void removeEnemy(Enemy enemy) {
@@ -55,33 +83,51 @@ public abstract class EnemyController {
 	public static void update(GameContainer container, int delta) {
 		Iterator<Enemy> it = enemies.iterator();
 		while (it.hasNext()) {
-			Enemy enemy =  it.next();
-			if (enemy.getHitpoints()<=0) {
+			Enemy enemy = it.next();
+			if (enemy.getHitpoints() <= 0) {
 				it.remove();
 				continue;
 			}
 
 			// shoot start
 
-//			check if magazine is empty and whether reload timer needs to be set off
+			//			check if magazine is empty and whether reload timer needs to be set off
 			Weapon equippedWeapon = enemy.getEquippedWeapon();
 
-			if (equippedWeapon.getBullets() > 0) {
+			//Enemy does not notice presence if player is too far away
+			boolean playerIsVisible = true;
+			Player player = PlayerController.getPlayer();
+			Line distanceToPlayer = new Line(enemy.getShape().getCenterX(), enemy.getShape().getCenterY(),
+					player.getShape().getCenterX(), player.getShape().getCenterY());
+			if (distanceToPlayer.length() > enemy.getVisibilityRadius()) {
+				playerIsVisible = false;
+			}
+
+			if (equippedWeapon.getBullets() > 0 && playerIsVisible) {
 				WeaponController.shoot(enemy, null, null);
-			} else if (equippedWeapon.getReloadTimer()==0){
+			} else if (equippedWeapon.getBullets() == 0 && equippedWeapon.getReloadTimer() == 0) {
 				equippedWeapon.setReloadTimer(equippedWeapon.getReloadRate());
 			}
-			
-			if (equippedWeapon.getReloadTimer()==1) {
+
+			if (equippedWeapon.getReloadTimer() == 1) {
 				equippedWeapon.reload((equippedWeapon.getMagazineSize()));
 			}
 
 			// shoot end
-			
-			enemy.alignWithPlayer(delta);
-			
-			enemy.move(delta);
+			if (playerIsVisible) {
+				enemy.alignWithPlayer(delta);
+				enemy.move(delta);
+			}
+
 			enemy.getDamageAnimation().update();
+		}
+		
+		for (Computer computer : computers) {
+			if (computer.getHitpoints() <= 0) {
+				computer.die();
+			}
+			
+			computer.getDamageAnimation().update();
 		}
 	}
 	
@@ -90,8 +136,85 @@ public abstract class EnemyController {
 			enemy.render(g);
 			enemy.getDamageAnimation().render(g);
 		}
-		
+
+		for (Computer computer : computers) {
+			computer.render(g);
+			computer.getDamageAnimation().render(g);
+		}
 	}
+	
+	/**
+	 * Spawn enemies around computers
+	 * 
+	 * @throws SlickException
+	 */
+	public static void spawnEnemiesAroundComputers() throws SlickException {
+
+		short sentinelAmount = 0;
+		short guardianAmount = 0;
+		short maxAmountOfEnemies = 0;
+
+		switch (getAmountOfComputers()) {
+			case 4:
+				sentinelAmount = 3;
+				guardianAmount = 1;
+				maxAmountOfEnemies = 10;
+				break;
+			case 3:
+				sentinelAmount = 4;
+				guardianAmount = 2;
+				maxAmountOfEnemies = 20;
+				break;
+			case 2:
+				sentinelAmount = 5;
+				guardianAmount = 4;
+				maxAmountOfEnemies = 30;
+				break;
+			case 1:
+				sentinelAmount = 2;
+				guardianAmount = 6;
+				maxAmountOfEnemies = 40;
+				break;
+			default:
+				break;
+		}
+
+		for (int i = 0; i < sentinelAmount; i++) {
+			if (enemies.size() >= maxAmountOfEnemies) {
+				return;
+			}
+
+			Computer computer = computers.get(random.nextInt(4));
+
+			float randomX;
+			float randomY;
+
+			do {
+				randomX = computer.getShape().getCenterX() + (random.nextFloat() - 0.5f) * 1000;
+				randomY = computer.getShape().getCenterY() + (random.nextFloat() - 0.5f) * 1000;
+			} while (LevelController.getIsHittingCollision(randomX, randomY));
+
+			createSentinel(randomX, randomY, 0);
+		}
+		
+		for (int i = 0; i < guardianAmount; i++) {
+			if (enemies.size() >= maxAmountOfEnemies) {
+				return;
+			}
+
+			Computer computer = computers.get(random.nextInt(4));
+
+			float randomX;
+			float randomY;
+			
+			do {
+				randomX = computer.getShape().getCenterX() + (random.nextFloat() - 0.5f) * 500;
+				randomY = computer.getShape().getCenterY() + (random.nextFloat() - 0.5f) * 500;	
+			} while (LevelController.getIsHittingCollision(randomX, randomY));
+
+			createGuardian(randomX, randomY, 0);
+		}
+	} 
 	
 	// getter and setter
 	/**
@@ -100,6 +223,30 @@ public abstract class EnemyController {
 	 */
 	public static HashSet<Enemy> getEnemies() {
 		return enemies;
+	}
+
+	/**
+	 * returns all computers
+	 * @return
+	 */
+	public static ArrayList<Computer> getComputers() {
+		return computers;
+	}
+
+	/**
+	 * returns number of working computers
+	 * @return number of working computers
+	 */
+	public static short getAmountOfComputers() {
+		short amount = 0;
+
+		for (Computer computer : computers) {
+			if (!computer.isDestroyed()) {
+				amount++;
+			}
+		}
+
+		return amount;
 	}
 	
 	

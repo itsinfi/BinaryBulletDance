@@ -7,15 +7,12 @@ import org.newdawn.slick.SlickException;
 
 import Controllers.WeaponController;
 import Controllers.EnemyController;
+import Controllers.ItemController;
 import Controllers.LevelController;
 import Controllers.MusicController;
 import Controllers.PlayerController;
-import Entities.LivingEntity;
 import Entities.Player;
-import Entities.SentinelEnemy;
 import ui.Hud;
-
-import java.util.HashSet;
 
 /**
  * Diese Klasse verwaltet den Spielzustand und steuert den Ablauf des Spiels.
@@ -31,7 +28,9 @@ public class GameStateManager extends BasicGame {
     //Attribute
 
     //TODO: Controller static machen und unnötige Werte entfernen
-    private HashSet<LivingEntity> livingEntities = new HashSet<LivingEntity>();
+    private static short gameLoopTimer = 0;
+    private static short gameLoopRate = 60;
+    private static int lastKnownAmountOfComputers = 4;
 
 
     //Konstruktoren
@@ -81,18 +80,22 @@ public class GameStateManager extends BasicGame {
      */
     @Override
     public void init(GameContainer container) throws SlickException {
+        WeaponController.init();
         PlayerController.init(container);
-        livingEntities.add(PlayerController.getPlayer());
+        EnemyController.init();
+
         LevelController.loadLevel("01");
+
+        ItemController.init();
 
         //Font für die GUI laden        
         Hud.init();
         
-        // temporary enemy        
-         EnemyController.createSentinel(100, 100, 0);
-         EnemyController.createSentinel(200, 200, 0);
-         EnemyController.createSentinel(300, 300, 0);
-         EnemyController.createGuardian(100, 100, 0);
+        // spawn computers TODO:  add actual coordinates 
+        EnemyController.createComputer(100, 100, 0);
+        EnemyController.createComputer(2000, 0, 0);
+        EnemyController.createComputer(0, 2000, 0);
+        EnemyController.createComputer(2000, 2000, 0);
 
         MusicController.init();
         MusicController.startMusic();
@@ -111,15 +114,19 @@ public class GameStateManager extends BasicGame {
         Input input = container.getInput();
         Player player = PlayerController.getPlayer();
         
-        // stop game when player is dead
-        if (player.getHitpoints() <= 0) {
+        // restart game when player is dead
+        if (player.getHitpoints() <= 0 || EnemyController.getAmountOfComputers() <= 0) {
 
             if (input.isKeyDown(Input.KEY_E)) {
-                container.exit();
+                MusicController.stopMusic();
+                init(container);
             } else {
                 return;
             }
         }
+
+        //Game Loop updaten
+        updateGameLoop();
         
         //Level updaten
         LevelController.update(container, delta);
@@ -130,7 +137,11 @@ public class GameStateManager extends BasicGame {
         //Waffen updaten
         WeaponController.update();
         
+        //Gegner updaten
         EnemyController.update(container, delta);
+
+        //Items updaten
+        ItemController.update();
     }
 
     /**
@@ -144,6 +155,7 @@ public class GameStateManager extends BasicGame {
     @Override
     public void render(GameContainer container, Graphics g) throws SlickException {
 
+        //Kamera übersetzen
         LevelController.translateCamera(g);
 
         //Map rendern
@@ -152,16 +164,69 @@ public class GameStateManager extends BasicGame {
         //Weapons rendern
         WeaponController.render(g);
 
+        //Gegner rendern
+        EnemyController.render(g);
+
         //Player rendern
         PlayerController.render(g);
-        
-        EnemyController.render(g);
+
+        //Items rendern
+        ItemController.render(g);
 
         //Draw HUD
         Hud.render(g, container);
 
+        //Kameraübersetzung aufheben
         LevelController.resetCameraTranslation(g);
-        
+
+    }
+    
+    /**
+     * Diese Methode verwaltet den GameLoop:
+     * 
+     * - Spiel beenden, sobald alle 4 Computer zerstört wurden
+     * - Solange werden immer Medkits auf der gesamten Karte gespawnt
+     * - Jeder Computer spawnt Gegner um sich herum
+     * - Wird ein Computer zerstört, können mehr Gegner insgesamt gespawnt werden
+     * - Ebenso erhöht sich die Spawnrate pro zerstörtem Computer
+     */
+    public static void updateGameLoop() throws SlickException{
+
+        int amountOfComputers = EnemyController.getAmountOfComputers();
+
+        if (amountOfComputers == 0) {
+            lastKnownAmountOfComputers = amountOfComputers;
+            return;
+        }
+
+        if (lastKnownAmountOfComputers != amountOfComputers) {
+            lastKnownAmountOfComputers = amountOfComputers;
+            switch (amountOfComputers) {
+                case 1:
+                    gameLoopRate = 10;
+                    break;
+                case 2:
+                    gameLoopRate = 20;
+                    break;
+                case 3:
+                    gameLoopRate = 40;
+                    break;
+                default:
+                    gameLoopRate = 60;
+                    break;
+            }
+        }
+
+        if (gameLoopTimer == 0) {
+
+            ItemController.generateMedkits((short) 2);
+
+            EnemyController.spawnEnemiesAroundComputers();
+
+            gameLoopTimer = gameLoopRate;
+        } else {
+            gameLoopTimer--;
+        }
     }
     
 }

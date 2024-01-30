@@ -1,15 +1,10 @@
 package Entities;
 
-import java.util.HashMap;
-
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
-import Entities.Weapon;
 import Entities.Animations.BulletFireAnimation;
-import Controllers.EnemyController;
 import Controllers.PlayerController;
-import Controllers.WeaponController;
 
 import java.lang.Math;
 import java.util.Random;
@@ -19,27 +14,25 @@ public abstract class Enemy extends LivingEntity{
 	protected float targetPosX;
 	protected float targetPosY;
 	protected float rotationSpeed;
+	protected float visibilityRadius = 500;
 	
 
 	public Enemy(String spriteAsset, float centerX, float centerY, float direction) throws SlickException {
 		super(spriteAsset, centerX, centerY, direction);
 		this.targetPosX = this.getShape().getX();
 		this.targetPosY = this.getShape().getY();
-		// TODO Auto-generated constructor stub
 	}
 
-    //TODO:
-
-    
 
 	/**
+	 * This method returns the visibility radius of the enemy
 	 * 
+	 * @return Visibility radius of the enemy
 	 */
-    @Override
-    public void die() {
-    	
-//    	throw new UnsupportedOperationException("Unimplemented method 'die'");
-    }
+	public float getVisibilityRadius() {
+		return visibilityRadius;
+	}
+
 	
 	/**
 	 * moves enemy towards a randomly selected target position within a certain distance near the player
@@ -55,7 +48,9 @@ public abstract class Enemy extends LivingEntity{
 		float playerY = PlayerController.getPlayer().getShape().getCenterY();
 		
 		float distanceX = Math.abs(enemyX-targetPosX);
-		float distanceY = Math.abs(enemyY-targetPosY);
+		float distanceY = Math.abs(enemyY - targetPosY);
+		
+
 		
 		// how far the target point from the enemy can be next to player
 		float range = 500;
@@ -87,20 +82,24 @@ public abstract class Enemy extends LivingEntity{
 
 		if (enemyX > targetPosX) {
 			this.setX(this.getShape().getX() - this.movementSpeed * delta);
+			equippedWeapon.setX(equippedWeapon.getShape().getX() - this.movementSpeed * delta);
 			bulletFireAnimation.setX(bulletFireAnimation.getShape().getX() - this.movementSpeed * delta);
 			damageAnimation.setX(damageAnimation.getShape().getX() - this.movementSpeed * delta);
 		} else if (enemyX < targetPosX) {
 			this.setX(this.getShape().getX() + this.movementSpeed * delta);
+			equippedWeapon.setX(equippedWeapon.getShape().getX() + this.movementSpeed * delta);
 			bulletFireAnimation.setX(bulletFireAnimation.getShape().getX() + this.movementSpeed * delta);
 			damageAnimation.setX(damageAnimation.getShape().getX() + this.movementSpeed * delta);
 		}
 
 		if (enemyY > targetPosY) {
 			this.setY(this.getShape().getY() - this.movementSpeed * delta);
+			equippedWeapon.setY(equippedWeapon.getShape().getY() - this.movementSpeed * delta);
 			bulletFireAnimation.setY(bulletFireAnimation.getShape().getY() - this.movementSpeed * delta);
 			damageAnimation.setY(damageAnimation.getShape().getY() - this.movementSpeed * delta);
 		} else if (enemyY < targetPosY) {
 			this.setY(this.getShape().getY() + this.movementSpeed * delta);
+			equippedWeapon.setY(equippedWeapon.getShape().getY() + this.movementSpeed * delta);
 			bulletFireAnimation.setY(bulletFireAnimation.getShape().getY() + this.movementSpeed * delta);
 			damageAnimation.setY(damageAnimation.getShape().getY() + this.movementSpeed * delta);
 		}
@@ -135,6 +134,7 @@ public abstract class Enemy extends LivingEntity{
 		
 		this.setDirection(enemyRotationAngle);
 		damageAnimation.setDirection(enemyRotationAngle);
+		equippedWeapon.setDirection(enemyRotationAngle);
 		equippedWeapon.getBulletFire().setDirection(enemyRotationAngle);
 	}
 	
