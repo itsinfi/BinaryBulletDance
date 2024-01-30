@@ -42,7 +42,7 @@ public class Player extends LivingEntity {
         super(playerAsset, 800, 1400, 0);
 
         //Werte festlegen
-        this.hitpoints = 2000;
+        this.hitpoints = 20000;
         this.maxHitpoints = 100;
         this.movementSpeed = 0.27f;
     }

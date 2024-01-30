@@ -11,7 +11,7 @@ import Entities.Weapons.Pistol;
 
 public class SentinelEnemy extends Enemy {
 
-	private FlyingAnimation flyingAnimation;
+//	private FlyingAnimation flyingAnimation;
 	
 	// constructor
 	/**
@@ -30,7 +30,7 @@ public class SentinelEnemy extends Enemy {
 		this.rotationSpeed = 0.15f;
 		this.hitpoints = 25;
 		
-		this.flyingAnimation = new FlyingAnimation(shape);
+//		this.flyingAnimation = new FlyingAnimation(shape);
 	}
 
 	/**
@@ -43,8 +43,9 @@ public class SentinelEnemy extends Enemy {
 		float y = this.shape.getY();
 		this.sprite.setRotation(direction);
 		this.sprite.draw(x, y);
-		flyingAnimation.update();
-		flyingAnimation.render(g);		
+		
+//		flyingAnimation.update();
+//		flyingAnimation.render(g);
 	}
 
 	@Override
