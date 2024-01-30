@@ -13,11 +13,15 @@ import Entities.Enemy;
 public class Computer extends Enemy {
 
     private boolean isDestroyed = false;
+	private float spawnRangeX;
+	private float spawnRangeY;
 
-    public Computer(float centerX, float centerY) throws SlickException {
+    public Computer(float centerX, float centerY, float spawnRangeX, float spawnRangeY) throws SlickException {
         //TODO:
         super("assets/playertestOld.png", centerX, centerY, 0);
         this.hitpoints = 200;
+        this.spawnRangeX = spawnRangeX;
+        this.spawnRangeY = spawnRangeY;
     }
 
     @Override
@@ -43,6 +47,14 @@ public class Computer extends Enemy {
 
     public boolean isDestroyed() {
         return isDestroyed;
+    }
+    
+    public float getSpawnRangeX() {
+    	return this.spawnRangeX;
+    }
+    
+    public float getSpawnRangeY() {
+    	return this.spawnRangeY;
     }
     
 }

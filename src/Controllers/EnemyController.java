@@ -67,13 +67,13 @@ public abstract class EnemyController {
 		EnemyController.addEnemy(g);
 	}
 
-	public static void createComputer(float x, float y, float d) throws SlickException {
-		Computer c = new Computer(x, y);
+	public static void createComputer(float x, float y, float d, float spawnRangeX, float spawnRangeY) throws SlickException {
+		Computer c = new Computer(x, y, spawnRangeX, spawnRangeY);
 		EnemyController.addComputer(c);
-		createSentinel(x + 100, y, d);
-		createSentinel(x, y + 100, 90);
-		createSentinel(x - 100, y, 180);
-		createGuardian(x, y - 100, -90);
+		createSentinel(x, y, d);
+		createSentinel(x, y, 90);
+		createSentinel(x, y, 180);
+		createGuardian(x, y, -90);
 	}
 	
 	public static void removeEnemy(Enemy enemy) {
@@ -188,10 +188,15 @@ public abstract class EnemyController {
 
 			float randomX;
 			float randomY;
+			float maxX = computer.getShape().getCenterX() + computer.getSpawnRangeX();
+			float maxY = computer.getShape().getCenterY() + computer.getSpawnRangeY();
+			float minX = computer.getShape().getCenterX() - computer.getSpawnRangeX();
+			float minY = computer.getShape().getCenterY() - computer.getSpawnRangeY();
 
 			do {
-				randomX = computer.getShape().getCenterX() + (random.nextFloat() - 0.5f) * 1000;
-				randomY = computer.getShape().getCenterY() + (random.nextFloat() - 0.5f) * 1000;
+				
+				randomX = random.nextFloat(minX, maxX);
+				randomY = random.nextFloat(minY, maxY);
 			} while (LevelController.getIsHittingCollision(randomX, randomY));
 
 			createSentinel(randomX, randomY, 0);
