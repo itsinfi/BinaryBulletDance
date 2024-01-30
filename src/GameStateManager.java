@@ -211,10 +211,10 @@ public class GameStateManager extends BasicGame {
             lastKnownAmountOfComputers = amountOfComputers;
             switch (amountOfComputers) {
                 case 1:
-                    gameLoopRate = 25;
+                    gameLoopRate = 40;
                     break;
                 case 2:
-                    gameLoopRate = 40;
+                    gameLoopRate = 45;
                     break;
                 case 3:
                     gameLoopRate = 50;
