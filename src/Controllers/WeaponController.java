@@ -185,6 +185,12 @@ public abstract class WeaponController {
             calculateShot(weapon, shootingEntity, xCursor, yCursor, weapon.getAccuracy(), weapon.getRange());
         }
 
+        //Waffe schießen
+        weapon.attack();
+
+        //FireTimer setzen (Feuerrate der Waffe)
+        weapon.setFireTimer(weapon.getFirerate());
+
     }
     
     /**
@@ -254,12 +260,6 @@ public abstract class WeaponController {
         float lineY = (float) (range * Math.sin(Math.toRadians(bulletDirectionInDegrees)))
                 + randomAccuracyY;
         Line bulletLine = new Line(x, y, x + lineX, y + lineY);
-
-        //Waffe schießen
-        weapon.attack();
-
-        //FireTimer setzen (Feuerrate der Waffe)
-        weapon.setFireTimer(weapon.getFirerate());
 
         //Wall Collision Check durchführen
         checkWallCollisions(bulletLine);

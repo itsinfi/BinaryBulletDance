@@ -15,7 +15,6 @@ public abstract class Weapon extends Entity {
 
     //Attribute
 
-    protected boolean isSecondary;
     protected short damagePerBullet;
     protected String ammoType;
     protected short firerate;
@@ -45,7 +44,6 @@ public abstract class Weapon extends Entity {
      * @param centerX Zentrale x-Koordinate der Position der Entität
      * @param centerY Zentrale y-Koordinate der Position der Entität
      * @param direction Blickrichtung der Entität (in Grad)
-     * @param isSecondary True, falls die Waffe eine Sekundärwaffe sein soll, false, falls sie eine Primärwaffe sein soll
      * @param damagePerBullet Schaden pro Schuss (selbe Einheit wie HP)
      * @param ammoType Bezeichner für den Munitionstyp zur Unterscheidung verschiedener Typen
      * @param firerate Zeit in Frames, bis ein nächster Schuss erlaubt ist
@@ -60,7 +58,7 @@ public abstract class Weapon extends Entity {
      * @param bulletFireOffsetY Anzahl an Pixel, um welche das Schussfeuer vertikal (wenn man nach rechts schaut) versetzt zum Träger der Waffe gerendert werden soll
      * @param shootSound Sound, der gespielt werden soll, wenn die Waffe schießt
      */
-    public Weapon(String spriteAsset, float centerX, float centerY, float direction, boolean isSecondary, short damagePerBullet, String ammoType, short firerate, float accuracy,
+    public Weapon(String spriteAsset, float centerX, float centerY, float direction, short damagePerBullet, String ammoType, short firerate, float accuracy,
             short range, short magazineSize, short reloadRate, boolean hasAutomaticFire, float offsetX, float offsetY, float bulletFireOffsetX, float bulletFireOffsetY, Sound shootSound) throws SlickException {
         //Entity erzeugen
         super(spriteAsset, centerX, centerY, direction);
@@ -72,7 +70,6 @@ public abstract class Weapon extends Entity {
         this.sprite = this.sprite.getFlippedCopy(false, true);
 
         //Werte einfügen
-        this.isSecondary = isSecondary;
         this.damagePerBullet = damagePerBullet;
         this.ammoType = ammoType;
         this.firerate = firerate;
@@ -89,15 +86,6 @@ public abstract class Weapon extends Entity {
     }
 
     //Getter
-
-    /**
-     * Diese Methode gibt zurück, ob eine Waffe eine Sekundärwaffe ist, oder nicht.
-     * 
-     * @return True, falls die Waffe eine Sekundärwaffe sein soll, false, falls sie eine Primärwaffe sein soll
-     */
-    public boolean isSecondary() {
-        return isSecondary;
-    }
 
     /**
      * Diese Methode gibt zurück, wie viel Schaden eine Waffe pro Schuss verursacht.
@@ -254,15 +242,6 @@ public abstract class Weapon extends Entity {
 
 
     //Setter
-
-    /**
-     * Diese Methode legt fest, ob eine Waffe eine Primär- (false) oder Sekundärwaffe (true) ist.
-     * 
-     * @param isSecondary True, falls die Waffe eine Sekundärwaffe sein soll, false, falls sie eine Primärwaffe sein soll
-     */
-    public void setSecondary(boolean isSecondary) {
-        this.isSecondary = isSecondary;
-    }
 
     /**
      * Diese Methode legt den Schaden pro Schuss der Waffe fest.

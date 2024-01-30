@@ -8,7 +8,7 @@ import Entities.LivingEntity;
 import Entities.Weapon;
 
 /**
- * Die Primärwaffe. (Automatisches Sturmgewehr mit begrenzter Munition)
+ * Das Sturmgewehr. (Automatisch mit begrenzter Munition)
  * 
  * @author Sascha Angermann
  */
@@ -21,17 +21,17 @@ public class AssaultRifle extends Weapon {
     //Konstruktoren
 
     /**
-     * Diese Methode erstellt eine Primärwaffe
+     * Diese Methode erstellt ein Sturmgewehr
      */
     public AssaultRifle(LivingEntity livingEntity) throws SlickException {
 
-        //Primärwaffe  erzeugen
+        //Sturmgewehr  erzeugen
         super("assets/weaponSprites/assaultRifle.png", livingEntity.getShape().getCenterX(), livingEntity.getShape().getCenterY(),
-                livingEntity.getDirection(), false, (short) 30, "ASSAULT_RIFLE", (short) 5, 350f, (short) 1400, (short) 30,
+                livingEntity.getDirection(), (short) 30, "ASSAULT_RIFLE", (short) 5, 350f, (short) 1400, (short) 30,
                 (short) 120, true, 40f, 24f, 100f, 30f,
                 new Sound("assets/sounds/assault_rifle_shoot.wav"));
 
-        //Primärwaffe dem WeaponController übergeben
+        //Sturmgewehr dem WeaponController übergeben
         WeaponController.addWeapon((Weapon) this);
     }
 
