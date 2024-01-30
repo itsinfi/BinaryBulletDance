@@ -77,9 +77,9 @@ public abstract class PlayerController {
         HashMap<String, Short> ammo = new HashMap<String, Short>();
         ammo.put("ASSAULT_RIFLE", (short) 200);
         ammo.put("MACHINE_PISTOL", (short) 200);
-        ammo.put("SHOTGUN", (short) 200);
-        ammo.put("SNIPER_RIFLE", (short) 200);
-        ammo.put("PISTOL", (short) 200);
+        ammo.put("SHOTGUN", (short) 100);
+        ammo.put("SNIPER_RIFLE", (short) 50);
+        ammo.put("PISTOL", (short) 1);
         player.addAmmo(ammo);
     }
 

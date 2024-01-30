@@ -27,7 +27,7 @@ public class Pistol extends Weapon {
         //Pistole erzeugen
         super("assets/weaponSprites/pistol.png", livingEntity.getShape().getCenterX(), livingEntity.getShape().getCenterY(),
                 livingEntity.getDirection(), (short) 30, "PISTOL", (short) 15, 200f,
-                (short) 1000, (short) 15, (short) 60, false, 10f, 26f, 36f, 30f,
+                (short) 1000, (short) 15, (short) 60, false, 10f, 26f, 26f, 5f,
                 new Sound("assets/sounds/pistol_shoot.wav"));
 
         //Einstellen, dass Munition für die Waffe unendlich sein soll.

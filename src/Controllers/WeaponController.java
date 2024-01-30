@@ -174,6 +174,12 @@ public abstract class WeaponController {
             return;
         }
 
+        //Waffe schießen
+        weapon.attack();
+
+        //FireTimer setzen (Feuerrate der Waffe)
+        weapon.setFireTimer(weapon.getFirerate());
+
         //Falls Waffe eine Shotgun ist, die spezielle Funktion für Shotguns aufrufen:
         if (weapon instanceof Shotgun) {
             Shotgun shotgun = (Shotgun) weapon;
@@ -184,13 +190,6 @@ public abstract class WeaponController {
         } else {
             calculateShot(weapon, shootingEntity, xCursor, yCursor, weapon.getAccuracy(), weapon.getRange());
         }
-
-        //Waffe schießen
-        weapon.attack();
-
-        //FireTimer setzen (Feuerrate der Waffe)
-        weapon.setFireTimer(weapon.getFirerate());
-
     }
     
     /**

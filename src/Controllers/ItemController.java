@@ -49,16 +49,24 @@ public abstract class ItemController {
     
 
     public static void generateMedkits(short amount) throws SlickException {
+
+        //Maximal 15 Medkits erlauben
+        if (medkits.size() > 15) {
+            return;
+        }
+
         Random random = new Random();
 
-        float xPos = -1;
-        float yPos = -1;
+        float xPos = 0;
+        float yPos = 0;
 
         for (int i = 0; i < amount; i++) {
-            while (xPos < 0 && yPos < 0 && LevelController.getIsHittingCollision(xPos, yPos)) {
+            
+            do  {
                 xPos = random.nextFloat() * LevelController.getLevelWidth();
                 yPos = random.nextFloat() * LevelController.getLevelHeight();
-            }
+            } while (xPos < 0 && yPos < 0 && LevelController.getIsHittingCollision(xPos, yPos));
+
             Medkit medkit = new Medkit(xPos, yPos);
             medkits.add(medkit);
         }

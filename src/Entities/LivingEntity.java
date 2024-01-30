@@ -18,7 +18,7 @@ public abstract class LivingEntity extends Entity implements Renderable {
     protected short hitpoints;
     protected short maxHitpoints = 100;
     protected short invincibilityTime = 0;
-    protected float movementSpeed = 0.27f;
+    protected float movementSpeed = 0.09f;
     protected DamageAnimation damageAnimation;
 
 

@@ -64,7 +64,7 @@ public abstract class Weapon extends Entity {
         super(spriteAsset, centerX, centerY, direction);
 
         //Schussfeuer erzeugen (zum Rendern des Schussfeuers)
-        this.bulletFire = new BulletFireAnimation(centerX, centerY, direction, bulletFireOffsetX, bulletFireOffsetY);
+        this.bulletFire = new BulletFireAnimation(centerX, centerY, direction, bulletFireOffsetX + offsetX, bulletFireOffsetY + offsetY);
         
         //Image auf der y-Achse spiegeln (Charakter soll Rechtshänder sein)
         this.sprite = this.sprite.getFlippedCopy(false, true);
@@ -455,7 +455,7 @@ public abstract class Weapon extends Entity {
      */
     protected void playShootSound() {
         if (shootSound != null) {
-            shootSound.play();
+            shootSound.play(1f, 0.3f);
         }
     }
 

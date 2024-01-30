@@ -45,9 +45,9 @@ public class Player extends LivingEntity {
         super(playerAsset, 2624, 2304, 0);
 
         //Werte festlegen
-        this.hitpoints = 20000;
-        this.maxHitpoints = 100;
-        this.movementSpeed = 0.27f;
+        this.hitpoints = 1000;
+        this.maxHitpoints = 1000;
+        this.movementSpeed = 0.4f;
     }
     
 
@@ -189,13 +189,13 @@ public class Player extends LivingEntity {
      * @param g Grafische Darstellung des Spiels durch die Slick2D-Library
      */
     public void render(Graphics g) {
+        if (this.equippedWeapon != null) {
+            this.getEquippedWeapon().render();
+        }
         float x = this.shape.getX();
         float y = this.shape.getY();
         this.sprite.setRotation(direction);
         this.sprite.draw(x, y);
-        if (this.equippedWeapon != null) {
-            this.getEquippedWeapon().render();
-        }
         this.damageAnimation.render(g);
     }
 

@@ -64,7 +64,7 @@ public class GameStateManager extends BasicGame {
             AppGameContainer app = new AppGameContainer(
                     new GameStateManager("ayo voll krasses game alter check this out!"));
             app.setIcons(new String[] { "assets/appIcon/appIcon.png" });
-            app.setDisplayMode(1600, 900, false);
+            app.setDisplayMode(1920, 1080, true);
             app.setTargetFrameRate(60);
             app.start();
         } catch (SlickException e) {
@@ -113,6 +113,11 @@ public class GameStateManager extends BasicGame {
     public void update(GameContainer container, int delta) throws SlickException {
         Input input = container.getInput();
         Player player = PlayerController.getPlayer();
+
+        //stop game when esc is pressed
+        if (input.isKeyDown(Input.KEY_ESCAPE)) {
+            container.exit();
+        }
         
         // restart game when player is dead
         if (player.getHitpoints() <= 0 || EnemyController.getAmountOfComputers() <= 0) {
@@ -203,13 +208,13 @@ public class GameStateManager extends BasicGame {
             lastKnownAmountOfComputers = amountOfComputers;
             switch (amountOfComputers) {
                 case 1:
-                    gameLoopRate = 10;
+                    gameLoopRate = 25;
                     break;
                 case 2:
-                    gameLoopRate = 20;
+                    gameLoopRate = 40;
                     break;
                 case 3:
-                    gameLoopRate = 40;
+                    gameLoopRate = 50;
                     break;
                 default:
                     gameLoopRate = 60;

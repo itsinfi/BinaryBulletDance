@@ -163,17 +163,17 @@ public abstract class EnemyController {
 			case 3:
 				sentinelAmount = 4;
 				guardianAmount = 2;
-				maxAmountOfEnemies = 20;
+				maxAmountOfEnemies = 15;
 				break;
 			case 2:
 				sentinelAmount = 5;
 				guardianAmount = 4;
-				maxAmountOfEnemies = 30;
+				maxAmountOfEnemies = 20;
 				break;
 			case 1:
 				sentinelAmount = 2;
 				guardianAmount = 6;
-				maxAmountOfEnemies = 40;
+				maxAmountOfEnemies = 25;
 				break;
 			default:
 				break;
@@ -184,7 +184,11 @@ public abstract class EnemyController {
 				return;
 			}
 
-			Computer computer = computers.get(random.nextInt(4));
+			Computer computer;
+
+			do {
+				computer = computers.get(random.nextInt(4));
+			} while (computer.isDestroyed());
 
 			float randomX;
 			float randomY;
@@ -202,7 +206,11 @@ public abstract class EnemyController {
 				return;
 			}
 
-			Computer computer = computers.get(random.nextInt(4));
+			Computer computer;
+
+			do {
+				computer = computers.get(random.nextInt(4));
+			} while (computer.isDestroyed());
 
 			float randomX;
 			float randomY;

@@ -1,18 +1,20 @@
 package Entities.Enemies;
 
 import java.util.HashMap;
+import java.util.Random;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 import Controllers.PlayerController;
 import Entities.Enemy;
-import Entities.LivingEntity;
 import Entities.Weapon;
 import Entities.Weapons.AssaultRifle;
+import Entities.Weapons.MachinePistol;
+import Entities.Weapons.Shotgun;
+import Entities.Weapons.SniperRifle;
 
 public class GuardianEnemy extends Enemy{
-		private String ammoType;
 		// constructor
 		/**
 		 * creates a new Guardian. Guardians are slower but stronger than sentinels
@@ -24,9 +26,27 @@ public class GuardianEnemy extends Enemy{
 		 */
 		public GuardianEnemy(String spriteAsset, float centerX, float centerY, float direction) throws SlickException {
 			super(spriteAsset, centerX, centerY, direction);
-			Weapon w = (Weapon) new AssaultRifle((LivingEntity) this);
-			this.setEquippedWeapon(w);
-			this.ammoType = "ASSAULT_RIFLE";
+
+			//Chosse random weapon
+			Random random = new Random();
+			int randomInt = random.nextInt(4);
+			switch (randomInt) {
+				case 0:
+					this.equippedWeapon = new AssaultRifle(this);
+					break;
+				case 1:
+					this.equippedWeapon = new MachinePistol(this);
+					break;
+				case 2:
+					this.equippedWeapon = new Shotgun(this);
+					break;
+				case 3:
+					this.equippedWeapon = new SniperRifle(this);
+					break;
+				default:
+					break;
+			}
+
 			this.movementSpeed = 0.1f;
 			this.rotationSpeed = 0.1f;
 			this.hitpoints = 75;
@@ -37,7 +57,6 @@ public class GuardianEnemy extends Enemy{
 		 */
 		@Override
 		public void render(Graphics g) {
-			// TODO Auto-generated method stub
 			float x = this.shape.getX();
 			float y = this.shape.getY();
 			this.sprite.setRotation(direction);
@@ -49,9 +68,8 @@ public class GuardianEnemy extends Enemy{
 		public void die() {
 			// replenish ammo for player when defeated
 		    HashMap<String, Short> a = new HashMap<String, Short>();
-		    a.put(this.ammoType, (short)(30));
+		    a.put(this.equippedWeapon.getAmmoType(), this.equippedWeapon.getMagazineSize());
 			PlayerController.getPlayer().addAmmo(a);
-			
 		}
 
 		@Override
