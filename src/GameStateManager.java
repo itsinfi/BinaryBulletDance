@@ -92,10 +92,10 @@ public class GameStateManager extends BasicGame {
         Hud.init();
         
         // spawn computers TODO:  add actual coordinates 
-        EnemyController.createComputer(100, 100, 0);
-        EnemyController.createComputer(2000, 0, 0);
-        EnemyController.createComputer(0, 2000, 0);
-        // EnemyController.createComputer(2000, 2000, 0);
+        EnemyController.createComputer(1155, 237, 0, 100, 100);
+        EnemyController.createComputer(4000, 390, 0, 100, 100);
+        EnemyController.createComputer(5650, 2770, 0, 100, 100);
+        EnemyController.createComputer(260, 3350, 0, 100, 100);
 
         MusicController.init();
         MusicController.startMusic();
