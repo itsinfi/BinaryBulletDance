@@ -6,7 +6,16 @@
     "activeFile": "",
     "expandedProjectPaths": [
     ],
+    "file.lastUsedOpenFilter": "Alle Dateien (*)",
     "fileStates": {
+        "Level01.tmx": {
+            "scale": 0.12973437499999999,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 3206.5518487293757,
+                "y": 3202.697820065037
+            }
+        },
         "Map01.tmx": {
             "scale": 0.12973437499999999,
             "selectedLayer": 0,
@@ -28,6 +37,7 @@
     "project": "BBD.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "Level01.tmx",
         "Map01.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
