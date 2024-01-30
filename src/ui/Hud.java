@@ -73,6 +73,11 @@ public abstract class Hud {
         
         g.drawString("HP: " + player.getHitpoints(), maxWidth + 15, maxHeight + 830);
         
+        // used for testing
+        // draw player coordinates
+        g.drawString("X: " + player.getShape().getCenterX(), maxWidth+200, maxHeight+200);
+        g.drawString("Y: "+ player.getShape().getCenterY(), maxWidth+200, maxHeight+180);
+        
         // Game Over Screen
         if (PlayerController.getPlayer().getHitpoints() <= 0) {
             MusicController.stopMusic();

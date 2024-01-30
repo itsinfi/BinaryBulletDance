@@ -36,7 +36,10 @@ public class Player extends LivingEntity {
     public Player(String playerAsset, GameContainer container) throws SlickException {
         
         //Spieler in der Mitte des Bildschirms spawnen
-        super(playerAsset, container.getWidth() / 2, container.getHeight() / 2, 0);
+//        super(playerAsset, container.getWidth() / 2, container.getHeight() / 2, 0);
+        
+        // Spieler auf custom spawnpoint spawnen
+        super(playerAsset, 800, 1400, 0);
 
         //Werte festlegen
         this.hitpoints = 2000;
