@@ -21,7 +21,7 @@ public class Computer extends Enemy {
     public Computer(float centerX, float centerY, float spawnRangeX, float spawnRangeY) throws SlickException {
         //TODO:
         super("assets/enemySprites/computer.png", centerX, centerY, 0);
-        this.hitpoints = 200;
+        this.hitpoints = 800;
         this.spawnRangeX = spawnRangeX;
         this.spawnRangeY = spawnRangeY;
     }
