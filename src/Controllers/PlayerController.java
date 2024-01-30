@@ -115,11 +115,9 @@ public abstract class PlayerController {
         damageAnimation.update();
 
         //Keyboard-Input auslesen und Spielerkollisionen checken
-//        if (input.isKeyDown(Input.KEY_W) && player.getShape().getY() > 0) {
 
-           if (input.isKeyDown(Input.KEY_W)) {
+           if (input.isKeyDown(Input.KEY_W) && player.getShape().getCenterY() - player.getShape().getHeight()/2 > 0) {
         	
-//            direction = !LevelController.getIsHittingCollision(player.getShape()) ? Direction.UP : Direction.DOWN;
         	float currentX = player.getShape().getCenterX();
             float currentY = player.getShape().getCenterY();
             
@@ -130,11 +128,8 @@ public abstract class PlayerController {
             	}
             }
             
-            
-//        if (input.isKeyDown(Input.KEY_S) && player.getShape().getY() < (container.getHeight() + LevelController.getCameraY()) - player.getShape().getHeight()) {
-
-        if (input.isKeyDown(Input.KEY_S)) {
-//            direction = !LevelController.getIsHittingCollision(player.getShape()) ? Direction.DOWN : Direction.UP;
+        if (input.isKeyDown(Input.KEY_S) && player.getShape().getY() < (container.getHeight() + LevelController.getCameraY()) - player.getShape().getHeight()) {
+        	
         	float currentX = player.getShape().getCenterX();
         	float currentY = player.getShape().getCenterY();
             
@@ -148,9 +143,8 @@ public abstract class PlayerController {
            
         }
         
-//        if (input.isKeyDown(Input.KEY_A) && player.getShape().getX() > 0) {
-        if (input.isKeyDown(Input.KEY_A)) {
-//            direction = !LevelController.getIsHittingCollision(player.getShape()) ? Direction.LEFT : Direction.RIGHT;
+
+        if (input.isKeyDown(Input.KEY_A) && player.getShape().getCenterX() - player.getShape().getWidth()/2 > 0) {
         	float currentX = player.getShape().getCenterX();
         	float currentY = player.getShape().getCenterY();
             
@@ -160,9 +154,9 @@ public abstract class PlayerController {
             	movePlayer(delta, playerSpeed, primaryWeapon, secondaryWeapon, primaryBulletFire, secondaryBulletFire, damageAnimation);
         	}
         }
-//        if (input.isKeyDown(Input.KEY_D) && player.getShape().getX() < (container.getWidth() + LevelController.getCameraX()) - player.getShape().getWidth()) {
-        if (input.isKeyDown(Input.KEY_D)) {
-//            direction = !LevelController.getIsHittingCollision(player.getShape()) ? Direction.RIGHT : Direction.LEFT;
+
+        if (input.isKeyDown(Input.KEY_D) && player.getShape().getX() < (container.getWidth() + LevelController.getCameraX()) - player.getShape().getWidth()) {
+        	
         	float currentX = player.getShape().getCenterX();
         	float currentY = player.getShape().getCenterY();
             
@@ -173,9 +167,7 @@ public abstract class PlayerController {
         	}
         	
         }
-        
-        System.out.println(LevelController.getIsHittingCollision(player.getShape().getCenterX(), player.getShape().getCenterY()));
-        
+
         if (input.isKeyDown(Input.KEY_H)) {
         	player.takeDamage((short) 1);
         }
