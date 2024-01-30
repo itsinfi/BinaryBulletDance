@@ -118,7 +118,6 @@ public abstract class Hud {
 			g.drawImage(c3, maxWidth+1700, maxHeight+1000);
 			g.drawImage(c4, maxWidth+1800, maxHeight+1000);
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         
@@ -174,10 +173,6 @@ public abstract class Hud {
             g.drawString("You died!", maxWidth + 835, maxHeight + 470);
             g.drawString("Press E to restart game!", maxWidth + 680, maxHeight + 520);
             g.drawString("Press Escape to close.", maxWidth + 680, maxHeight + 570);
-            
-            
-            playDeathDialogSound();
-    	
     }
     
     public static void winScreen(Graphics g, GameContainer container) {
@@ -190,21 +185,5 @@ public abstract class Hud {
         g.drawString("You won!", maxWidth + 835, maxHeight + 470);
         g.drawString("Press E to restart game!", maxWidth + 680, maxHeight + 520);
         g.drawString("Press Escape to close.", maxWidth + 680, maxHeight + 570);
-    }
-    
-    /**TODO:
-     * Diese Methode spielt den Sound, wenn der Spieler stirbt (ein zufälliger aus 4)
-     */
-    public static void playDeathDialogSound() {
-        if (deathDialog == null) {
-        //     int randomInt = random.nextInt(4) + 1;
-        //     String fileName = "assets/sounds/death_dialog_" + randomInt + ".wav";
-        //     try {
-        //         deathDialog = new Sound(fileName);
-        //         deathDialog.play();
-        //     } catch (SlickException e) {
-        //         System.out.println(e);
-        //     }
-        }
     }
 }

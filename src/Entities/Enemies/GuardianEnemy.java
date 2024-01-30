@@ -74,8 +74,6 @@ public class GuardianEnemy extends Enemy{
 
 		@Override
 		public void reload() {
-			// TODO Auto-generated method stub
-			
 		}
 		
 		// getters and setters

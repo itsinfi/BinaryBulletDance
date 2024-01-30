@@ -19,7 +19,6 @@ public class Computer extends Enemy {
 	private float spawnRangeY;
 
     public Computer(float centerX, float centerY, float spawnRangeX, float spawnRangeY) throws SlickException {
-        //TODO:
         super("assets/enemySprites/computer.png", centerX, centerY, 0);
         this.hitpoints = 800;
         this.spawnRangeX = spawnRangeX;
@@ -28,29 +27,19 @@ public class Computer extends Enemy {
 
     @Override
     public void render(Graphics g) {
-        //TODO: add different texture
-        if (isDestroyed) {
-            float x = this.shape.getX();
-            float y = this.shape.getY();
-            this.sprite.draw(x, y);
-        } else {
-            float x = this.shape.getX();
-            float y = this.shape.getY();
-            this.sprite.draw(x, y);
-        }
-        
+        float x = this.shape.getX();
+        float y = this.shape.getY();
+        this.sprite.draw(x, y);
     }
 
     @Override
     public void die() {
-        //TODO:
     	try {
 			Image image = new Image("assets/enemySprites/computer_broken.png");
 			this.sprite = image.getScaledCopy(2);
 			DamageAnimation brokenComputer = new DamageAnimation("assets/enemySprites/computer_broken.png", this.getShape().getCenterX(), this.getShape().getCenterY(), this.direction);
 			this.damageAnimation = brokenComputer;
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         this.isDestroyed = true;

@@ -139,7 +139,6 @@ public abstract class Enemy extends LivingEntity{
 	/**
 	 * aligns Enemy automatically with player
 	 */
-	// TODO check if there's a wall between player and enemy
 	public void alignWithPlayer(int delta) {
 		float enemyX = this.getShape().getCenterX();
 		float enemyY = this.getShape().getCenterY();
@@ -184,7 +183,7 @@ public abstract class Enemy extends LivingEntity{
 	
 	public void reload() {
 		short requiredBullets = (short) (this.equippedWeapon.getMagazineSize() - this.equippedWeapon.getBullets());
-		this.equippedWeapon.reload((short) 15);
+		this.equippedWeapon.reload(requiredBullets);
 	}
 	
 }

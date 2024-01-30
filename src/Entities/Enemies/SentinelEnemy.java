@@ -40,7 +40,6 @@ public class SentinelEnemy extends Enemy {
 	 */
 	@Override
 	public void render(Graphics g) {
-		// TODO Auto-generated method stub
 		float x = this.shape.getX();
 		float y = this.shape.getY();
 		this.sprite.setRotation(direction);

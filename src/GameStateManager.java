@@ -30,7 +30,6 @@ public class GameStateManager extends BasicGame {
 
     //Attribute
 
-    //TODO: Controller static machen und unnötige Werte entfernen
     private static short gameLoopTimer = 0;
     private static short gameLoopRate = 60;
     private static int lastKnownAmountOfComputers = 4;

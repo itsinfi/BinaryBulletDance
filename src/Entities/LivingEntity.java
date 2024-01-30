@@ -112,7 +112,6 @@ public abstract class LivingEntity extends Entity implements Renderable {
 
     //Methoden
 
-    //TODO: add heal and takeDamage methods
     
     /**
      * Diese Methode heilt die Entität.
@@ -121,7 +120,6 @@ public abstract class LivingEntity extends Entity implements Renderable {
      */
     public void heal(short amount) {
     	
-    	//TODO: add exception handling
     	if(amount < 0) {
     		throw new IllegalArgumentException("Negative amounts are not allowed for healing! Use takeDamage(amount) if you want to deal damage to an entity instead!");
     	}
@@ -142,7 +140,6 @@ public abstract class LivingEntity extends Entity implements Renderable {
      */
     public void takeDamage(short amount) {
     	
-    	//TODO: add exception handling
     	if(amount < 0) {
     		throw new IllegalArgumentException("Negative amounts of damage are not allowed! Use heal(amount) if you want to heal an entity instead!");
     	}

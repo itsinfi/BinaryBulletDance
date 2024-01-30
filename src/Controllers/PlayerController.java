@@ -46,7 +46,6 @@ public abstract class PlayerController {
      * 
      * @param container container of the window
      */
-    //TODO: Spieler aus GameStateManager entfernen
     public static void init(GameContainer container) throws SlickException {
 
         //Spieler erzeugen
@@ -113,7 +112,6 @@ public abstract class PlayerController {
             player.setChangeEquippedWeaponTimer(--changeEquippedWeaponTimer);
         }
 
-        // Spielerbewegung (+ Waffen des Spielers) TODO: iwann schöner handlen mit bulletFire und weapon movement updates
         float playerSpeed = player.getMovementSpeed();
         Weapon weapon1 = player.getWeaponSlot((short) 1);
         Weapon weapon2 = player.getWeaponSlot((short) 2);
@@ -344,7 +342,6 @@ public abstract class PlayerController {
      * 
      * @param g Grafische Darstellung des Spiels durch die Slick2D-Library
      */
-    //TODO: Diese Methode in der Main verwenden
     public static void render(Graphics g) {
         player.render(g);
     }

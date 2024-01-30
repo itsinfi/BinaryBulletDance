@@ -11,7 +11,6 @@ import Entities.Animations.BulletFireAnimation;
  * @author Sascha Angermann
  */
 public abstract class Weapon extends Entity {
-    //TODO: später als abstrakte Oberklasse implementieren
 
     //Attribute
 
