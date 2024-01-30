@@ -12,6 +12,7 @@ import org.newdawn.slick.Sound;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.util.ResourceLoader;
 
+import Controllers.EnemyController;
 import Controllers.LevelController;
 import Controllers.MusicController;
 import Controllers.PlayerController;
@@ -78,6 +79,11 @@ public abstract class Hud {
         g.drawString("X: " + player.getShape().getCenterX(), maxWidth+200, maxHeight+200);
         g.drawString("Y: "+ player.getShape().getCenterY(), maxWidth+200, maxHeight+180);
         
+        // Win Screen
+        if (EnemyController.getAmountOfComputers()==0) {
+        	winScreen(g, container);
+        }
+        
         // Game Over Screen
         if (PlayerController.getPlayer().getHitpoints() <= 0) {
             MusicController.stopMusic();
@@ -120,11 +126,22 @@ public abstract class Hud {
             float maxHeight = LevelController.getCameraY();
 
             g.drawString("You died!", maxWidth + 675, maxHeight + 400);
-            g.drawString("Press E to exit!", maxWidth + 625, maxHeight + 450);
+            g.drawString("Press E to restart game!", maxWidth + 530, maxHeight + 450);
             
             
             playDeathDialogSound();
     	
+    }
+    
+    public static void winScreen(Graphics g, GameContainer container) {
+    	g.setFont(gameOverTTF);
+    	g.setColor(Color.green);
+    	
+    	float maxWidth = LevelController.getCameraX();
+        float maxHeight = LevelController.getCameraY();
+
+        g.drawString("You won!", maxWidth + 675, maxHeight + 400);
+        g.drawString("Press E to restart game!", maxWidth + 530, maxHeight + 450);
     }
     
     /**TODO:
