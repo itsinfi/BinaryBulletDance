@@ -5,6 +5,9 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+
 import Controllers.WeaponController;
 import Controllers.EnemyController;
 import Controllers.ItemController;
@@ -61,10 +64,11 @@ public class GameStateManager extends BasicGame {
      */
     public static void main(String[] args) {
         try {
+            GraphicsDevice graphicsDevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
             AppGameContainer app = new AppGameContainer(
                     new GameStateManager("Binary Bullet Dance"));
             app.setIcons(new String[] { "assets/appIcon/appIcon.png" });
-            app.setDisplayMode(1920, 1080, true);
+            app.setDisplayMode(graphicsDevice.getDisplayMode().getWidth(), graphicsDevice.getDisplayMode().getHeight(), true);
             app.setTargetFrameRate(60);
             app.start();
         } catch (SlickException e) {
