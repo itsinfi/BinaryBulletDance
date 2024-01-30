@@ -31,7 +31,7 @@ public class SentinelEnemy extends Enemy {
 		this.rotationSpeed = 0.15f;
 		this.hitpoints = 25;
 		
-		Shape[] shapes = {this.shape, this.equippedWeapon.getShape(), this.equippedWeapon.getBulletFire().getShape()};
+		Shape[] shapes = {this.shape, this.equippedWeapon.getShape(), this.equippedWeapon.getBulletFire().getShape(), this.damageAnimation.getShape()};
 		this.flyingAnimation = new FlyingAnimation(shapes);
 	}
 
