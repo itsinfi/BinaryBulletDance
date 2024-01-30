@@ -80,9 +80,6 @@ public abstract class Enemy extends LivingEntity{
 			this.targetPosY = random.nextFloat(minY, maxY);
 
 		}
-		System.out.println("TargetPosX: " + this.targetPosX);
-		System.out.println("TargetPosY: " + this.targetPosY);
-//		} while(LevelController.getIsHittingCollision(this.targetPosX, this.targetPosY));
 		
 		
 		
@@ -98,8 +95,6 @@ public abstract class Enemy extends LivingEntity{
 			} else {
 				this.targetPosX = random.nextFloat(enemyX-25, enemyX+25);
 				this.targetPosY = random.nextFloat(enemyY-25, enemyY+25);
-				System.out.println("New TargetPosX: " + this.targetPosX);
-				System.out.println("New TargetPosY: " + this.targetPosY);
 			}
 			
 		} else if (enemyX < targetPosX) {
@@ -111,8 +106,6 @@ public abstract class Enemy extends LivingEntity{
 			} else {
 				this.targetPosX = random.nextFloat(enemyX-25, enemyX+25);
 				this.targetPosY = random.nextFloat(enemyY-25, enemyY+25);
-				System.out.println("New TargetPosX: " + this.targetPosX);
-				System.out.println("New TargetPosY: " + this.targetPosY);
 			}
 			
 		}
@@ -126,8 +119,6 @@ public abstract class Enemy extends LivingEntity{
 			} else {
 				this.targetPosX = random.nextFloat(enemyX-25, enemyX+25);
 				this.targetPosY = random.nextFloat(enemyY-25, enemyY+25);
-				System.out.println("New TargetPosX: " + this.targetPosX);
-				System.out.println("New TargetPosY: " + this.targetPosY);
 			}
 			
 		} else if (enemyY < targetPosY) {
@@ -139,8 +130,6 @@ public abstract class Enemy extends LivingEntity{
 			} else {
 				this.targetPosX = random.nextFloat(enemyX-25, enemyX+25);
 				this.targetPosY = random.nextFloat(enemyY-25, enemyY+25);
-				System.out.println("New TargetPosX: " + this.targetPosX);
-				System.out.println("New TargetPosY: " + this.targetPosY);
 			}
 			
 		}
