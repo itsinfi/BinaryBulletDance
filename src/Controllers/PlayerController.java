@@ -199,23 +199,23 @@ public abstract class PlayerController {
         boolean playerIsTooNear = true;
         if (playerDirection.length() > equippedWeapon.getOffsetX() + equippedWeapon.getShape().getWidth() + 30) {
             playerIsTooNear = false;
-
-            //Richtungsvektor normalisieren (Länge auf 1 setzen)
-            playerDirection = playerDirection.normalise();
-
-            //Wert in Grad für den Vektor berechnen (um die Sprites zu rotieren)
-            float playerRotationAngle = (float) Math
-                    .toDegrees(Math.atan2(playerDirection.getY(), playerDirection.getX()));
-
-            //Rotation des Spielers und seiner getragenen Waffen
-            player.setDirection(playerRotationAngle);
-            weapon1.setDirection(playerRotationAngle);
-            weapon2.setDirection(playerRotationAngle);
-            weapon3.setDirection(playerRotationAngle);
-            weapon4.setDirection(playerRotationAngle);
-            weapon5.setDirection(playerRotationAngle);
-            damageAnimation.setDirection(playerRotationAngle);
         }
+
+        //Richtungsvektor normalisieren (Länge auf 1 setzen)
+        playerDirection = playerDirection.normalise();
+
+        //Wert in Grad für den Vektor berechnen (um die Sprites zu rotieren)
+        float playerRotationAngle = (float) Math
+                .toDegrees(Math.atan2(playerDirection.getY(), playerDirection.getX()));
+
+        //Rotation des Spielers und seiner getragenen Waffen
+        player.setDirection(playerRotationAngle);
+        weapon1.setDirection(playerRotationAngle);
+        weapon2.setDirection(playerRotationAngle);
+        weapon3.setDirection(playerRotationAngle);
+        weapon4.setDirection(playerRotationAngle);
+        weapon5.setDirection(playerRotationAngle);
+        damageAnimation.setDirection(playerRotationAngle);
 
         // Weapon Slot wechseln
         if (changeEquippedWeaponTimer == 0) {
