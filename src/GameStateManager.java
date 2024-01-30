@@ -75,7 +75,7 @@ public class GameStateManager extends BasicGame {
     /**
      * Methode zur Initialisierung der Attribute der GameStateManager-Klasse.
      * 
-     * @param container Game Container des Games
+     * @param container container of the window
      * @throws SlickException Falls ein Fehler bei der Initialisierung auftritt.
      */
     @Override
@@ -95,7 +95,7 @@ public class GameStateManager extends BasicGame {
         EnemyController.createComputer(100, 100, 0);
         EnemyController.createComputer(2000, 0, 0);
         EnemyController.createComputer(0, 2000, 0);
-        EnemyController.createComputer(2000, 2000, 0);
+        // EnemyController.createComputer(2000, 2000, 0);
 
         MusicController.init();
         MusicController.startMusic();
@@ -105,7 +105,7 @@ public class GameStateManager extends BasicGame {
      * Methode zum Updaten aller logischen Elemente des Games, die sich verändern sollen.
      * Diese Methode wird mit jedem Frame von der GameContainer-Klasse aufgerufen.
      * 
-     * @param container Game Container des Games
+     * @param container container of the window
      * @param delta Millisekunden seit dem letzten Frame
      * @throws SlickException Falls ein Fehler beim Aktualisieren auftritt.
      */
@@ -153,7 +153,7 @@ public class GameStateManager extends BasicGame {
      * Methode zur Visualisierung aller Elemente des Games, die dargestellt werden sollen.
      * Diese Methode wird mit jedem Frame von der GameContainer-Klasse aufgerufen.
      * 
-     * @param container Game Container des Games
+     * @param container container of the window
      * @param g Grafische Darstellung des Spiels durch die Slick2D-Library
      * @throws SlickException Falls ein Fehler beim Darstellen auftritt
      */

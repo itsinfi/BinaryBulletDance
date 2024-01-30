@@ -29,9 +29,6 @@ public abstract class WeaponController {
     private static HashSet<Weapon> weapons;
     private static Random shotAccuracyRandomizer = new Random();
 
-
-    //Konstruktoren
-
     
     //Getter
 
@@ -43,9 +40,6 @@ public abstract class WeaponController {
     public static HashSet<Weapon> getWeapons() {
         return weapons;
     }
-    
-
-    //Setter
     
 
     //Methoden
@@ -144,6 +138,10 @@ public abstract class WeaponController {
      * @param shootingEntity Die schießende lebendige Entität
      * @param xCursor (Optional) x-Koordinate für Punkt, welche in der Schusslaufbahn enthalten sein soll (wichtig für Mauszeiger)
      * @param yCursor (Optional) y-Koordinate für Punkt, welche in der Schusslaufbahn enthalten sein soll (wichtig für Mauszeiger)
+     * 
+     * @throws IllegalArgumentException xCursor und yCursor dürfen nur:
+     * - beide null sein
+     * - beide nicht null sein
      */
     public static void shoot(LivingEntity shootingEntity, Float xCursor, Float yCursor) {
 
@@ -180,7 +178,7 @@ public abstract class WeaponController {
         //FireTimer setzen (Feuerrate der Waffe)
         weapon.setFireTimer(weapon.getFirerate());
 
-        //Falls Waffe eine Shotgun ist, die spezielle Funktion für Shotguns aufrufen:
+        //Falls Waffe eine Shotgun ist, mehrere Schüsse berechnen (um den Split zu berechen)
         if (weapon instanceof Shotgun) {
             Shotgun shotgun = (Shotgun) weapon;
             for (int i = 0; i < shotgun.getSpreadAmount(); i++) {
@@ -201,6 +199,10 @@ public abstract class WeaponController {
      * @param yCursor (Optional) y-Koordinate für Punkt, welche in der Schusslaufbahn enthalten sein soll (wichtig für Mauszeiger)
      * @param accuracy Zielgenauigkeit des Schusses
      * @param range Maximale Reichweite des Schusses
+     * 
+     * @throws IllegalArgumentException xCursor und yCursor dürfen nur:
+     * - beide null sein
+     * - beide nicht null sein
      */
     public static void calculateShot(Weapon weapon, LivingEntity shootingEntity, Float xCursor, Float yCursor,
             float accuracy, short range) {
@@ -228,18 +230,19 @@ public abstract class WeaponController {
         float x = shootingEntityX + rotatedOffsetX;
         float y = shootingEntityY + rotatedOffsetY;
 
-        //Richtung der lebendigen Enittät auslesen und einen Vektor dazu berechnen (falls xCursor und yCursor null sind)
+        //Richtung der lebendigen Entität auslesen und einen Vektor dazu berechnen (falls xCursor und yCursor null sind)
         Vector2f shootingEntityDirection;
         if (xCursor == null && yCursor == null) {
             shootingEntityDirection = new Vector2f(direction);
 
-            //Position eines Punktes berechnen, und Vektor dazu berechnen (falls xCursor und yCursor nicht null sind)
+        //Position eines Punktes berechnen, und Vektor dazu berechnen (falls xCursor und yCursor nicht null sind)
         } else if (xCursor != null && yCursor != null) {
             shootingEntityDirection = new Vector2f(xCursor - x, yCursor - y);
 
-            //Andernfalls returnen, weil es sollen beide Werte null oder nicht null sein
+        //Andernfalls IllegalArgumentException throwen, weil es sollen beide Werte null oder nicht null sein
         } else {
-            return;
+            throw new IllegalArgumentException(
+                    "xCursor and yCursor müssen beide angegeben sein oder nicht angegeben sein.");
         }
 
         //Distanz des Richtungsvektors auf die Reichweite der Waffe skalieren

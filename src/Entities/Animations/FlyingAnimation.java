@@ -1,5 +1,8 @@
 package Entities.Animations;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Shape;
 
@@ -8,17 +11,17 @@ import org.newdawn.slick.geom.Shape;
  */
 public class FlyingAnimation implements Animatable {
 
-    private Shape animatedShape;
+    private ArrayList<Shape> animatedShapes = new ArrayList<Shape>();
     private short animationTimer;
     private short animationTime = 240;
 
     /**
      * Konstruktor für die Animation
      * 
-     * @param shape Form des Objekts, welches Schweben soll
+     * @param shape Alle zugehörigen Objekte einer Entität, die schweben soll
      */
-    public FlyingAnimation(Shape shape) {
-        this.animatedShape = shape;
+    public FlyingAnimation(Shape[] shapes) {
+        this.animatedShapes.addAll(Arrays.asList(shapes));
         animate();
     }
 
@@ -49,9 +52,11 @@ public class FlyingAnimation implements Animatable {
     public void render(Graphics g) {
         float modifier = (float) animationTimer / animationTime;
 
-        float offsetY = 5 * (float) Math.cos(2 * Math.PI * modifier);
+        float offsetY = 1 * (float) Math.cos(2 * Math.PI * modifier);
 
-        this.animatedShape.setY(this.animatedShape.getX() + offsetY);
+        for (Shape animatedShape : this.animatedShapes) {
+            animatedShape.setY(animatedShape.getY() + offsetY);
+        }
     }
     
 }

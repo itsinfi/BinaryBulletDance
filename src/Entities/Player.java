@@ -33,7 +33,7 @@ public class Player extends LivingEntity {
      * Diese Klasse erstellt und initialisiert den Spieler und dessen Attribute.
      * 
      * @param playerAsset Pfad zum Image-Asset zur Darstellung der Entität
-     * @param container Zur Berechnung der Koordinaten für das "shape"-Attribut
+     * @param container container of the window
      * @throws SlickException falls etwas bei der Erstellung des Sprites oder Shapes nicht klappt.
      */
     public Player(String playerAsset, GameContainer container) throws SlickException {

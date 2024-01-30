@@ -150,10 +150,12 @@ public abstract class EnemyController {
 	 */
 	public static void spawnEnemiesAroundComputers() throws SlickException {
 
+		//values to be decided by amount of undamaged computers
 		short sentinelAmount = 0;
 		short guardianAmount = 0;
 		short maxAmountOfEnemies = 0;
 
+		//change values
 		switch (getAmountOfComputers()) {
 			case 4:
 				sentinelAmount = 3;
@@ -179,47 +181,55 @@ public abstract class EnemyController {
 				break;
 		}
 
+		//spawn sentinels
 		for (int i = 0; i < sentinelAmount; i++) {
+
+			//do not spawn any enemies if limit has been reached
 			if (enemies.size() >= maxAmountOfEnemies) {
 				return;
 			}
 
+			//choose random undamaged computer to spawn enemies around at
 			Computer computer;
-
 			do {
-				computer = computers.get(random.nextInt(4));
+				computer = computers.get(random.nextInt(computers.size()));
 			} while (computer.isDestroyed());
 
+			//choose random coordinates that are not inside a wall
 			float randomX;
 			float randomY;
-
 			do {
 				randomX = computer.getShape().getCenterX() + (random.nextFloat() - 0.5f) * 1000;
 				randomY = computer.getShape().getCenterY() + (random.nextFloat() - 0.5f) * 1000;
 			} while (LevelController.getIsHittingCollision(randomX, randomY));
 
+			//create sentinal at these coordinates
 			createSentinel(randomX, randomY, 0);
 		}
 		
+		//spawn guardians
 		for (int i = 0; i < guardianAmount; i++) {
+
+			//do not spawn any enemies if limit has been reached
 			if (enemies.size() >= maxAmountOfEnemies) {
 				return;
 			}
 
+			//choose random undamaged computer to spawn enemies around at
 			Computer computer;
-
 			do {
-				computer = computers.get(random.nextInt(4));
+				computer = computers.get(random.nextInt(computers.size()));
 			} while (computer.isDestroyed());
 
+			//choose random coordinates that are not inside a wall
 			float randomX;
 			float randomY;
-			
 			do {
 				randomX = computer.getShape().getCenterX() + (random.nextFloat() - 0.5f) * 500;
 				randomY = computer.getShape().getCenterY() + (random.nextFloat() - 0.5f) * 500;	
 			} while (LevelController.getIsHittingCollision(randomX, randomY));
 
+			//create guardian at these coordinates
 			createGuardian(randomX, randomY, 0);
 		}
 	} 
@@ -243,6 +253,7 @@ public abstract class EnemyController {
 
 	/**
 	 * returns number of working computers
+	 * 
 	 * @return number of working computers
 	 */
 	public static short getAmountOfComputers() {

@@ -2,6 +2,7 @@ package Entities.Enemies;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Shape;
 
 import Entities.Enemy;
 import Entities.LivingEntity;
@@ -11,7 +12,7 @@ import Entities.Weapons.Pistol;
 
 public class SentinelEnemy extends Enemy {
 
-//	private FlyingAnimation flyingAnimation;
+	private FlyingAnimation flyingAnimation;
 	
 	// constructor
 	/**
@@ -30,7 +31,8 @@ public class SentinelEnemy extends Enemy {
 		this.rotationSpeed = 0.15f;
 		this.hitpoints = 25;
 		
-//		this.flyingAnimation = new FlyingAnimation(shape);
+		Shape[] shapes = {this.shape, this.equippedWeapon.getShape(), this.equippedWeapon.getBulletFire().getShape()};
+		this.flyingAnimation = new FlyingAnimation(shapes);
 	}
 
 	/**
@@ -44,8 +46,8 @@ public class SentinelEnemy extends Enemy {
 		this.sprite.setRotation(direction);
 		this.sprite.draw(x, y);
 		
-//		flyingAnimation.update();
-//		flyingAnimation.render(g);
+		flyingAnimation.update();
+		flyingAnimation.render(g);
 	}
 
 	@Override

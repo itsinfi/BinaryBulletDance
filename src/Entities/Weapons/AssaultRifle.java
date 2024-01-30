@@ -28,7 +28,7 @@ public class AssaultRifle extends Weapon {
         //Sturmgewehr  erzeugen
         super("assets/weaponSprites/assaultRifle.png", livingEntity.getShape().getCenterX(), livingEntity.getShape().getCenterY(),
                 livingEntity.getDirection(), (short) 30, "ASSAULT_RIFLE", (short) 5, 350f, (short) 1400, (short) 30,
-                (short) 120, true, 40f, 24f, 60f, 7f,
+                (short) 120, true, 35f, 24f, 60f, 7f,
                 new Sound("assets/sounds/assault_rifle_shoot.wav"));
 
         //Sturmgewehr dem WeaponController übergeben

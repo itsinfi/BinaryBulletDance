@@ -57,11 +57,11 @@ public class GuardianEnemy extends Enemy{
 		 */
 		@Override
 		public void render(Graphics g) {
+			this.equippedWeapon.render();
 			float x = this.shape.getX();
 			float y = this.shape.getY();
 			this.sprite.setRotation(direction);
 			this.sprite.draw(x, y);
-			this.equippedWeapon.render();
 		}
 
 		@Override

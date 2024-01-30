@@ -31,7 +31,7 @@ public class Shotgun extends Weapon {
         //Shotgun erzeugen
         super("assets/weaponSprites/shotgun.png", livingEntity.getShape().getCenterX(), livingEntity.getShape().getCenterY(),
                 livingEntity.getDirection(), (short) 30, "SHOTGUN", (short) 60, 1f, (short) 500, (short) 8,
-                (short) 120, false, 28f, 26f, 45f, 5f,
+                (short) 120, false, 43f, 26f, 45f, 5f,
                 new Sound("assets/sounds/assault_rifle_shoot.wav"));
 
         //Shotgun dem WeaponController übergeben
