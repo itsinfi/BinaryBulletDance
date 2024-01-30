@@ -7,7 +7,7 @@ import Entities.Animations.DamageAnimation;
 /**
  * Diese Klasse stellt die Vorgabe für alle lebendigen Entitäten im Game dar, sprich Spieler und Gegner
  * 
- * @author Sascha Angermann
+ * @author Jeremy Adam
  */
 public abstract class LivingEntity extends Entity implements Renderable {
 

@@ -130,17 +130,17 @@ public abstract class PlayerController {
 
         //Keyboard-Input auslesen und Spielerkollisionen checken
 
-           if (input.isKeyDown(Input.KEY_W) && player.getShape().getCenterY() - player.getShape().getHeight()/2 > 0) {
-        	
-        	float currentX = player.getShape().getCenterX();
-            float currentY = player.getShape().getCenterY();
-            
-            direction = Direction.UP;
-            
-            if (!(LevelController.getIsHittingCollision(currentX, currentY - playerSpeed * delta))) {
-            		movePlayer(delta, playerSpeed, weapon1, weapon2, weapon3, weapon4, weapon5, damageAnimation);
-            	}
-            }
+        if (input.isKeyDown(Input.KEY_W) && player.getShape().getCenterY() - player.getShape().getHeight()/2 > 0) {
+    	
+	    	float currentX = player.getShape().getCenterX();
+	        float currentY = player.getShape().getCenterY();
+	        
+	        direction = Direction.UP;
+	        
+	        if (!(LevelController.getIsHittingCollision(currentX, currentY - playerSpeed * delta))) {
+	        	movePlayer(delta, playerSpeed, weapon1, weapon2, weapon3, weapon4, weapon5, damageAnimation);
+	        	}
+        }
             
         if (input.isKeyDown(Input.KEY_S) && player.getShape().getY() < (container.getHeight() + LevelController.getCameraY()) - player.getShape().getHeight()) {
         	
@@ -183,7 +183,7 @@ public abstract class PlayerController {
         }
 
         if (input.isKeyDown(Input.KEY_H)) {
-        	player.takeDamage((short) 1);
+        	player.takeDamage((short) 100);
         }
 
         // Spielerausrichtung

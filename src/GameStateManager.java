@@ -62,7 +62,7 @@ public class GameStateManager extends BasicGame {
     public static void main(String[] args) {
         try {
             AppGameContainer app = new AppGameContainer(
-                    new GameStateManager("ayo voll krasses game alter check this out!"));
+                    new GameStateManager("Binary Bullet Dance"));
             app.setIcons(new String[] { "assets/appIcon/appIcon.png" });
             app.setDisplayMode(1920, 1080, true);
             app.setTargetFrameRate(60);
@@ -92,10 +92,10 @@ public class GameStateManager extends BasicGame {
         Hud.init();
         
         // spawn computers TODO:  add actual coordinates 
-        EnemyController.createComputer(100, 100, 0);
-        EnemyController.createComputer(2000, 0, 0);
-        EnemyController.createComputer(0, 2000, 0);
-        // EnemyController.createComputer(2000, 2000, 0);
+        EnemyController.createComputer(1155, 237, 0, 100, 100);
+        EnemyController.createComputer(4000, 390, 0, 100, 100);
+        EnemyController.createComputer(5850, 5440, 0, 100, 100);
+        EnemyController.createComputer(260, 3350, 0, 100, 100);
 
         MusicController.init();
         MusicController.startMusic();
@@ -121,7 +121,6 @@ public class GameStateManager extends BasicGame {
         
         // restart game when player is dead
         if (player.getHitpoints() <= 0 || EnemyController.getAmountOfComputers() <= 0) {
-
             if (input.isKeyDown(Input.KEY_E)) {
                 MusicController.stopMusic();
                 init(container);
