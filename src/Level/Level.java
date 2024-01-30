@@ -20,8 +20,8 @@ public class Level {
 
     // Konstruktoren
 
-    // TODO:
     /**
+     * create Level
      * 
      * @param levelPath
      * @throws SlickException
@@ -35,14 +35,29 @@ public class Level {
 
     // Getter
 
+    /**
+     * get level width (1 tile = 64 x 64 pixels)
+     * 
+     * @return level width
+     */
     public float getWidth() {
         return tiledLevel.getWidth() * 64;
     }
 
+    /**
+     * get level height (1 tile = 64 x 64 pixels)
+     * 
+     * @return
+     */
     public float getHeight() {
         return tiledLevel.getHeight() * 64;
     }
 
+    /**
+     * get collision map (walls, borders etc)
+     * 
+     * @return collision map of level
+     */
     public boolean[][] getCollisionMap() {
         return collisionMap;
     }
@@ -51,18 +66,31 @@ public class Level {
 
     // Methoden
 
+    /**
+     * load level
+     * 
+     * @param levelPath path of tiled level
+     * @return map of level
+     * @throws SlickException if assets could not be found
+     */
     private TiledMap loadLevel(String levelPath) throws SlickException {
-        
+
         try {
             tiledLevel = new TiledMap(levelPath);
         } catch (SlickException e) {
             e.printStackTrace();
             throw new SlickException("Error loading TiledMap: " + levelPath, e);
         }
-        
+
         return tiledLevel;
     }
 
+    /**
+     * build collision map
+     * 
+     * @param Level tiled level
+     * @return collision map
+     */
     private boolean[][] buildCollisionMap(TiledMap Level) {
         collisionMap = new boolean[Level.getWidth()][Level.getHeight()];
         
@@ -86,17 +114,13 @@ public class Level {
         return collisionMap;
     }
 
-    // TODO:
     /**
+     * render level
      * 
-     * @param g
-     * @throws SlickException
+     * @param g graphics from slick2d
+     * @throws SlickException rendering level failed
      */
     public void render() throws SlickException {
         tiledLevel.render(0, 0);
-    }
-
-    public void render(int pixelX, int pixelY) throws SlickException {
-        tiledLevel.render(pixelX, pixelY);
     }
 }

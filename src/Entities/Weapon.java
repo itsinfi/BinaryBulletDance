@@ -393,7 +393,6 @@ public abstract class Weapon extends Entity {
         this.playReloadSound();
     }
 
-    //TODO:
     /**
      * Diese Methode zieht den Abzug der Waffe.
      */

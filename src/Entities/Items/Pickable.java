@@ -7,6 +7,9 @@ package Entities.Items;
  */
 public interface Pickable {
     
+    /**
+     * Diese Methode soll von Items implementiert werden, um die Aktion durchzuführen, die passieren soll, wenn ein Spieler das Item aufhebt.
+     */
     public void pickUp();
 
 }
