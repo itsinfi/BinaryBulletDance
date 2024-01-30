@@ -15,7 +15,7 @@ public abstract class Enemy extends LivingEntity{
 	protected float targetPosX;
 	protected float targetPosY;
 	protected float rotationSpeed;
-	protected float visibilityRadius = 500;
+	protected float visibilityRadius = 1000;
 	
 
 	public Enemy(String spriteAsset, float centerX, float centerY, float direction) throws SlickException {

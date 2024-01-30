@@ -39,7 +39,7 @@ public class Player extends LivingEntity {
 //        super(playerAsset, container.getWidth() / 2, container.getHeight() / 2, 0);
         
         // Spieler auf custom spawnpoint spawnen
-        super(playerAsset, 800, 1400, 0);
+        super(playerAsset, 2624, 2304, 0);
 
         //Werte festlegen
         this.hitpoints = 20000;
