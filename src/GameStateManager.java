@@ -62,7 +62,7 @@ public class GameStateManager extends BasicGame {
     public static void main(String[] args) {
         try {
             AppGameContainer app = new AppGameContainer(
-                    new GameStateManager("ayo voll krasses game alter check this out!"));
+                    new GameStateManager("Binary Bullet Dance"));
             app.setIcons(new String[] { "assets/appIcon/appIcon.png" });
             app.setDisplayMode(1920, 1080, true);
             app.setTargetFrameRate(60);
@@ -121,7 +121,6 @@ public class GameStateManager extends BasicGame {
         
         // restart game when player is dead
         if (player.getHitpoints() <= 0 || EnemyController.getAmountOfComputers() <= 0) {
-
             if (input.isKeyDown(Input.KEY_E)) {
                 MusicController.stopMusic();
                 init(container);
