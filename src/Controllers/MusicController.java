@@ -5,7 +5,6 @@ import org.newdawn.slick.Sound;
 public abstract class MusicController {
     
     private static Sound sound;
-    private static boolean play;
 
     public static void init() {
         try {

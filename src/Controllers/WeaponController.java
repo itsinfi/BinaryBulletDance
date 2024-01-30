@@ -25,8 +25,8 @@ public abstract class WeaponController {
 
     //Attribute
 
-    private static HashSet<BulletTraceAnimation> bulletTraces = new HashSet<BulletTraceAnimation>();
-    private static HashSet<Weapon> weapons = new HashSet<Weapon>();
+    private static HashSet<BulletTraceAnimation> bulletTraces;
+    private static HashSet<Weapon> weapons;
     private static Random shotAccuracyRandomizer = new Random();
 
 
@@ -66,6 +66,14 @@ public abstract class WeaponController {
      */
     public static void removeWeapon(Weapon weapon) {
         weapons.remove(weapon);
+    }
+
+    /**
+     * Diese Methode initialisiert alle Waffen und deren Animationen
+     */
+    public static void init() {
+        weapons = new HashSet<Weapon>();
+        bulletTraces = new HashSet<BulletTraceAnimation>();
     }
 
     /**
@@ -189,7 +197,8 @@ public abstract class WeaponController {
      * @param accuracy Zielgenauigkeit des Schusses
      * @param range Maximale Reichweite des Schusses
      */
-    public static void calculateShot(Weapon weapon, LivingEntity shootingEntity, Float xCursor, Float yCursor, float accuracy, short range) {
+    public static void calculateShot(Weapon weapon, LivingEntity shootingEntity, Float xCursor, Float yCursor,
+            float accuracy, short range) {
 
         //Zufällige Werte für die Punktgenauigkeit des Schusses losen
         float randomAccuracyX = (shotAccuracyRandomizer.nextFloat() - 0.5f) * accuracy;
@@ -252,6 +261,9 @@ public abstract class WeaponController {
         //FireTimer setzen (Feuerrate der Waffe)
         weapon.setFireTimer(weapon.getFirerate());
 
+        //Wall Collision Check durchführen
+        checkWallCollisions(bulletLine);
+
         //Hitscan durchführen
         if (weapon instanceof SniperRifle) {
             hitScanSniperRifle(weapon, bulletLine, shootingEntity);
@@ -259,6 +271,42 @@ public abstract class WeaponController {
             hitScan(weapon, bulletLine, shootingEntity);
         }
 
+    }
+
+    /**
+     * Diese Methode überprüft, ob der Schuss durch eine Wand blockiert wird (und die Laufbahn somit verkürzt)
+     * 
+     * @param bulletLine Schusslaufbahn der Kugel
+    */
+    private static void checkWallCollisions(Line bulletLine) {
+
+        //Vektor (um durch die Punkte iterieren zu können)
+        Vector2f originalVector = new Vector2f(bulletLine.getX2() - bulletLine.getX1(),
+                bulletLine.getY2() - bulletLine.getY1());
+
+        //Distanz des Vektors
+        float originalDistance = originalVector.length();
+
+        //Alle 1/Länge-der-Schusslaufbahn-igen Punkte iterieren
+        for (float i = 0; i <= 1; i += 1 / bulletLine.length()) {
+
+            //Vektor skalieren (um aktuellen Punkte zu berechnen)
+            Vector2f scaledVector = new Vector2f(originalVector);
+            scaledVector.normalise().scale(originalDistance * i);
+
+            //Punktkoordinaten berechnen
+            float currentX = scaledVector.x + bulletLine.getX1();
+            float currentY = scaledVector.y + bulletLine.getY1();
+
+            //Kollisionscheck durchführen
+            if (LevelController.getIsHittingCollision(currentX, currentY)) {
+
+                //Schusslaufbahn verkürzen
+                bulletLine.set(bulletLine.getX1(), bulletLine.getY1(), currentX, currentY);
+                break;
+            }
+        }
+        
     }
     
     /**
@@ -274,6 +322,7 @@ public abstract class WeaponController {
         HashSet<LivingEntity> livingEntities = new HashSet<LivingEntity>();
         livingEntities.add(PlayerController.getPlayer());
         livingEntities.addAll(EnemyController.getEnemies());
+        livingEntities.addAll(EnemyController.getComputers());
 
         //Bestimmen, ob die schießende Entität ein Gegner ist
         boolean entityIsEnemy = shootingEntity instanceof Enemy;
@@ -339,6 +388,7 @@ public abstract class WeaponController {
         HashSet<LivingEntity> livingEntities = new HashSet<LivingEntity>();
         livingEntities.add(PlayerController.getPlayer());
         livingEntities.addAll(EnemyController.getEnemies());
+        livingEntities.addAll(EnemyController.getComputers());
 
         //Bestimmen, ob die schießende Entität ein Gegner ist
         boolean entityIsEnemy = shootingEntity instanceof Enemy;

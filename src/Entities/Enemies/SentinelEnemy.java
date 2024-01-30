@@ -1,14 +1,17 @@
-package Entities;
-
-import java.util.HashMap;
+package Entities.Enemies;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-import Controllers.EnemyController;
+import Entities.Enemy;
+import Entities.LivingEntity;
+import Entities.Weapon;
+import Entities.Animations.FlyingAnimation;
 import Entities.Weapons.Pistol;
 
 public class SentinelEnemy extends Enemy {
+
+	private FlyingAnimation flyingAnimation;
 	
 	// constructor
 	/**
@@ -26,6 +29,8 @@ public class SentinelEnemy extends Enemy {
 		this.movementSpeed = 0.15f;
 		this.rotationSpeed = 0.15f;
 		this.hitpoints = 25;
+		
+		this.flyingAnimation = new FlyingAnimation(shape);
 	}
 
 	/**
@@ -38,7 +43,8 @@ public class SentinelEnemy extends Enemy {
 		float y = this.shape.getY();
 		this.sprite.setRotation(direction);
 		this.sprite.draw(x, y);
-		
+		flyingAnimation.update();
+		flyingAnimation.render(g);		
 	}
 
 	@Override

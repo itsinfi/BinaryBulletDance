@@ -4,7 +4,6 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-import Entities.Animatable;
 import Entities.Entity;
 import Entities.Renderable;
 

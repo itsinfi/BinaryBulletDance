@@ -59,7 +59,6 @@ public abstract class Weapon extends Entity {
      * @param bulletFireOffsetX Anzahl an Pixel, um welche das Schussfeuer horizontal (wenn man nach rechts schaut) versetzt zum Träger der Waffe gerendert werden soll
      * @param bulletFireOffsetY Anzahl an Pixel, um welche das Schussfeuer vertikal (wenn man nach rechts schaut) versetzt zum Träger der Waffe gerendert werden soll
      * @param shootSound Sound, der gespielt werden soll, wenn die Waffe schießt
-     * @param reloadSound Sound, der gespielt werden soll, wenn die Waffe nachlädt
      */
     public Weapon(String spriteAsset, float centerX, float centerY, float direction, boolean isSecondary, short damagePerBullet, String ammoType, short firerate, float accuracy,
             short range, short magazineSize, short reloadRate, boolean hasAutomaticFire, float offsetX, float offsetY, float bulletFireOffsetX, float bulletFireOffsetY, Sound shootSound) throws SlickException {

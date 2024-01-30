@@ -1,10 +1,12 @@
-package Entities;
+package Entities.Items;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
 import Controllers.PlayerController;
+import Entities.Entity;
+import Entities.Renderable;
 
 /**
  * Diese Klasse stellt die für den Spieler einsammelbaren Medkits dar.
