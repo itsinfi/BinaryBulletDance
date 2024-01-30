@@ -17,8 +17,11 @@ public class Player extends LivingEntity {
 
     //Attribute
 
-    private Weapon primaryWeapon;
-    private Weapon secondaryWeapon;
+    private Weapon weaponSlot1;
+    private Weapon weaponSlot2;
+    private Weapon weaponSlot3;
+    private Weapon weaponSlot4;
+    private Weapon weaponSlot5;
     private HashMap<String, Short> ammo = new HashMap<String, Short>();
     private short changeEquippedWeaponTimer = 0;
     private Vector2f playerDirection;
@@ -51,21 +54,27 @@ public class Player extends LivingEntity {
     //Getter
 
     /**
-     * Diese Methode gibt die Primärwaffe des Spielers zurück.
+     * Diese Methode gibt die Waffe des Waffenslots zurück
      * 
-     * @return Primärwaffe des Spielers
-     */
-    public Weapon getPrimaryWeapon() {
-        return primaryWeapon;
-    }
-
-    /**
-     * Diese Methode gibt die Sekundärwaffe des Spielers zurück.
+     * @param Waffenslotnummer
      * 
-     * @return Sekundärwaffe des Spielers
+     * @return Waffe im Waffenslot
      */
-    public Weapon getSecondaryWeapon() {
-        return secondaryWeapon;
+    public Weapon getWeaponSlot(short slot) {
+        switch (slot) {
+            case 1:
+                return weaponSlot1;
+            case 2:
+                return weaponSlot2;
+            case 3:
+                return weaponSlot3;
+            case 4:
+                return weaponSlot4;
+            case 5:
+                return weaponSlot5;
+            default:
+                throw new IllegalArgumentException("Weapon Slot out of reach");
+        }
     }
 
     /**
@@ -92,11 +101,28 @@ public class Player extends LivingEntity {
     /**
      * Diese Methode legt die aktuell ausgerüstete Waffe des Spielers fest.
      * 
-     * @param isPrimary True = Primärwaffe wird ausgerüstet, False = Sekundärwaffe wird ausgerüstet.
+     * @param slot Waffenslotnummer
      */
-    public void setEquippedWeapon(boolean isPrimary) {
-        this.equippedWeapon = isPrimary ? this.primaryWeapon : this.secondaryWeapon;
-        this.changeEquippedWeaponTimer = 30;
+    public void setEquippedWeapon(short slot) {
+        switch (slot) {
+            case 1:
+                this.equippedWeapon = this.weaponSlot1;
+                break;
+            case 2:
+                this.equippedWeapon = this.weaponSlot2;
+                break;
+            case 3:
+                this.equippedWeapon = this.weaponSlot3;
+                break;  
+            case 4:
+                this.equippedWeapon = this.weaponSlot4;
+                break;
+            case 5:
+                this.equippedWeapon = this.weaponSlot5;
+                break;
+            default:
+                return;
+        }
     }
 
     /**
@@ -116,11 +142,25 @@ public class Player extends LivingEntity {
      * 
      * @param weapon Neue Waffe, die ausgerüstet werden soll
      */
-    public void addWeapon(Weapon weapon) {
-        if (weapon.isSecondary()) {
-            this.secondaryWeapon = weapon;
-        } else {
-            this.primaryWeapon = weapon;
+    public void addWeapon(Weapon weapon, short slot) {
+        switch (slot) {
+            case 1:
+                this.weaponSlot1 = weapon;
+                break;
+            case 2:
+                this.weaponSlot2 = weapon;
+                break;
+            case 3:
+                this.weaponSlot3 = weapon;
+                break;
+            case 4:
+                this.weaponSlot4 = weapon;
+                break;
+            case 5:
+                this.weaponSlot5 = weapon;
+                break;
+            default:
+                throw new IllegalArgumentException("Weapon Slot out of reach");
         }
     }
 

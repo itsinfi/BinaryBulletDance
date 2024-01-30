@@ -6,7 +6,6 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
-import Entities.LivingEntity;
 import Entities.Player;
 import Entities.Weapons.AssaultRifle;
 import Entities.Weapons.MachinePistol;
@@ -14,7 +13,6 @@ import Entities.Weapons.Pistol;
 import Entities.Weapons.Shotgun;
 import Entities.Weapons.SniperRifle;
 import Entities.Weapon;
-import Entities.Animations.BulletFireAnimation;
 import Entities.Animations.DamageAnimation;
 
 import java.util.HashMap;
@@ -54,18 +52,33 @@ public abstract class PlayerController {
         //Spieler erzeugen
         player = new Player("assets/playertest_fixed.png", container);
 
-        //Primärwaffe des Spielers erzeugen
-        Weapon primary = (Weapon) new AssaultRifle((LivingEntity) player);
-        player.addWeapon(primary);
-        player.setEquippedWeapon(true);
+        //Waffenslot 1
+        Weapon weapon1 = (Weapon) new AssaultRifle(player);
+        player.addWeapon(weapon1, (short) 1);
+        player.setEquippedWeapon((short) 1);
+
+        //Waffenslot 2
+        Weapon weapon2 = (Weapon) new MachinePistol(player);
+        player.addWeapon(weapon2, (short) 2);
+
+        //Waffenslot 3
+        Weapon weapon3 = (Weapon) new Shotgun(player);
+        player.addWeapon(weapon3, (short) 3);
+
+        //Waffenslot 4
+        Weapon weapon4 = (Weapon) new SniperRifle(player);
+        player.addWeapon(weapon4, (short) 4);
         
-        //Sekundärwaffe des Spielers erzeugen
-        Weapon secondary = (Weapon) new Pistol((LivingEntity) player);
-        player.addWeapon(secondary);
+        //Waffenslot 5
+        Weapon weapon5 = (Weapon) new Pistol(player);
+        player.addWeapon(weapon5, (short) 5);
 
         //Spieler Startmunition geben
         HashMap<String, Short> ammo = new HashMap<String, Short>();
         ammo.put("ASSAULT_RIFLE", (short) 200);
+        ammo.put("MACHINE_PISTOL", (short) 200);
+        ammo.put("SHOTGUN", (short) 200);
+        ammo.put("SNIPER_RIFLE", (short) 200);
         ammo.put("PISTOL", (short) 200);
         player.addAmmo(ammo);
     }
@@ -102,10 +115,11 @@ public abstract class PlayerController {
 
         // Spielerbewegung (+ Waffen des Spielers) TODO: iwann schöner handlen mit bulletFire und weapon movement updates
         float playerSpeed = player.getMovementSpeed();
-        Weapon primaryWeapon = player.getPrimaryWeapon();
-        Weapon secondaryWeapon = player.getSecondaryWeapon();
-        BulletFireAnimation primaryBulletFire = primaryWeapon.getBulletFire();
-        BulletFireAnimation secondaryBulletFire = secondaryWeapon.getBulletFire();
+        Weapon weapon1 = player.getWeaponSlot((short) 1);
+        Weapon weapon2 = player.getWeaponSlot((short) 2);
+        Weapon weapon3 = player.getWeaponSlot((short) 3);
+        Weapon weapon4 = player.getWeaponSlot((short) 4);
+        Weapon weapon5 = player.getWeaponSlot((short) 5);
         DamageAnimation damageAnimation = player.getDamageAnimation();
 
         // Ausgerüstete Waffe lesen
@@ -124,7 +138,7 @@ public abstract class PlayerController {
             direction = Direction.UP;
             
             if (!(LevelController.getIsHittingCollision(currentX, currentY - playerSpeed * delta))) {
-            		movePlayer(delta, playerSpeed, primaryWeapon, secondaryWeapon, primaryBulletFire, secondaryBulletFire, damageAnimation);
+            		movePlayer(delta, playerSpeed, weapon1, weapon2, weapon3, weapon4, weapon5, damageAnimation);
             	}
             }
             
@@ -137,7 +151,7 @@ public abstract class PlayerController {
             
             if (!(LevelController.getIsHittingCollision(currentX, currentY + playerSpeed * delta))) {
             	
-            	movePlayer(delta, playerSpeed, primaryWeapon, secondaryWeapon, primaryBulletFire, secondaryBulletFire, damageAnimation);
+            	movePlayer(delta, playerSpeed, weapon1, weapon2, weapon3, weapon4, weapon5, damageAnimation);
         	}
 
            
@@ -151,7 +165,7 @@ public abstract class PlayerController {
             direction = Direction.LEFT;
             
             if (!(LevelController.getIsHittingCollision(currentX - playerSpeed * delta, currentY))) {
-            	movePlayer(delta, playerSpeed, primaryWeapon, secondaryWeapon, primaryBulletFire, secondaryBulletFire, damageAnimation);
+            	movePlayer(delta, playerSpeed, weapon1, weapon2, weapon3, weapon4, weapon5, damageAnimation);
         	}
         }
 
@@ -163,7 +177,7 @@ public abstract class PlayerController {
             direction = Direction.RIGHT;
             
             if (!(LevelController.getIsHittingCollision(currentX + playerSpeed * delta, currentY))) {
-            	movePlayer(delta, playerSpeed, primaryWeapon, secondaryWeapon, primaryBulletFire, secondaryBulletFire, damageAnimation);
+            	movePlayer(delta, playerSpeed, weapon1, weapon2, weapon3, weapon4, weapon5, damageAnimation);
         	}
         	
         }
@@ -195,21 +209,39 @@ public abstract class PlayerController {
 
             //Rotation des Spielers und seiner getragenen Waffen
             player.setDirection(playerRotationAngle);
-            primaryWeapon.setDirection(playerRotationAngle);
-            secondaryWeapon.setDirection(playerRotationAngle);
+            weapon1.setDirection(playerRotationAngle);
+            weapon2.setDirection(playerRotationAngle);
+            weapon3.setDirection(playerRotationAngle);
+            weapon4.setDirection(playerRotationAngle);
+            weapon5.setDirection(playerRotationAngle);
             damageAnimation.setDirection(playerRotationAngle);
         }
 
         // Weapon Slot wechseln
         if (changeEquippedWeaponTimer == 0) {
-            if (input.isKeyDown(Input.KEY_1) && equippedWeapon != player.getPrimaryWeapon()) {
+            if (input.isKeyDown(Input.KEY_1) && equippedWeapon != weapon1) {
                 equippedWeapon.setReloadTimer((short) 0);
-                player.setEquippedWeapon(true);
+                player.setEquippedWeapon((short) 1);
             }
 
-            if (input.isKeyDown(Input.KEY_2) && equippedWeapon != player.getSecondaryWeapon()) {
+            if (input.isKeyDown(Input.KEY_2) && equippedWeapon != weapon2) {
                 equippedWeapon.setReloadTimer((short) 0);
-                player.setEquippedWeapon(false);
+                player.setEquippedWeapon((short) 2);
+            }
+
+            if (input.isKeyDown(Input.KEY_3) && equippedWeapon != weapon3) {
+                equippedWeapon.setReloadTimer((short) 0);
+                player.setEquippedWeapon((short) 3);
+            }
+
+            if (input.isKeyDown(Input.KEY_4) && equippedWeapon != weapon4) {
+                equippedWeapon.setReloadTimer((short) 0);
+                player.setEquippedWeapon((short) 4);
+            }
+
+            if (input.isKeyDown(Input.KEY_5) && equippedWeapon != weapon5) {
+                equippedWeapon.setReloadTimer((short) 0);
+                player.setEquippedWeapon((short) 5);
             }
         }
 
@@ -243,43 +275,66 @@ public abstract class PlayerController {
         }
     }
     
-    public static void movePlayer(int delta, float playerSpeed, Weapon primaryWeapon, Weapon secondaryWeapon, BulletFireAnimation primaryBulletFire,
-            BulletFireAnimation secondaryBulletFire, DamageAnimation damageAnimation) {
+    public static void movePlayer(int delta, float playerSpeed, Weapon weapon1, Weapon weapon2, Weapon weapon3, Weapon weapon4, Weapon weapon5, DamageAnimation damageAnimation) {
         
         //Nach oben laufen
         if (direction == Direction.UP) {
             player.setY(player.getShape().getY() - playerSpeed * delta);
-            player.getPrimaryWeapon().setY(primaryWeapon.getShape().getY() - playerSpeed * delta);
-            player.getSecondaryWeapon().setY(secondaryWeapon.getShape().getY() - playerSpeed * delta);
-            player.getPrimaryWeapon().getBulletFire().setY(primaryBulletFire.getShape().getY() - playerSpeed * delta);
-            player.getSecondaryWeapon().getBulletFire().setY(secondaryBulletFire.getShape().getY() - playerSpeed * delta);
+            weapon1.setY(weapon1.getShape().getY() - playerSpeed * delta);
+            weapon2.setY(weapon2.getShape().getY() - playerSpeed * delta);
+            weapon3.setY(weapon3.getShape().getY() - playerSpeed * delta);
+            weapon4.setY(weapon4.getShape().getY() - playerSpeed * delta);
+            weapon5.setY(weapon5.getShape().getY() - playerSpeed * delta);
+            weapon1.getBulletFire().setY(weapon1.getBulletFire().getShape().getY() - playerSpeed * delta);
+            weapon2.getBulletFire().setY(weapon2.getBulletFire().getShape().getY() - playerSpeed * delta);
+            weapon3.getBulletFire().setY(weapon3.getBulletFire().getShape().getY() - playerSpeed * delta);
+            weapon4.getBulletFire().setY(weapon4.getBulletFire().getShape().getY() - playerSpeed * delta);
+            weapon5.getBulletFire().setY(weapon5.getBulletFire().getShape().getY() - playerSpeed * delta);
             player.getDamageAnimation().setY(damageAnimation.getShape().getY() - playerSpeed * delta);
 
         //Nach links laufen
         } else if (direction == Direction.LEFT) {
             player.setX(player.getShape().getX() - playerSpeed * delta);
-            primaryWeapon.setX(primaryWeapon.getShape().getX() - playerSpeed * delta);
-            secondaryWeapon.setX(secondaryWeapon.getShape().getX() - playerSpeed * delta);
-            primaryBulletFire.setX(primaryBulletFire.getShape().getX() - playerSpeed * delta);
-            secondaryBulletFire.setX(secondaryBulletFire.getShape().getX() - playerSpeed * delta);
+            weapon1.setX(weapon1.getShape().getX() - playerSpeed * delta);
+            weapon2.setX(weapon2.getShape().getX() - playerSpeed * delta);
+            weapon3.setX(weapon3.getShape().getX() - playerSpeed * delta);
+            weapon4.setX(weapon4.getShape().getX() - playerSpeed * delta);
+            weapon5.setX(weapon5.getShape().getX() - playerSpeed * delta);
+            weapon1.getBulletFire().setX(weapon1.getBulletFire().getShape().getX() - playerSpeed * delta);
+            weapon2.getBulletFire().setX(weapon2.getBulletFire().getShape().getX() - playerSpeed * delta);
+            weapon3.getBulletFire().setX(weapon3.getBulletFire().getShape().getX() - playerSpeed * delta);
+            weapon4.getBulletFire().setX(weapon4.getBulletFire().getShape().getX() - playerSpeed * delta);
+            weapon5.getBulletFire().setX(weapon5.getBulletFire().getShape().getX() - playerSpeed * delta);
             damageAnimation.setX(damageAnimation.getShape().getX() - playerSpeed * delta);
 
         //Nach unten laufen
         } else if (direction == Direction.DOWN) {
             player.setY(player.getShape().getY() + playerSpeed * delta);
-            primaryWeapon.setY(primaryWeapon.getShape().getY() + playerSpeed * delta);
-            secondaryWeapon.setY(secondaryWeapon.getShape().getY() + playerSpeed * delta);
-            primaryBulletFire.setY(primaryBulletFire.getShape().getY() + playerSpeed * delta);
-            secondaryBulletFire.setY(secondaryBulletFire.getShape().getY() + playerSpeed * delta);
+            weapon1.setY(weapon1.getShape().getY() + playerSpeed * delta);
+            weapon2.setY(weapon2.getShape().getY() + playerSpeed * delta);
+            weapon3.setY(weapon3.getShape().getY() + playerSpeed * delta);
+            weapon4.setY(weapon4.getShape().getY() + playerSpeed * delta);
+            weapon5.setY(weapon5.getShape().getY() + playerSpeed * delta);
+            weapon1.getBulletFire().setY(weapon1.getBulletFire().getShape().getY() + playerSpeed * delta);
+            weapon2.getBulletFire().setY(weapon2.getBulletFire().getShape().getY() + playerSpeed * delta);
+            weapon3.getBulletFire().setY(weapon3.getBulletFire().getShape().getY() + playerSpeed * delta);
+            weapon4.getBulletFire().setY(weapon4.getBulletFire().getShape().getY() + playerSpeed * delta);
+            weapon5.getBulletFire().setY(weapon5.getBulletFire().getShape().getY() + playerSpeed * delta);
             damageAnimation.setY(damageAnimation.getShape().getY() + playerSpeed * delta);
 
         //Nach rechts laufen
         } else if (direction == Direction.RIGHT) {
             player.setX(player.getShape().getX() + playerSpeed * delta);
-            primaryWeapon.setX(primaryWeapon.getShape().getX() + playerSpeed * delta);
-            secondaryWeapon.setX(secondaryWeapon.getShape().getX() + playerSpeed * delta);
-            primaryBulletFire.setX(primaryBulletFire.getShape().getX() + playerSpeed * delta);
-            secondaryBulletFire.setX(secondaryBulletFire.getShape().getX() + playerSpeed * delta);
+            weapon1.setX(weapon1.getShape().getX() + playerSpeed * delta);
+            weapon2.setX(weapon2.getShape().getX() + playerSpeed * delta);
+            weapon3.setX(weapon3.getShape().getX() + playerSpeed * delta);
+            weapon4.setX(weapon4.getShape().getX() + playerSpeed * delta);
+            weapon5.setX(weapon5.getShape().getX() + playerSpeed * delta);
+            weapon1.getBulletFire().setX(weapon1.getBulletFire().getShape().getX() + playerSpeed * delta);
+            weapon2.getBulletFire().setX(weapon2.getBulletFire().getShape().getX() + playerSpeed * delta);
+            weapon3.getBulletFire().setX(weapon3.getBulletFire().getShape().getX() + playerSpeed * delta);
+            weapon4.getBulletFire().setX(weapon4.getBulletFire().getShape().getX() + playerSpeed * delta);
+            weapon5.getBulletFire().setX(weapon5.getBulletFire().getShape().getX() + playerSpeed * delta);
             damageAnimation.setX(damageAnimation.getShape().getX() + playerSpeed * delta);
         }
     }

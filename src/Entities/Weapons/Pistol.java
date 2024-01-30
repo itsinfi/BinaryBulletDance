@@ -8,7 +8,7 @@ import Entities.LivingEntity;
 import Entities.Weapon;
 
 /**
- * Die Sekundärwaffe. (Pistole mit unendlich Munition)
+ * Die Pistole (Pistole mit unendlich Munition)
  * 
  * @author Sascha Angermann
  */
@@ -20,20 +20,20 @@ public class Pistol extends Weapon {
     //Konstruktoren
 
     /**
-     * Diese Methode erstellt eine Sekundärwaffe
+     * Diese Methode erstellt eine Pistole
      */
     public Pistol(LivingEntity livingEntity) throws SlickException {
 
-        //Sekundärwaffe erzeugen
+        //Pistole erzeugen
         super("assets/weaponSprites/pistol.png", livingEntity.getShape().getCenterX(), livingEntity.getShape().getCenterY(),
-                livingEntity.getDirection(), true, (short) 30, "PISTOL", (short) 15, 200f,
+                livingEntity.getDirection(), (short) 30, "PISTOL", (short) 15, 200f,
                 (short) 1000, (short) 15, (short) 60, false, 10f, 26f, 36f, 30f,
                 new Sound("assets/sounds/pistol_shoot.wav"));
 
         //Einstellen, dass Munition für die Waffe unendlich sein soll.
         this.hasInfiniteAmmo = true;
 
-        //Sekundärwaffe dem WeaponController übergeben
+        //Pistole dem WeaponController übergeben
         WeaponController.addWeapon(this);
     }
 
