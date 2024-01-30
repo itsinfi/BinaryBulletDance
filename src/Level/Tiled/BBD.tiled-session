@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "Levels/Level01.tmx",
     "expandedProjectPaths": [
     ],
     "file.lastUsedOpenFilter": "Alle Dateien (*)",
@@ -15,6 +15,20 @@
                 "x": 3206.5518487293757,
                 "y": 3202.697820065037
             }
+        },
+        "Levels/Level01.tmx": {
+            "scale": 0.125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 600,
+                "y": 2556
+            }
+        },
+        "Levels/Solid-2gen_postapoc.tsx": {
+            "scaleInDock": 1
+        },
+        "Levels/Unsolid-2gen_postapoc.tsx": {
+            "scaleInDock": 1
         },
         "Map01.tmx": {
             "scale": 0.12973437499999999,
@@ -33,10 +47,12 @@
     "map.tileWidth": 64,
     "map.width": 100,
     "openFiles": [
+        "Levels/Level01.tmx"
     ],
     "project": "BBD.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "Levels/Level01.tmx",
         "Level01.tmx",
         "Map01.tmx"
     ],
