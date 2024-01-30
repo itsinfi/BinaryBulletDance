@@ -95,11 +95,11 @@ public class GameStateManager extends BasicGame {
         //Font für die GUI laden        
         Hud.init();
         
-        // spawn computers TODO:  add actual coordinates 
-        EnemyController.createComputer(1155, 170, 0, 100, 100);
-        EnemyController.createComputer(4000, 390, 0, 100, 100);
-        EnemyController.createComputer(5850, 5440, 0, 100, 100);
-        EnemyController.createComputer(1400, 6000, 0, 100, 100);
+        // spawn computers
+        EnemyController.createComputer(1155, 170, 0, 385, 1130);//Lager
+        EnemyController.createComputer(4000, 390, 0, 1500, 410);//Villa
+        EnemyController.createComputer(5850, 5440, 0, 530, 1500);//Mülldeponie
+        EnemyController.createComputer(1400, 6000, 0, 570, 4000);//Büro
 
         MusicController.init();
         MusicController.startMusic();
