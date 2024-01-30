@@ -38,7 +38,7 @@ public abstract class LevelController {
         int x = (int) (xPos / 64);
         int y = (int) (yPos / 64);
         boolean[][] collisionMap = level.getCollisionMap();
-        if (x < 0 || x > collisionMap.length || y < 0 || y > collisionMap[0].length) {
+        if (x < 0 || x >= collisionMap.length || y < 0 || y >= collisionMap[0].length) {
             return true;
         }
         return collisionMap[x][y];
@@ -51,7 +51,7 @@ public abstract class LevelController {
         
         boolean[][] collisionMap = level.getCollisionMap();
         
-        if (x < 0 || x > collisionMap.length || y < 0 || y > collisionMap[0].length) {
+        if (x < 0 || x >= collisionMap.length || y < 0 || y >= collisionMap[0].length) {
             return true;
         }
         

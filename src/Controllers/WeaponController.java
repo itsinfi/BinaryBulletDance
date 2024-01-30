@@ -261,8 +261,21 @@ public abstract class WeaponController {
         //FireTimer setzen (Feuerrate der Waffe)
         weapon.setFireTimer(weapon.getFirerate());
 
-        //Wall Collision Check durchführen
+        //Wall Collision Check durchführen (Wände sollen den Schuss verkürzen)
         checkWallCollisions(bulletLine);
+
+        //Linie vom Spieler zur Mündung der Waffe berechnen
+        Line shootingEntityLine = new Line(shootingEntityX, shootingEntityY, x, y);
+
+        //Wall Collision Check mit dieser Linie durchführen für den Fall, dass eine Waffe durch eine Wand durchguckt
+        float oldShootingEntityLineDistance = shootingEntityLine.length();
+        checkWallCollisions(shootingEntityLine);
+
+        //Falls sich die Distanz im zweiten Check ändert, soll kein Schaden hinzugefügt werden und keine Schusslaufbahn gezeichnet werden
+        //(Damit man nicht trotzdem durch Wände schießen kann, wenn die Waffe durch eine Wand durch ragt.)
+        if (oldShootingEntityLineDistance != shootingEntityLine.length()) {
+            return;
+        }
 
         //Hitscan durchführen
         if (weapon instanceof SniperRifle) {
@@ -274,35 +287,35 @@ public abstract class WeaponController {
     }
 
     /**
-     * Diese Methode überprüft, ob der Schuss durch eine Wand blockiert wird (und die Laufbahn somit verkürzt)
+     * Diese Methode überprüft, ob eine Linie durch eine Wand verläuft und verkürzt diese Linie bis zum Aufprallpunkt.
      * 
-     * @param bulletLine Schusslaufbahn der Kugel
+     * @param line Linie, welche überprüft werden soll
     */
-    private static void checkWallCollisions(Line bulletLine) {
+    private static void checkWallCollisions(Line line) {
 
         //Vektor (um durch die Punkte iterieren zu können)
-        Vector2f originalVector = new Vector2f(bulletLine.getX2() - bulletLine.getX1(),
-                bulletLine.getY2() - bulletLine.getY1());
+        Vector2f originalVector = new Vector2f(line.getX2() - line.getX1(),
+                line.getY2() - line.getY1());
 
         //Distanz des Vektors
         float originalDistance = originalVector.length();
 
         //Alle 1/Länge-der-Schusslaufbahn-igen Punkte iterieren
-        for (float i = 0; i <= 1; i += 1 / bulletLine.length()) {
+        for (float i = 0; i <= 1; i += 1 / line.length()) {
 
             //Vektor skalieren (um aktuellen Punkte zu berechnen)
             Vector2f scaledVector = new Vector2f(originalVector);
             scaledVector.normalise().scale(originalDistance * i);
 
             //Punktkoordinaten berechnen
-            float currentX = scaledVector.x + bulletLine.getX1();
-            float currentY = scaledVector.y + bulletLine.getY1();
+            float currentX = scaledVector.x + line.getX1();
+            float currentY = scaledVector.y + line.getY1();
 
             //Kollisionscheck durchführen
             if (LevelController.getIsHittingCollision(currentX, currentY)) {
 
                 //Schusslaufbahn verkürzen
-                bulletLine.set(bulletLine.getX1(), bulletLine.getY1(), currentX, currentY);
+                line.set(line.getX1(), line.getY1(), currentX, currentY);
                 break;
             }
         }
