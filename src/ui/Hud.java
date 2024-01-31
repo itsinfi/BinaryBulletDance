@@ -2,14 +2,12 @@ package ui;
 
 import java.awt.Font;
 import java.io.InputStream;
-import java.util.Random;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.util.ResourceLoader;
 
@@ -18,7 +16,6 @@ import Controllers.LevelController;
 import Controllers.MusicController;
 import Controllers.PlayerController;
 import Entities.Player;
-import Level.Level;
 
 /**
  * Diese Klasse ist für die Darstellung der HUD-Darstellung verantwortlich.
@@ -33,9 +30,6 @@ public abstract class Hud {
      
      private static Font gameOverFont;
      private static TrueTypeFont gameOverTTF;
-
-     private static Random random = new Random();
-     private static Sound deathDialog;
      
     // getter and setter
 	

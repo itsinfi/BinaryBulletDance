@@ -1,14 +1,11 @@
 package Entities.Enemies;
 
-import java.util.HashMap;
 import java.util.Random;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-import Controllers.PlayerController;
 import Entities.Enemy;
-import Entities.Weapon;
 import Entities.Weapons.AssaultRifle;
 import Entities.Weapons.MachinePistol;
 import Entities.Weapons.Shotgun;
@@ -53,7 +50,7 @@ public class GuardianEnemy extends Enemy{
 		}
 
 		/**
-		 * 
+		 * renders guadian
 		 */
 		@Override
 		public void render(Graphics g) {
@@ -62,22 +59,5 @@ public class GuardianEnemy extends Enemy{
 			float y = this.shape.getY();
 			this.sprite.setRotation(direction);
 			this.sprite.draw(x, y);
-		}
-
-		@Override
-		public void die() {
-			// replenish ammo for player when defeated
-		    HashMap<String, Short> a = new HashMap<String, Short>();
-		    a.put(this.equippedWeapon.getAmmoType(), this.equippedWeapon.getMagazineSize());
-			PlayerController.getPlayer().addAmmo(a);
-		}
-
-		@Override
-		public void reload() {
-		}
-		
-		// getters and setters
-		public void setEquippedWeapon(Weapon w) {
-			this.equippedWeapon = w;
 		}
 }

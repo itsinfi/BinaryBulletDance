@@ -30,9 +30,9 @@ public class GameStateManager extends BasicGame {
 
     //Attribute
 
-    private static short gameLoopTimer = 0;
-    private static short gameLoopRate = 60;
-    private static int lastKnownAmountOfComputers = 4;
+    private short gameLoopTimer = 0;
+    private short gameLoopRate = 60;
+    private int lastKnownAmountOfComputers = 4;
 
 
     //Konstruktoren
@@ -184,7 +184,7 @@ public class GameStateManager extends BasicGame {
         Hud.render(g, container);
 
         //Kameraübersetzung aufheben
-        LevelController.resetCameraTranslation(g);
+        // LevelController.resetCameraTranslation(g);
 
     }
     
@@ -197,7 +197,7 @@ public class GameStateManager extends BasicGame {
      * - Wird ein Computer zerstört, können mehr Gegner insgesamt gespawnt werden
      * - Ebenso erhöht sich die Spawnrate pro zerstörtem Computer
      */
-    public static void updateGameLoop() throws SlickException{
+    public void updateGameLoop() throws SlickException{
 
         int amountOfComputers = EnemyController.getAmountOfComputers();
 

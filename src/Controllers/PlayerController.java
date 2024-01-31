@@ -22,14 +22,14 @@ import java.util.HashMap;
  * 
  * @author Jeremy Adam
  */
-public abstract class PlayerController {
+public final class PlayerController {
 
     
     //Attribute
 
     private static Player player;
 
-    public enum Direction {
+    private enum Direction {
         UP,
         DOWN,
         LEFT,
@@ -40,6 +40,13 @@ public abstract class PlayerController {
 
 
     //Konstruktoren
+
+    private PlayerController() {
+        throw new AssertionError();
+    }
+
+
+    //Methoden
 
     /**
      * Diese Methode erstellt den PlayerController und den Spieler.

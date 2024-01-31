@@ -21,13 +21,20 @@ import Entities.Weapons.SniperRifle;
  * 
  * @author Sascha Angermann
  */
-public abstract class WeaponController {
+public final class WeaponController {
 
     //Attribute
 
     private static HashSet<BulletTraceAnimation> bulletTraces;
     private static HashSet<Weapon> weapons;
     private static Random shotAccuracyRandomizer = new Random();
+
+
+    //Konstruktoren
+
+    private WeaponController() {
+        throw new AssertionError();
+    }
 
     
     //Getter
@@ -397,7 +404,7 @@ public abstract class WeaponController {
      * @param bulletLine Linie der Schusslaufbahn
      * @param shootingEntity Schießende Entität (soll sich selbst keinen Schaden zufügen können)
      */
-    public static void hitScanSniperRifle(Weapon weapon, Line bulletLine, LivingEntity shootingEntity) {
+    private static void hitScanSniperRifle(Weapon weapon, Line bulletLine, LivingEntity shootingEntity) {
 
         //Alle lebendigen Entitäten in einem HashSet abspeichern
         HashSet<LivingEntity> livingEntities = new HashSet<LivingEntity>();

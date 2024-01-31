@@ -1,5 +1,6 @@
 package Entities;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 import Entities.Animations.DamageAnimation;
@@ -9,7 +10,7 @@ import Entities.Animations.DamageAnimation;
  * 
  * @author Jeremy Adam
  */
-public abstract class LivingEntity extends Entity implements Renderable {
+public abstract class LivingEntity extends Entity {
 
     
     //Attribute
@@ -17,7 +18,6 @@ public abstract class LivingEntity extends Entity implements Renderable {
     protected Weapon equippedWeapon;
     protected short hitpoints;
     protected short maxHitpoints = 100;
-    protected short invincibilityTime = 0;
     protected float movementSpeed = 0.09f;
     protected DamageAnimation damageAnimation;
 
@@ -62,15 +62,6 @@ public abstract class LivingEntity extends Entity implements Renderable {
     }
 
     /**
-     * Diese Methode gibt die aktuelle Anzahl an Frames, bis die Entität erneut Schaden nehmen kann, zurück.
-     * 
-     * @return Aktuelle Anzahl an Frames, bis die Entität erneut Schaden nehmen kann
-     */
-    public short getInvincibilityTime() {
-        return invincibilityTime;
-    }
-
-    /**
      * Diese Methode gibt die aktuelle Bewegungsgeschwindigkeit der Entität zurück
      * 
      * @return Bewegungsgeschwindigkeit der Entität
@@ -98,15 +89,6 @@ public abstract class LivingEntity extends Entity implements Renderable {
      */
     public void setHitpoints(short hitpoints) {
         this.hitpoints = hitpoints;
-    }
-
-    /**
-     * Diese Methode legt eine Anzahl an Frames fest, ab welcher die Entität erneut Schaden nehmen kann.
-     * 
-     * @param invincibilityTime Aktuelle Anzahl an Frames, bis die Entität erneut Schaden nehmen kann
-     */
-    public void setInvincibilityTime(short invincibilityTime) {
-        this.invincibilityTime = invincibilityTime;
     }
 
 
@@ -167,4 +149,10 @@ public abstract class LivingEntity extends Entity implements Renderable {
      */
     public abstract void reload();
 
+    /**
+     * Diese Methode sorgt dafür, dass die Entität gerendert werden kann.
+     * 
+     * @param g Grafische Darstellung durch Slick2D
+     */
+    public abstract void render(Graphics g);
 }

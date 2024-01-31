@@ -5,11 +5,18 @@ import org.newdawn.slick.Sound;
 /**
  * Diese Klasse verwaltet die Hintergrundmusik des Spiels
  */
-public abstract class MusicController {
+public final class MusicController {
     
     //Attribute
 
     private static Sound sound;
+
+
+    //Konstruktoren
+
+    private MusicController() {
+        throw new AssertionError();
+    }
 
 
     //Methoden

@@ -6,14 +6,13 @@ import org.newdawn.slick.Sound;
 
 import Controllers.PlayerController;
 import Entities.Entity;
-import Entities.Renderable;
 
 /**
  * Diese Klasse stellt die für den Spieler einsammelbaren Medkits dar.
  * 
- * @author Hendrik Gomez
+ * @author Sascha Angermann
  */
-public class Medkit extends Entity implements Renderable, Pickable {
+public class Medkit extends Entity implements Pickable {
 
     private short healAmount = 500;
     private Sound healSound = new Sound("assets/sounds/player_heal.wav");
@@ -41,7 +40,6 @@ public class Medkit extends Entity implements Renderable, Pickable {
     /**
      * this method renders the medkit
      */
-    @Override
     public void render(Graphics g) {
         float x = this.shape.getX();
         float y = this.shape.getY();

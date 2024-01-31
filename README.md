@@ -7,6 +7,7 @@ Dies ist ein Projekt im Rahmen der Prüfungsleistung im dualen Studium im Studie
 - src/ => beinhaltet den Code des Games
 - src/GameStateManager.java => Main-Datei zum Starten des Games
     - In der Main-Methode kann hier auch die Auflösung festgelegt werden und ob Vollbild verwendet werden soll.
+- src/Level/Tiled => beinhaltet alle für die Erstellung der Spielwelt notwendigen Dateien, welche durch Tiled erstellt wurden
 - assets/ => beinhaltet Sounds und Sprites für Game-Inhalte
 - .gitignore => Hier können Dateien und Ordner aus dem Tracking von Git entfernt werden
 - javadoc/ => beinhaltet die Javadoc für die Slick2D-Bibliothek

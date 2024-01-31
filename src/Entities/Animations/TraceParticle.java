@@ -12,7 +12,7 @@ public class TraceParticle implements Animatable {
     private short animationTimer;
     private short animationTime;
     private float xPos;
-    float yPos;
+    private float yPos;
     private Random random = new Random();
 
 

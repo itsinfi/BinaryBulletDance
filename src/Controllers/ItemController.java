@@ -15,11 +15,17 @@ import Entities.Items.Medkit;
  * 
  * @author Hendrik Gomez
  */
-public abstract class ItemController {
+public final class ItemController {
 
     //attributes
     private static HashSet<Medkit> medkits;
     private static short limitOfMedkits = 15;
+
+
+    //constructors
+    private ItemController() {
+        throw new AssertionError();
+    }
 
 
     //methods

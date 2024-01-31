@@ -2,7 +2,6 @@ package Entities;
 
 import java.util.HashMap;
 
-import org.lwjgl.util.vector.Vector2f;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -24,7 +23,6 @@ public class Player extends LivingEntity {
     private Weapon weaponSlot5;
     private HashMap<String, Short> ammo = new HashMap<String, Short>();
     private short changeEquippedWeaponTimer = 0;
-    private Vector2f playerDirection;
 
 
     //Konstruktoren
@@ -249,15 +247,5 @@ public class Player extends LivingEntity {
     public void die() {
         // TODO: Auto-generated method stub
     }
-
-
-	public Vector2f getPlayerDirection() {
-		return playerDirection;
-	}
-
-
-	public void setPlayerDirection(Vector2f playerDirection) {
-		this.playerDirection = playerDirection;
-	}
 
 }

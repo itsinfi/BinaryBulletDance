@@ -22,11 +22,19 @@ import Entities.Enemies.SentinelEnemy;
  * 
  * @author Jeremy Adam
  */
-public abstract class EnemyController {
+public final class EnemyController {
 	
+	//attributes
 	private static HashSet<Enemy> enemies;
 	private static ArrayList<Computer> computers;
 	private static Random random = new Random();
+
+
+	//constructors
+    private EnemyController() {
+        throw new AssertionError();
+    }
+
 	
 	// methods
 	/**
@@ -51,23 +59,43 @@ public abstract class EnemyController {
 	}
 	
 	/**
+	 * this method creates a sentinel enemy
 	 * 
 	 * @param x spawn coordinate on the x-axis
 	 * @param y spawn coordinate on the y-axis
 	 * @param d starting direction where the sentinel is looking at
-	 * @throws SlickException 
+	 * @throws SlickException asset could not be found
 	 */
 	public static void createSentinel(float x, float y, float d) throws SlickException {
 		SentinelEnemy s = new SentinelEnemy("assets/enemySprites/sentinel.png", x, y, d);
 		EnemyController.addEnemy(s);
 	}
 	
+	/**
+	 * this method creates a guardian enemy
+	 * 
+	 * @param x spawn coordinate on the x-axis
+	 * @param y spawn coordinate on the y-axis
+	 * @param d starting direction where the sentinel is looking at
+	 * @throws SlickException asset could not be found
+	 */
 	public static void createGuardian(float x, float y, float d) throws SlickException {
 		GuardianEnemy g = new GuardianEnemy("assets/enemySprites/guardian.png", x, y, d);
 		EnemyController.addEnemy(g);
 	}
 
-	public static void createComputer(float x, float y, float d, float spawnRangeX, float spawnRangeY) throws SlickException {
+	/**
+	 * this method creates a computer enemy type
+	 * 
+	 * @param x spawn coordinate on the x-axis
+	 * @param y spawn coordinate on the y-axis
+	 * @param d starting direction where the sentinel is looking at
+	 * @param spawnRangeX range for x-coordinates next to computer where enemies can be spawned by computer
+	 * @param spawnRangeY range for y-coordinates next to computer where enemies can be spawned by computer
+	 * @throws SlickException asset could not be found
+	 */
+	public static void createComputer(float x, float y, float d, float spawnRangeX, float spawnRangeY)
+			throws SlickException {
 		Computer c = new Computer(x, y, spawnRangeX, spawnRangeY);
 		EnemyController.addComputer(c);
 		createSentinel(x, y, d);
@@ -76,10 +104,21 @@ public abstract class EnemyController {
 		createGuardian(x, y, -90);
 	}
 	
+	/**
+	 * removes enemy
+	 * 
+	 * @param enemy
+	 */
 	public static void removeEnemy(Enemy enemy) {
 		enemies.remove(enemy);
 	}
 	
+	/**
+	 * updates all enemies and computers
+	 * 
+	 * @param container game window
+	 * @param delta milliseconds since last frame
+	 */
 	public static void update(GameContainer container, int delta) {
 		Iterator<Enemy> it = enemies.iterator();
 		while (it.hasNext()) {
@@ -121,16 +160,21 @@ public abstract class EnemyController {
 
 			enemy.getDamageAnimation().update();
 		}
-		
+
 		for (Computer computer : computers) {
 			if (computer.getHitpoints() <= 0) {
 				computer.die();
 			}
-			
+
 			computer.getDamageAnimation().update();
 		}
 	}
 	
+	/**
+	 * renders all enemies and computers
+	 * 
+	 * @param g
+	 */
 	public static void render(Graphics g) {
 		for (Enemy enemy : enemies) {
 			enemy.render(g);

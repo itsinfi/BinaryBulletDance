@@ -5,15 +5,14 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 import Entities.Entity;
-import Entities.Renderable;
 
 /**
  * Diese Klasse stellt das Hinzufügen von Schaden bei einer lebendigen Entität visuell dar.
  */
-public class DamageAnimation extends Entity implements Animatable, Renderable {
+public class DamageAnimation extends Entity implements Animatable {
 
-    short animationTime = 20;
-    short animationTimer;
+    private short animationTime = 20;
+    private short animationTimer;
 
 
     /**

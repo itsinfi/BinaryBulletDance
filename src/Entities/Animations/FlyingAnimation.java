@@ -1,7 +1,7 @@
 package Entities.Animations;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Shape;
@@ -11,7 +11,7 @@ import org.newdawn.slick.geom.Shape;
  */
 public class FlyingAnimation implements Animatable {
 
-    private ArrayList<Shape> animatedShapes = new ArrayList<Shape>();
+    private HashSet<Shape> animatedShapes = new HashSet<Shape>();
     private short animationTimer;
     private short animationTime = 240;
 

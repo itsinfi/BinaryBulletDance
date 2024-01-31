@@ -14,11 +14,19 @@ import Level.Level;
  * 
  * @author Hendrik Gomez
  */
-public abstract class LevelController {
+public final class LevelController {
 
     //attributes
     private static Level level;
     private static String levelNumber;
+
+
+    //constructors
+
+    private LevelController() {
+        throw new AssertionError();
+    }
+
 
     //getters
 

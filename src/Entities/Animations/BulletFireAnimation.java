@@ -30,6 +30,16 @@ public class BulletFireAnimation extends Entity implements Animatable {
     
     //Konstruktor
 
+    /**
+     * Dieser Konstruktor erzeugt eine Schussfeueranimation
+     * 
+     * @param centerX zentrale x-Koordinate des Trägers der Waffe
+     * @param centerY zentrale y-Koordinate des Trägers der Waffe
+     * @param direction Richtung in Grad des Trägers der Waffe
+     * @param offsetX x-Offset zum Träger der Waffe (wo die Mündung ist)
+     * @param offsetY y-Offset zum Träger der Waffe (wo die Mündung ist)
+     * @throws SlickException
+     */
     public BulletFireAnimation(float centerX, float centerY, float direction, float offsetX, float offsetY)
             throws SlickException {
         super("assets/weaponSprites/bulletFire.png", centerX, centerY, direction);
@@ -41,6 +51,9 @@ public class BulletFireAnimation extends Entity implements Animatable {
 
     //Methoden
 
+    /**
+     * Diese Methode startet den Animationstimer und generiert zufällige Werte für die Rotation und Spiegelung des Schussfeuers.
+     */
     public void animate() {
         //Animationstimer starten
         this.animationTimer = this.animationTime;
@@ -52,6 +65,9 @@ public class BulletFireAnimation extends Entity implements Animatable {
         this.randomDirectionModifier = (random.nextFloat() - 0.5f) * 27;
     }
     
+    /**
+     * Diese Methode aktualisiert den Animationstimer pro Frame
+     */
     public void update() {
         //Animationstimer laufen lassen, falls noch nicht beendet
         if (animationTimer > 0) {
@@ -59,6 +75,9 @@ public class BulletFireAnimation extends Entity implements Animatable {
         }
     }
 
+    /**
+     * Diese Methode rendert die Animation.
+     */
     public void render(Graphics g) {
         //Prüfen, ob das Schussfeuer dargestellt werden soll
         if (animationTimer == 0) {

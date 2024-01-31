@@ -36,7 +36,7 @@ public class SentinelEnemy extends Enemy {
 	}
 
 	/**
-	 * 
+	 * renders sentinel
 	 */
 	@Override
 	public void render(Graphics g) {
@@ -44,26 +44,9 @@ public class SentinelEnemy extends Enemy {
 		float y = this.shape.getY();
 		this.sprite.setRotation(direction);
 		this.sprite.draw(x, y);
-		
+
 		flyingAnimation.update();
 		flyingAnimation.render(g);
-	}
-
-	@Override
-	public void die() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void reload() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	// getters and setters
-	public void setEquippedWeapon(Weapon w) {
-		this.equippedWeapon = w;
 	}
 
 }
