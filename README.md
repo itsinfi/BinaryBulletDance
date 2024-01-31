@@ -30,8 +30,6 @@ Dies ist ein Projekt im Rahmen der Prüfungsleistung im dualen Studium im Studie
 
 # Credit
 
-Sascha Angermann
-Jeremy Adam
-Hendrik Gomez Giron
+Sascha Angermann, Jeremy Adam, Hendrik Gomez Giron
 
 Tileset by 2gen - https://www.unrealsoftware.de/files_show.php?file=17758
