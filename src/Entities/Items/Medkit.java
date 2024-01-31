@@ -10,7 +10,7 @@ import Entities.Entity;
 /**
  * Diese Klasse stellt die für den Spieler einsammelbaren Medkits dar.
  * 
- * @author Sascha Angermann
+ * @author Hendrik Gomez
  */
 public class Medkit extends Entity implements Pickable {
 
