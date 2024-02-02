@@ -67,7 +67,7 @@ public abstract class Hud {
                     maxHeight + 870);
         }
         
-        g.drawString("HP: " + player.getHitpoints(), maxWidth + 15, maxHeight + 830);
+        g.drawString(player.godMode ? "GOD" : "HP: " + player.getHitpoints(), maxWidth + 15, maxHeight + 830);
         
         // draw amount of computers destroyed
         Image intact;

@@ -135,7 +135,7 @@ public final class PlayerController {
 
         //Keyboard-Input auslesen und Spielerkollisionen checken
 
-        if (input.isKeyDown(Input.KEY_G)) {
+        if (input.isKeyPressed(Input.KEY_G)) {
             player.godMode = !player.godMode;
         }
 
