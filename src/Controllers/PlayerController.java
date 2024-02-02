@@ -135,6 +135,10 @@ public final class PlayerController {
 
         //Keyboard-Input auslesen und Spielerkollisionen checken
 
+        if (input.isKeyDown(Input.KEY_G)) {
+            player.godMode = !player.godMode;
+        }
+
         if (input.isKeyDown(Input.KEY_W) && player.getShape().getCenterY() - player.getShape().getHeight()/2 > 0) {
     	
 	    	float currentX = player.getShape().getCenterX();

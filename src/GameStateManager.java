@@ -67,7 +67,7 @@ public class GameStateManager extends BasicGame {
             AppGameContainer app = new AppGameContainer(
                     new GameStateManager("Binary Bullet Dance"));
             app.setIcons(new String[] { "assets/appIcon/appIcon.png" });
-            app.setDisplayMode(graphicsDevice.getDisplayMode().getWidth(), graphicsDevice.getDisplayMode().getHeight(), true);
+            app.setDisplayMode(graphicsDevice.getDisplayMode().getWidth(), graphicsDevice.getDisplayMode().getHeight(), false);
             app.setTargetFrameRate(60);
             app.start();
         } catch (SlickException e) {

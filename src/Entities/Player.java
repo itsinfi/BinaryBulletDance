@@ -16,6 +16,7 @@ public class Player extends LivingEntity {
 
     //Attribute
 
+    public boolean godMode = false;
     private Weapon weaponSlot1;
     private Weapon weaponSlot2;
     private Weapon weaponSlot3;
@@ -246,6 +247,14 @@ public class Player extends LivingEntity {
     @Override
     public void die() {
         // TODO: Auto-generated method stub
+    }
+
+
+    @Override
+    public void takeDamage(short amount) {
+        if (!godMode) {
+            super.takeDamage(amount);
+        }
     }
 
 }
